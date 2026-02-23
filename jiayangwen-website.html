@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jiayang Wen — Creator / Builder / Thinker</title>
+<meta name="description" content="Personal portfolio of Jiayang Wen — App Dev, AI Video, Vibe Coding, Art Works, and Investing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0b;
+    --fg: #f0ece4;
+    --accent: #e8ff47;
+    --muted: #6b6b6b;
+    --card-bg: #141416;
+    --glass: rgba(255,255,255,0.04);
+    --serif: 'Playfair Display', Georgia, serif;
+    --sans: 'DM Sans', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--sans);
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: var(--bg);
+  }
+
+  /* ═══════════════ CUSTOM CURSOR FOLLOWER ═══════════════ */
+  .cursor-glow {
+    position: fixed;
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(232,255,71,0.07) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease-out;
+  }
+
+  /* ═══════════════ GRAIN OVERLAY ═══════════════ */
+  .grain {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    pointer-events: none;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 128px 128px;
+  }
+
+  /* ═══════════════ NAVIGATION ═══════════════ */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    padding: 24px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(180deg, rgba(10,10,11,0.95) 0%, transparent 100%);
+    backdrop-filter: blur(12px);
+  }
+
+  .logo {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: var(--fg);
+    text-decoration: none;
+  }
+
+  .logo span {
+    color: var(--accent);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.3s;
+    position: relative;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--accent);
+    transition: width 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--fg); }
+  .nav-links a:hover::after { width: 100%; }
+
+  /* ═══════════════ HERO SECTION ═══════════════ */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 120px 48px 80px;
+    position: relative;
+  }
+
+  .hero-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: var(--accent);
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.3s;
+  }
+
+  .hero h1 {
+    font-family: var(--serif);
+    font-size: clamp(48px, 8vw, 120px);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -3px;
+    margin-bottom: 40px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.5s;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+  }
+
+  .hero-desc {
+    max-width: 520px;
+    font-size: 18px;
+    line-height: 1.7;
+    color: var(--muted);
+    font-weight: 300;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.7s;
+  }
+
+  .hero-visual {
+    position: absolute;
+    right: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 380px;
+    height: 380px;
+    border-radius: 50%;
+    border: 1px solid rgba(232,255,71,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    animation: fadeScale 1.2s ease forwards 0.9s;
+  }
+
+  .hero-visual::before {
+    content: '';
+    position: absolute;
+    inset: 20px;
+    border-radius: 50%;
+    border: 1px dashed rgba(232,255,71,0.1);
+    animation: spin 30s linear infinite;
+  }
+
+  .hero-visual::after {
+    content: '';
+    position: absolute;
+    inset: 50px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(232,255,71,0.05) 0%, transparent 70%);
+  }
+
+  .orbit-item {
+    position: absolute;
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--accent);
+    background: var(--card-bg);
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid rgba(232,255,71,0.2);
+    white-space: nowrap;
+  }
+
+  .orbit-item:nth-child(1) { top: -10px; left: 50%; transform: translateX(-50%); }
+  .orbit-item:nth-child(2) { top: 50%; right: -40px; transform: translateY(-50%); }
+  .orbit-item:nth-child(3) { bottom: -10px; left: 50%; transform: translateX(-50%); }
+  .orbit-item:nth-child(4) { top: 50%; left: -30px; transform: translateY(-50%); }
+  .orbit-item:nth-child(5) { top: 18%; right: -20px; }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 40px;
+    left: 48px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--muted);
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 1.2s;
+  }
+
+  .scroll-line {
+    width: 40px;
+    height: 1px;
+    background: var(--muted);
+    animation: pulse 2s ease infinite;
+  }
+
+  /* ═══════════════ SECTION STYLES ═══════════════ */
+  section {
+    padding: 120px 48px;
+    position: relative;
+  }
+
+  .section-number {
+    font-family: var(--serif);
+    font-size: clamp(80px, 12vw, 180px);
+    font-weight: 900;
+    color: rgba(232,255,71,0.04);
+    position: absolute;
+    top: 60px;
+    right: 48px;
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: var(--accent);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(32px, 5vw, 64px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -1.5px;
+    margin-bottom: 24px;
+  }
+
+  .section-desc {
+    max-width: 600px;
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--muted);
+    font-weight: 300;
+    margin-bottom: 48px;
+  }
+
+  /* ═══════════════ PROJECT CARDS ═══════════════ */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 24px;
+  }
+
+  .project-card {
+    background: var(--card-bg);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 16px;
+    padding: 36px;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+
+  .project-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(232,255,71,0.15);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+
+  .project-card:hover::before { opacity: 1; }
+
+  .card-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: rgba(232,255,71,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+
+  .card-title {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .card-desc {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.1);
+    color: var(--muted);
+    transition: all 0.3s;
+  }
+
+  .project-card:hover .tag {
+    border-color: rgba(232,255,71,0.2);
+    color: var(--fg);
+  }
+
+  /* ═══════════════ BENTO GRID ═══════════════ */
+  .bento-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto;
+    gap: 20px;
+  }
+
+  .bento-item {
+    background: var(--card-bg);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 16px;
+    padding: 32px;
+    transition: all 0.4s;
+    min-height: 220px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .bento-item:hover {
+    border-color: rgba(232,255,71,0.15);
+    transform: translateY(-2px);
+  }
+
+  .bento-item.featured {
+    grid-column: span 2;
+    background: linear-gradient(135deg, rgba(232,255,71,0.06) 0%, var(--card-bg) 60%);
+  }
+
+  .bento-item.tall { grid-row: span 2; }
+
+  .bento-number {
+    font-family: var(--serif);
+    font-size: 48px;
+    font-weight: 900;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .bento-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--muted);
+    margin-top: 8px;
+  }
+
+  .bento-title {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .bento-desc {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+
+  /* ═══════════════ GALLERY STRIP ═══════════════ */
+  .gallery-strip {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    padding-bottom: 16px;
+    scrollbar-width: none;
+  }
+
+  .gallery-strip::-webkit-scrollbar { display: none; }
+
+  .gallery-item {
+    flex: 0 0 300px;
+    height: 400px;
+    border-radius: 16px;
+    background: var(--card-bg);
+    border: 1px solid rgba(255,255,255,0.06);
+    overflow: hidden;
+    position: relative;
+    transition: all 0.4s;
+    cursor: pointer;
+  }
+
+  .gallery-item:hover {
+    flex: 0 0 360px;
+    border-color: rgba(232,255,71,0.2);
+  }
+
+  .gallery-placeholder {
+    width: 100%;
+    height: 65%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 60px;
+    background: linear-gradient(135deg, rgba(232,255,71,0.04) 0%, rgba(232,255,71,0.01) 100%);
+  }
+
+  .gallery-info {
+    padding: 20px;
+  }
+
+  .gallery-info h4 {
+    font-family: var(--serif);
+    font-size: 18px;
+    margin-bottom: 4px;
+  }
+
+  .gallery-info p {
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  /* ═══════════════ INVESTING TICKER ═══════════════ */
+  .ticker-bar {
+    display: flex;
+    gap: 48px;
+    padding: 24px 0;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    margin-bottom: 48px;
+    overflow: hidden;
+  }
+
+  .ticker-item {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    flex-shrink: 0;
+    animation: marquee 20s linear infinite;
+  }
+
+  .ticker-symbol {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--fg);
+  }
+
+  .ticker-value {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--accent);
+  }
+
+  /* ═══════════════ PHILOSOPHY CARDS ═══════════════ */
+  .philosophy-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  .philosophy-card {
+    padding: 36px;
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 16px;
+    transition: all 0.4s;
+  }
+
+  .philosophy-card:hover {
+    border-color: rgba(232,255,71,0.2);
+    background: var(--glass);
+  }
+
+  .philosophy-card h4 {
+    font-family: var(--serif);
+    font-size: 20px;
+    margin-bottom: 12px;
+  }
+
+  .philosophy-card p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--muted);
+  }
+
+  /* ═══════════════ CONTACT / FOOTER ═══════════════ */
+  .contact-section {
+    text-align: center;
+    padding: 160px 48px;
+    position: relative;
+  }
+
+  .contact-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 80px;
+    background: linear-gradient(180deg, transparent, var(--accent));
+  }
+
+  .contact-cta {
+    font-family: var(--serif);
+    font-size: clamp(36px, 5vw, 72px);
+    font-weight: 700;
+    margin-bottom: 32px;
+    letter-spacing: -2px;
+  }
+
+  .contact-cta em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+  }
+
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .contact-link {
+    font-family: var(--mono);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--fg);
+    text-decoration: none;
+    padding: 14px 28px;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 40px;
+    transition: all 0.3s;
+  }
+
+  .contact-link:hover {
+    background: var(--accent);
+    color: var(--bg);
+    border-color: var(--accent);
+  }
+
+  footer {
+    padding: 32px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 1px;
+  }
+
+  /* ═══════════════ DIVIDER ═══════════════ */
+  .section-divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+    margin: 0;
+  }
+
+  /* ═══════════════ ANIMATIONS ═══════════════ */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeScale {
+    from { opacity: 0; transform: translateY(-50%) scale(0.85); }
+    to { opacity: 1; transform: translateY(-50%) scale(1); }
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-100%); }
+  }
+
+  /* Scroll reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ═══════════════ RESPONSIVE ═══════════════ */
+  @media (max-width: 1024px) {
+    .hero-visual { display: none; }
+    .bento-grid { grid-template-columns: repeat(2, 1fr); }
+    .bento-item.featured { grid-column: span 2; }
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    section { padding: 80px 24px; }
+    .hero { padding: 100px 24px 60px; }
+    .section-number { font-size: 80px; right: 24px; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .bento-grid { grid-template-columns: 1fr; }
+    .bento-item.featured { grid-column: span 1; }
+    .bento-item.tall { grid-row: span 1; }
+    .contact-section { padding: 100px 24px; }
+    .contact-links { flex-direction: column; align-items: center; }
+    footer { flex-direction: column; gap: 12px; text-align: center; }
+    .scroll-hint { display: none; }
+  }
+
+  /* Mobile menu */
+  .menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 32px;
+    height: 24px;
+    position: relative;
+  }
+
+  .menu-toggle span {
+    display: block;
+    width: 100%;
+    height: 1.5px;
+    background: var(--fg);
+    position: absolute;
+    left: 0;
+    transition: all 0.3s;
+  }
+
+  .menu-toggle span:nth-child(1) { top: 0; }
+  .menu-toggle span:nth-child(2) { top: 50%; transform: translateY(-50%); }
+  .menu-toggle span:nth-child(3) { bottom: 0; }
+
+  @media (max-width: 768px) {
+    .menu-toggle { display: block; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor-glow" id="cursorGlow"></div>
+<div class="grain"></div>
+
+<!-- ═══════════════ NAVIGATION ═══════════════ -->
+<nav>
+  <a href="#" class="logo">JW<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#apps">Apps</a></li>
+    <li><a href="#aivideo">AI Video</a></li>
+    <li><a href="#vibecoding">Vibe Code</a></li>
+    <li><a href="#artworks">Art</a></li>
+    <li><a href="#investing">Investing</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<section class="hero">
+  <p class="hero-label">Portfolio — 2025</p>
+  <h1>Jiayang<br>Wen<em>.</em></h1>
+  <p class="hero-desc">
+    Builder at the intersection of code, creativity, and capital. 
+    I make apps, generate AI videos, vibe code every week, create art, 
+    and invest in the future.
+  </p>
+
+  <div class="hero-visual">
+    <span class="orbit-item">App Dev</span>
+    <span class="orbit-item">AI Video</span>
+    <span class="orbit-item">Art</span>
+    <span class="orbit-item">Invest</span>
+    <span class="orbit-item">Vibe</span>
+  </div>
+
+  <div class="scroll-hint">
+    <span class="scroll-line"></span>
+    Scroll to explore
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══════════════ 01 — APP DEV ═══════════════ -->
+<section id="apps">
+  <span class="section-number">01</span>
+  <div class="reveal">
+    <p class="section-label">App Development</p>
+    <h2 class="section-title">Building products<br>people love.</h2>
+    <p class="section-desc">
+      From concept to App Store — I design and ship mobile and web applications 
+      that solve real problems with elegant interfaces and robust architecture.
+    </p>
+  </div>
+
+  <div class="projects-grid">
+    <div class="project-card reveal">
+      <div class="card-icon">📱</div>
+      <h3 class="card-title">Project Alpha</h3>
+      <p class="card-desc">A productivity app reimagined — swipe-based task management with AI prioritization. Built with SwiftUI and Core Data.</p>
+      <div class="card-tags">
+        <span class="tag">SwiftUI</span>
+        <span class="tag">iOS</span>
+        <span class="tag">CoreML</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="card-icon">🌐</div>
+      <h3 class="card-title">WebFlow Dashboard</h3>
+      <p class="card-desc">Real-time analytics dashboard for content creators. Visualize growth metrics, engagement patterns, and audience insights.</p>
+      <div class="card-tags">
+        <span class="tag">React</span>
+        <span class="tag">D3.js</span>
+        <span class="tag">Node</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="card-icon">⚡</div>
+      <h3 class="card-title">Catalyst API</h3>
+      <p class="card-desc">Open-source API toolkit for rapidly prototyping AI-powered micro-apps. Plug-and-play modules for common patterns.</p>
+      <div class="card-tags">
+        <span class="tag">Python</span>
+        <span class="tag">FastAPI</span>
+        <span class="tag">Docker</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══════════════ 02 — AI VIDEO ═══════════════ -->
+<section id="aivideo">
+  <span class="section-number">02</span>
+  <div class="reveal">
+    <p class="section-label">AI Video</p>
+    <h2 class="section-title">Motion through<br><em>machine imagination.</em></h2>
+    <p class="section-desc">
+      Exploring the frontier of AI-generated video — from Sora and Runway 
+      to custom Stable Video workflows. Each piece blurs the line between 
+      the real and the synthetic.
+    </p>
+  </div>
+
+  <div class="bento-grid">
+    <div class="bento-item featured reveal">
+      <div>
+        <div class="bento-number">12+</div>
+        <div class="bento-label">AI films created</div>
+      </div>
+      <div>
+        <div class="bento-title">Dreamscape Series</div>
+        <div class="bento-desc">A collection of AI-generated short films exploring surreal landscapes, impossible architecture, and fluid motion.</div>
+      </div>
+    </div>
+
+    <div class="bento-item reveal">
+      <div>
+        <div class="bento-title">Tools & Pipeline</div>
+        <div class="bento-desc">Runway Gen-3, Sora, Kling, ComfyUI workflows, custom prompt chaining for cinematic output.</div>
+      </div>
+    </div>
+
+    <div class="bento-item reveal">
+      <div>
+        <div class="bento-number">50K+</div>
+        <div class="bento-label">Views across platforms</div>
+      </div>
+    </div>
+
+    <div class="bento-item reveal">
+      <div>
+        <div class="bento-title">Style Transfer</div>
+        <div class="bento-desc">Experiments in translating painting styles into motion — Monet flows, Basquiat pulses, Hokusai waves.</div>
+      </div>
+    </div>
+
+    <div class="bento-item featured reveal">
+      <div>
+        <div class="bento-title">Music Video Collaborations</div>
+        <div class="bento-desc">Partnering with independent musicians to create fully AI-generated music videos. Blending audio-reactive visuals with narrative storytelling.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══════════════ 03 — WEEKLY VIBE CODING ═══════════════ -->
+<section id="vibecoding">
+  <span class="section-number">03</span>
+  <div class="reveal">
+    <p class="section-label">Weekly Vibe Coding</p>
+    <h2 class="section-title">One week.<br>One vibe.<br>One creation.</h2>
+    <p class="section-desc">
+      Every week I pick a mood, a song, or a feeling and turn it into code. 
+      Generative art, interactive toys, weird web experiments — 
+      this is where I play.
+    </p>
+  </div>
+
+  <div class="gallery-strip">
+    <div class="gallery-item reveal">
+      <div class="gallery-placeholder">🌊</div>
+      <div class="gallery-info">
+        <h4>Week 01 — Tidal</h4>
+        <p>Generative ocean waves with WebGL shaders</p>
+      </div>
+    </div>
+    <div class="gallery-item reveal">
+      <div class="gallery-placeholder">🔮</div>
+      <div class="gallery-info">
+        <h4>Week 02 — Neon Drift</h4>
+        <p>Retro-futuristic driving sim in the browser</p>
+      </div>
+    </div>
+    <div class="gallery-item reveal">
+      <div class="gallery-placeholder">🎵</div>
+      <div class="gallery-info">
+        <h4>Week 03 — Synth Garden</h4>
+        <p>Click-to-grow audio-visual flower garden</p>
+      </div>
+    </div>
+    <div class="gallery-item reveal">
+      <div class="gallery-placeholder">🧬</div>
+      <div class="gallery-info">
+        <h4>Week 04 — Cell Division</h4>
+        <p>Cellular automata meets particle physics</p>
+      </div>
+    </div>
+    <div class="gallery-item reveal">
+      <div class="gallery-placeholder">✨</div>
+      <div class="gallery-info">
+        <h4>Week 05 — Starfield</h4>
+        <p>Interactive 3D star map with real constellation data</p>
+      </div>
+    </div>
+    <div class="gallery-item reveal">
+      <div class="gallery-placeholder">🎨</div>
+      <div class="gallery-info">
+        <h4>Week 06 — Paint Machine</h4>
+        <p>AI-assisted collaborative painting tool</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══════════════ 04 — ART WORKS ═══════════════ -->
+<section id="artworks">
+  <span class="section-number">04</span>
+  <div class="reveal">
+    <p class="section-label">Art Works</p>
+    <h2 class="section-title">Pixels, paint,<br>& <em>process.</em></h2>
+    <p class="section-desc">
+      My art practice spans digital illustration, generative design, 
+      mixed-media collage, and AI-assisted creation. Each piece is an 
+      exploration of form, color, and meaning.
+    </p>
+  </div>
+
+  <div class="projects-grid">
+    <div class="project-card reveal">
+      <div class="card-icon">🎨</div>
+      <h3 class="card-title">Digital Illustrations</h3>
+      <p class="card-desc">Character designs, conceptual art, and editorial illustrations created in Procreate and Photoshop.</p>
+      <div class="card-tags">
+        <span class="tag">Procreate</span>
+        <span class="tag">Photoshop</span>
+        <span class="tag">Digital</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="card-icon">🖼️</div>
+      <h3 class="card-title">Generative Series</h3>
+      <p class="card-desc">Algorithm-driven art using p5.js, Processing, and custom shaders. Math becomes beauty.</p>
+      <div class="card-tags">
+        <span class="tag">p5.js</span>
+        <span class="tag">GLSL</span>
+        <span class="tag">Generative</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="card-icon">🧩</div>
+      <h3 class="card-title">Mixed Media</h3>
+      <p class="card-desc">Physical-digital collages blending photography, hand-drawn elements, and AI textures into layered compositions.</p>
+      <div class="card-tags">
+        <span class="tag">Collage</span>
+        <span class="tag">Photography</span>
+        <span class="tag">AI</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══════════════ 05 — INVESTING ═══════════════ -->
+<section id="investing">
+  <span class="section-number">05</span>
+  <div class="reveal">
+    <p class="section-label">Investing</p>
+    <h2 class="section-title">Capital meets<br>conviction.</h2>
+    <p class="section-desc">
+      I study markets, build investment theses, and allocate capital 
+      with a long-term lens. Focused on tech, AI infrastructure, 
+      and emerging platforms.
+    </p>
+  </div>
+
+  <div class="ticker-bar reveal">
+    <div class="ticker-item"><span class="ticker-symbol">AI/ML</span><span class="ticker-value">↑ Long</span></div>
+    <div class="ticker-item"><span class="ticker-symbol">INFRA</span><span class="ticker-value">↑ Overweight</span></div>
+    <div class="ticker-item"><span class="ticker-symbol">CRYPTO</span><span class="ticker-value">◆ Selective</span></div>
+    <div class="ticker-item"><span class="ticker-symbol">ENERGY</span><span class="ticker-value">↑ Bullish</span></div>
+    <div class="ticker-item"><span class="ticker-symbol">BIOTECH</span><span class="ticker-value">◇ Watching</span></div>
+    <div class="ticker-item"><span class="ticker-symbol">RE</span><span class="ticker-value">↓ Cautious</span></div>
+    <div class="ticker-item"><span class="ticker-symbol">AI/ML</span><span class="ticker-value">↑ Long</span></div>
+    <div class="ticker-item"><span class="ticker-symbol">INFRA</span><span class="ticker-value">↑ Overweight</span></div>
+  </div>
+
+  <div class="philosophy-grid">
+    <div class="philosophy-card reveal">
+      <h4>Thesis-Driven</h4>
+      <p>Every position starts with a written thesis. If I can't articulate why in 3 sentences, I don't buy.</p>
+    </div>
+    <div class="philosophy-card reveal">
+      <h4>Long Horizon</h4>
+      <p>Default holding period is 5+ years. Compounding works best when you stop interrupting it.</p>
+    </div>
+    <div class="philosophy-card reveal">
+      <h4>Asymmetric Bets</h4>
+      <p>I look for situations where downside is bounded but upside is non-linear. Small positions, big potential.</p>
+    </div>
+    <div class="philosophy-card reveal">
+      <h4>Builder's Edge</h4>
+      <p>Being a developer gives me signal that pure financial analysts miss. I use what I build to inform what I invest in.</p>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══════════════ CONTACT ═══════════════ -->
+<section class="contact-section" id="contact">
+  <div class="reveal">
+    <h2 class="contact-cta">Let's build<br>something <em>great.</em></h2>
+    <div class="contact-links">
+      <a href="mailto:hello@jiayangwen.com" class="contact-link">Email</a>
+      <a href="https://github.com/jiayangwen" class="contact-link" target="_blank">GitHub</a>
+      <a href="https://twitter.com/jiayangwen" class="contact-link" target="_blank">Twitter / X</a>
+      <a href="https://linkedin.com/in/jiayangwen" class="contact-link" target="_blank">LinkedIn</a>
+      <a href="https://youtube.com/@jiayangwen" class="contact-link" target="_blank">YouTube</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer>
+  <span>© 2025 Jiayang Wen</span>
+  <span>jiayangwen.com</span>
+  <span>Made with curiosity</span>
+</footer>
+
+<script>
+  // ═══════════════ CURSOR GLOW ═══════════════
+  const glow = document.getElementById('cursorGlow');
+  document.addEventListener('mousemove', (e) => {
+    glow.style.left = e.clientX + 'px';
+    glow.style.top = e.clientY + 'px';
+  });
+
+  // ═══════════════ SCROLL REVEAL ═══════════════
+  const revealElements = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, index) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, index * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+  revealElements.forEach(el => observer.observe(el));
+
+  // ═══════════════ SMOOTH SCROLL ═══════════════
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // ═══════════════ NAV SCROLL EFFECT ═══════════════
+  let lastScroll = 0;
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    const currentScroll = window.pageYOffset;
+    if (currentScroll > 100) {
+      nav.style.background = 'rgba(10,10,11,0.95)';
+      nav.style.backdropFilter = 'blur(20px)';
+    } else {
+      nav.style.background = 'linear-gradient(180deg, rgba(10,10,11,0.95) 0%, transparent 100%)';
+    }
+    lastScroll = currentScroll;
+  });
+
+  // ═══════════════ PARALLAX HERO VISUAL ═══════════════
+  const heroVisual = document.querySelector('.hero-visual');
+  if (heroVisual) {
+    window.addEventListener('scroll', () => {
+      const scrolled = window.pageYOffset;
+      heroVisual.style.transform = `translateY(calc(-50% + ${scrolled * 0.15}px))`;
+    });
+  }
+
+  // ═══════════════ MOBILE MENU ═══════════════
+  const menuToggle = document.getElementById('menuToggle');
+  menuToggle.addEventListener('click', () => {
+    const navLinks = document.querySelector('.nav-links');
+    if (navLinks.style.display === 'flex') {
+      navLinks.style.display = 'none';
+    } else {
+      navLinks.style.display = 'flex';
+      navLinks.style.flexDirection = 'column';
+      navLinks.style.position = 'fixed';
+      navLinks.style.top = '70px';
+      navLinks.style.left = '0';
+      navLinks.style.right = '0';
+      navLinks.style.background = 'rgba(10,10,11,0.98)';
+      navLinks.style.padding = '24px';
+      navLinks.style.gap = '20px';
+      navLinks.style.zIndex = '999';
+    }
+  });
+</script>
+
+</body>
+</html>
