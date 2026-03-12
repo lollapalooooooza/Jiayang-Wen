@@ -1,0 +1,12 @@
+# Fill this file and upload it to Codex when you want to update one Weekly Vibe Coding card.
+# Supported target values match the current site labels, for example: "Week 01"
+# If Codex drafted this from a GitHub repo, review every field before approval.
+
+target_week: "Week 01"
+cover_image: "images/example-cover.jpg"
+cover_alt: "Short description of the vibe project cover image"
+emoji: "🌊"
+title: "Project title"
+description: "One sentence describing the project."
+try_out_url: "https://your-github-pages-link.example.com"
+readme_url: "https://github.com/OWNER/REPO/blob/main/README.md"

@@ -84,13 +84,21 @@ section{padding:120px 48px;position:relative}
 
 .vibe-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
 .vibe-card{background:var(--card-bg);border:1px solid rgba(255,255,255,0.06);border-radius:16px;padding:32px;transition:all .4s;position:relative;overflow:hidden}
+.vibe-card.has-cover{min-height:340px;display:flex;align-items:flex-end}
+.vibe-card.has-cover .vibe-cover{position:absolute;inset:0;background-size:cover;background-position:center;transform:scale(1.02);transition:transform .4s ease}
+.vibe-card.has-cover .vibe-cover::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,11,0.18) 0%,rgba(10,10,11,0.5) 38%,rgba(10,10,11,0.88) 100%)}
+.vibe-card.has-cover .vibe-content{position:relative;z-index:1;width:100%}
+.vibe-card.has-cover .vibe-week,.vibe-card.has-cover .vibe-title{color:var(--fg)}
+.vibe-card.has-cover .vibe-icon{filter:drop-shadow(0 6px 24px rgba(0,0,0,0.35))}
+.vibe-card.has-cover .vibe-desc{color:rgba(240,236,228,0.82);max-width:28ch}
+.vibe-card.has-cover:hover .vibe-cover{transform:scale(1.06)}
 .vibe-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));opacity:0;transition:opacity .4s}
 .vibe-card:hover{border-color:rgba(232,255,71,0.15);transform:translateY(-3px)}.vibe-card:hover::before{opacity:1}
 .vibe-week{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--accent);margin-bottom:12px}
 .vibe-icon{font-size:40px;margin-bottom:16px;display:block}
 .vibe-title{font-family:var(--serif);font-size:20px;font-weight:700;margin-bottom:8px}
 .vibe-desc{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:20px}
-.vibe-actions{display:flex;gap:8px}
+.vibe-actions{display:flex;gap:8px;flex-wrap:wrap}
 
 .gallery-scroll-container{max-height:85vh;overflow-y:auto;border-radius:16px;border:1px solid rgba(255,255,255,0.06);padding:16px;background:rgba(20,20,22,0.5);scrollbar-width:thin;scrollbar-color:rgba(232,255,71,0.2) transparent}
 .gallery-scroll-container::-webkit-scrollbar{width:6px}
@@ -249,7 +257,19 @@ footer{padding:32px 48px;display:flex;justify-content:space-between;align-items:
   <span class="section-number">03</span>
   <div class="reveal"><p class="section-label">Weekly Vibe Coding</p><h2 class="section-title">One week. One vibe.<br>One <em>creation.</em></h2><p class="section-desc">Every week I pick a mood, a song, or a feeling and turn it into code. Generative art, interactive toys, weird web experiments.</p></div>
   <div class="vibe-grid">
-    <div class="vibe-card reveal"><span class="vibe-week">Week 01</span><span class="vibe-icon">🌊</span><h3 class="vibe-title">Tidal</h3><p class="vibe-desc">Generative ocean waves with WebGL shaders — click to create ripples.</p><div class="vibe-actions"><a href="#" class="btn-sm download">↓ Download</a><a href="https://github.com/jiayangwen" target="_blank" class="btn-sm">◆ GitHub</a></div></div>
+    <div class="vibe-card has-cover reveal">
+      <div class="vibe-cover" style="background-image:url('images/stern-dashboard-cover.png')" aria-hidden="true"></div>
+      <div class="vibe-content">
+        <span class="vibe-week">Week 01</span>
+        <span class="vibe-icon" role="img" aria-label="Portfolio dashboard showing performance charts, risk metrics, and multi-strategy investment data">📊</span>
+        <h3 class="vibe-title">Stern Dashboard</h3>
+        <p class="vibe-desc">A full-stack portfolio management dashboard for the NYU Stern MIF Thematic Investment Team, with live risk metrics, performance tracking, and automated daily price updates.</p>
+        <div class="vibe-actions">
+          <a href="https://stern-dashboard.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn-sm download">↗ Try it out</a>
+          <a href="https://github.com/lollapalooooooza/stern-dashboard/blob/main/README.md" target="_blank" rel="noopener noreferrer" class="btn-sm">◆ Readme</a>
+        </div>
+      </div>
+    </div>
     <div class="vibe-card reveal"><span class="vibe-week">Week 02</span><span class="vibe-icon">🔮</span><h3 class="vibe-title">Neon Drift</h3><p class="vibe-desc">Retro-futuristic driving sim with synthwave visuals and procedural roads.</p><div class="vibe-actions"><a href="#" class="btn-sm download">↓ Download</a><a href="https://github.com/jiayangwen" target="_blank" class="btn-sm">◆ GitHub</a></div></div>
     <div class="vibe-card reveal"><span class="vibe-week">Week 03</span><span class="vibe-icon">🎵</span><h3 class="vibe-title">Synth Garden</h3><p class="vibe-desc">Click-to-grow audio-visual flower garden with synthesized notes.</p><div class="vibe-actions"><a href="#" class="btn-sm download">↓ Download</a><a href="https://github.com/jiayangwen" target="_blank" class="btn-sm">◆ GitHub</a></div></div>
     <div class="vibe-card reveal"><span class="vibe-week">Week 04</span><span class="vibe-icon">🧬</span><h3 class="vibe-title">Cell Division</h3><p class="vibe-desc">Cellular automata meets particle physics — emergent life from simple rules.</p><div class="vibe-actions"><a href="#" class="btn-sm download">↓ Download</a><a href="https://github.com/jiayangwen" target="_blank" class="btn-sm">◆ GitHub</a></div></div>
