@@ -6,6 +6,8 @@
 <title>Jiayang Wen — Creator / Builder / Thinker</title>
 <meta name="description" content="Personal portfolio of Jiayang Wen — App Dev, AI Video, Vibe Coding, Art Works, and Investing.">
 <link rel="icon" type="image/jpeg" href="images/website_icon.jpg">
+<link rel="shortcut icon" href="images/website_icon.jpg">
+<link rel="apple-touch-icon" href="images/website_icon.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -68,7 +70,7 @@ section{padding:120px 48px;position:relative}
 .dot-showcase{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
 .dot-cover-card{position:relative;max-width:360px;margin:0 auto;cursor:pointer;transition:transform .4s ease}
 .dot-cover-card:hover{transform:translateY(-8px)}
-.dot-cover-card img{width:100%;height:auto;display:block}
+.dot-cover-card img{width:100%;height:auto;display:block;border-radius:0;box-shadow:none;background:none}
 .dot-info h3{font-family:var(--serif);font-size:36px;font-weight:700;margin-bottom:16px}
 .dot-info .dot-subtitle{font-size:17px;line-height:1.7;color:var(--muted);margin-bottom:24px}
 .dot-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:32px}
@@ -281,7 +283,19 @@ footer{padding:32px 48px;display:flex;justify-content:space-between;align-items:
         </div>
       </div>
     </div>
-    <div class="vibe-card reveal"><span class="vibe-week">Week 02</span><span class="vibe-icon">🔮</span><h3 class="vibe-title">Neon Drift</h3><p class="vibe-desc">Retro-futuristic driving sim with synthwave visuals and procedural roads.</p><div class="vibe-actions"><a href="#" class="btn-sm download">↓ Download</a><a href="https://github.com/jiayangwen" target="_blank" class="btn-sm">◆ GitHub</a></div></div>
+    <div class="vibe-card has-cover reveal">
+      <div class="vibe-cover" style="background-image:url('images/red-pocket-cover.jpg')" aria-hidden="true"></div>
+      <div class="vibe-content">
+        <span class="vibe-week">Week 02</span>
+        <span class="vibe-icon" role="img" aria-label="Red pocket emoji">🧧</span>
+        <h3 class="vibe-title">Red Pocket</h3>
+        <p class="vibe-desc">An interactive fortune experience where opening a virtual red pocket reveals a cinematic, fate-driven world.</p>
+        <div class="vibe-actions">
+          <a href="https://lollapalooooooza.github.io/Red-Pocket/" target="_blank" rel="noopener noreferrer" class="btn-sm download">↗ Try it out</a>
+          <a href="https://github.com/lollapalooooooza/Red-Pocket" target="_blank" rel="noopener noreferrer" class="btn-sm">◆ GitHub</a>
+        </div>
+      </div>
+    </div>
     <div class="vibe-card reveal"><span class="vibe-week">Week 03</span><span class="vibe-icon">🎵</span><h3 class="vibe-title">Synth Garden</h3><p class="vibe-desc">Click-to-grow audio-visual flower garden with synthesized notes.</p><div class="vibe-actions"><a href="#" class="btn-sm download">↓ Download</a><a href="https://github.com/jiayangwen" target="_blank" class="btn-sm">◆ GitHub</a></div></div>
     <div class="vibe-card reveal"><span class="vibe-week">Week 04</span><span class="vibe-icon">🧬</span><h3 class="vibe-title">Cell Division</h3><p class="vibe-desc">Cellular automata meets particle physics — emergent life from simple rules.</p><div class="vibe-actions"><a href="#" class="btn-sm download">↓ Download</a><a href="https://github.com/jiayangwen" target="_blank" class="btn-sm">◆ GitHub</a></div></div>
     <div class="vibe-card reveal"><span class="vibe-week">Week 05</span><span class="vibe-icon">✨</span><h3 class="vibe-title">Starfield</h3><p class="vibe-desc">Interactive 3D star map with real constellation data.</p><div class="vibe-actions"><a href="#" class="btn-sm download">↓ Download</a><a href="https://github.com/jiayangwen" target="_blank" class="btn-sm">◆ GitHub</a></div></div>
