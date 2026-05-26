@@ -63,10 +63,11 @@ body.film-on .brand,body.film-on .tabs,body.film-on .hdr-right{opacity:0;visibil
 .brand-cli::before{content:'>';color:rgba(38,63,221,.55);margin-right:4px}
 .brand-cli .typed{display:inline-block;max-width:0;overflow:hidden;white-space:nowrap;vertical-align:bottom;padding-right:4px;margin-right:-3px}
 .brand-cli .cursor{display:inline-block;width:7px;height:15px;margin-left:2px;background:#263fdd;opacity:.78;animation:blink 1.1s steps(1,end) infinite}
-.brand-creator{font-family:var(--hand);font-size:30px;font-weight:700;letter-spacing:.01em;line-height:1;gap:0;overflow:visible}
-.brand-creator span{display:inline-block;clip-path:inset(0 110% 0 0);padding-right:3px;margin-right:-1px;text-shadow:.7px .35px rgba(20,18,12,.18),-.35px .2px rgba(255,255,255,.72),0 0 .55px currentColor;transform:translateY(0) rotate(var(--r,0deg));transform-origin:12% 72%;opacity:1}
-.brand-creator::after{content:'';position:absolute;left:-6px;top:58%;width:8px;height:8px;border-radius:50%;background:#ff7043;box-shadow:0 0 0 2px rgba(255,255,255,.52),0 1px 5px rgba(20,18,12,.2);opacity:0;transform:translateY(-50%) scale(.8);pointer-events:none}
-.brand-creator .c1{color:#355fc9}.brand-creator .c2{color:#4f874e}.brand-creator .c3{color:#ff7043}
+.brand-creator{width:174px;height:42px;display:block;overflow:visible}
+.brand-creator svg{width:174px;height:42px;display:block;overflow:visible}
+.brand-creator text{font-family:var(--hand);font-size:31px;font-weight:700;letter-spacing:.01em;fill:currentColor;fill-opacity:0;stroke:currentColor;stroke-width:.85;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:var(--dash,210);stroke-dashoffset:var(--dash,210);paint-order:stroke;filter:drop-shadow(.7px .35px rgba(20,18,12,.18)) drop-shadow(-.35px .2px rgba(255,255,255,.72))}
+.brand-creator .stroke-blue{color:#355fc9}.brand-creator .stroke-green{color:#4f874e}.brand-creator .stroke-orange{color:#ff7043}
+.brand-creator::after{content:'';position:absolute;left:0;top:0;width:8px;height:8px;border-radius:50%;background:#ff7043;box-shadow:0 0 0 2px rgba(255,255,255,.52),0 1px 5px rgba(20,18,12,.2);offset-path:path("M 4 29 C 19 13 31 19 39 28 C 50 37 53 20 66 21 C 84 21 84 34 96 28 C 108 21 117 16 129 23 C 141 31 151 23 168 25");offset-distance:0%;offset-rotate:0deg;opacity:0;pointer-events:none}
 .brand-investor{align-items:baseline;font-family:var(--serif);color:#243331}
 .brand-investor .spark{width:48px;height:18px;display:inline-flex;align-items:center;align-self:center;margin-right:1px}
 .brand-investor .spark svg{width:48px;height:18px;display:block;overflow:visible}
@@ -76,15 +77,15 @@ body.film-on .brand,body.film-on .tabs,body.film-on .hdr-right{opacity:0;visibil
 .brand-investor .up{font-family:var(--mono);font-size:9px;color:#1f8a4c;margin-left:0}
 body.mode-builder .brand-cli,body.mode-creator .brand-creator,body.mode-investor .brand-investor{opacity:1;transform:translateY(-50%) scale(1);filter:blur(0)}
 body.mode-builder .brand-cli .typed{animation:typeBrand .82s steps(11,end) both}
-body.mode-creator .brand-creator span{animation:writeBrand .48s calc(.052s * var(--i)) cubic-bezier(.18,.82,.24,1) both}
-body.mode-creator .brand-creator::after{animation:crayonSweep 1.02s .02s cubic-bezier(.22,.8,.18,1) both}
+body.mode-creator .brand-creator text{animation:handStroke .72s var(--delay,0s) cubic-bezier(.2,.72,.16,1) both}
+body.mode-creator .brand-creator::after{animation:crayonWrite 1.55s .02s cubic-bezier(.22,.8,.18,1) both}
 body.mode-investor .brand-investor .spark path{animation:drawTicker .74s .05s var(--ease-out) both}
 body.mode-investor .brand-investor .ticker,body.mode-investor .brand-investor .price,body.mode-investor .brand-investor .up{animation:tickerIn .42s .52s var(--ease-out) both}
 body:not(.mode-investor) .brand-investor .ticker,body:not(.mode-investor) .brand-investor .price,body:not(.mode-investor) .brand-investor .up{opacity:0;transform:translateX(-8px)}
 @keyframes blink{50%{opacity:.16}}
 @keyframes typeBrand{from{max-width:0}to{max-width:12ch}}
-@keyframes writeBrand{0%{clip-path:inset(0 110% 0 0);filter:saturate(.8);transform:translateY(3px) rotate(calc(var(--r,0deg) - 5deg)) scale(.98)}62%{clip-path:inset(0 20% 0 0);filter:saturate(1.08)}100%{clip-path:inset(0 -0.34em 0 0);filter:saturate(1);transform:translateY(0) rotate(var(--r,0deg)) scale(1)}}
-@keyframes crayonSweep{0%{left:-6px;opacity:0;transform:translateY(-50%) scale(.74)}9%{opacity:.78}82%{left:calc(100% - 6px);opacity:.78;transform:translateY(-50%) scale(1)}100%{left:calc(100% + 8px);opacity:0;transform:translateY(-50%) scale(.72)}}
+@keyframes handStroke{0%{stroke-dashoffset:var(--dash,210);fill-opacity:0}72%{stroke-dashoffset:0;fill-opacity:0}100%{stroke-dashoffset:0;fill-opacity:1}}
+@keyframes crayonWrite{0%{offset-distance:0%;opacity:0;transform:scale(.74)}8%,88%{opacity:.82}100%{offset-distance:100%;opacity:0;transform:scale(.72)}}
 @keyframes drawTicker{from{stroke-dashoffset:74}to{stroke-dashoffset:0}}
 @keyframes tickerIn{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:translateX(0)}}
 .tabs{position:relative;display:flex;gap:4px}
@@ -361,6 +362,9 @@ main{position:fixed;top:var(--hdr);left:0;right:0;bottom:0}
 .project-detail .btn{padding:12px 18px;font-size:14px}
 .project-detail .sheet-close{top:18px;right:18px;background:rgba(255,255,255,.98);box-shadow:0 14px 36px rgba(0,0,0,.18)}
 .g-item.pi.is-detail-source .pcard{opacity:0;transform:scale(.985);transition:opacity .24s var(--ease),transform .24s var(--ease)}
+.project-morph-ghost{position:fixed;z-index:650;overflow:hidden;border-radius:6px;pointer-events:none;transform-origin:top left;will-change:transform,opacity;box-shadow:0 36px 86px rgba(10,12,30,.28),0 6px 18px rgba(10,12,30,.13)}
+.project-morph-ghost.pcard{height:auto;transform:none!important}
+.project-morph-ghost .pcard-open{opacity:0}
 @media(max-width:860px){
   .modal.project{padding:18px;align-items:flex-start}
   .sheet.project-detail{width:100%;grid-template-columns:1fr;margin:80px auto 28px}
@@ -405,7 +409,7 @@ main{position:fixed;top:var(--hdr);left:0;right:0;bottom:0}
   <div class="hdr-inner">
     <a href="#builder" class="brand" data-tab="builder" aria-label="Jiayang Wen">
       <span class="brand-layer brand-cli"><span class="typed">jiayang-wen</span><span class="cursor"></span></span>
-      <span class="brand-layer brand-creator" aria-label="Jiayang Wen"><span class="c1" style="--i:0;--r:-2deg">J</span><span class="c1" style="--i:1;--r:1deg">i</span><span class="c1" style="--i:2;--r:-1deg">a</span><span class="c2" style="--i:3;--r:1deg">y</span><span class="c2" style="--i:4;--r:-1deg">a</span><span class="c2" style="--i:5;--r:2deg">n</span><span class="c2" style="--i:6;--r:-1deg">g</span><span style="--i:7;width:5px"></span><span class="c3" style="--i:8;--r:-1deg">W</span><span class="c3" style="--i:9;--r:1deg">e</span><span class="c3" style="--i:10;--r:-2deg">n</span></span>
+      <span class="brand-layer brand-creator" aria-label="Jiayang Wen"><svg viewBox="0 0 174 42" aria-hidden="true"><text class="stroke-blue" x="2" y="29" style="--dash:170;--delay:0s">Jia</text><text class="stroke-green" x="39" y="29" style="--dash:220;--delay:.38s">yang</text><text class="stroke-orange" x="100" y="29" style="--dash:170;--delay:.84s">Wen</text></svg></span>
       <span class="brand-layer brand-investor"><span class="spark" aria-hidden="true"><svg viewBox="0 0 48 18"><path d="M2 15 C9 14 12 11 18 11 S27 5 34 6 S41 2 46 2"/></svg></span><span class="ticker">JWEN</span><span class="up">▲</span></span>
     </a>
     <nav class="tabs" id="tabs">
@@ -988,7 +992,7 @@ galleries={builder:bGal,creator:cGal};
 addEventListener('keydown',e=>{const g=galleries[current];if(!g)return;if(e.key==='ArrowRight')g.stepTo(g.index+1);if(e.key==='ArrowLeft')g.stepTo(g.index-1)});
 
 /* ============ investor: return chart ============ */
-let chartFx=null;
+let chartFx=null,chartAnim=0;
 function renderChart(){
   const box=$('#chart'); if(!box)return;
   $('#perfRet').textContent='+0.0%';
@@ -1025,31 +1029,39 @@ function renderChart(){
   hit.addEventListener('mouseleave',()=>{hov.style.opacity='0';tip.style.opacity='0'});
 }
 renderChart();
+function setChartProgress(p){
+  if(!chartFx)return;
+  const {lineEl,areaEl,glowEl,dotEl,lineLen}=chartFx,seg=Math.max(86,lineLen*.09);
+  const dash=lineLen*(1-p);
+  lineEl.style.strokeDashoffset=dash;
+  areaEl.style.opacity=p.toFixed(3);
+  areaEl.style.clipPath=`inset(0 ${(100-p*100).toFixed(3)}% 0 0)`;
+  glowEl.style.strokeDasharray=`${seg} ${lineLen}`;
+  glowEl.style.strokeDashoffset=(lineLen-p*(lineLen+seg*1.45)).toFixed(2);
+  glowEl.style.opacity=(p>0&&p<.985?Math.sin(Math.PI*p)*.56:0).toFixed(3);
+  dotEl.style.opacity=p>.965?((p-.965)/.035).toFixed(3):0;
+  dotEl.style.transform=`scale(${(.55+.45*clamp((p-.965)/.035,0,1)).toFixed(3)})`;
+}
 function playInvestorIntro(){
   if(investorIntroPlayed||!chartFx)return;
   investorIntroPlayed=true;
   const ret=$('#perfRet'),{lineEl,areaEl,glowEl,dotEl,lineLen}=chartFx;
+  cancelAnimationFrame(chartAnim);
   lineEl.getAnimations().forEach(a=>a.cancel());
   areaEl.getAnimations().forEach(a=>a.cancel());
   glowEl.getAnimations().forEach(a=>a.cancel());
   dotEl.getAnimations().forEach(a=>a.cancel());
-  lineEl.style.strokeDashoffset=lineLen;
-  areaEl.style.opacity=0;
-  areaEl.style.clipPath='inset(0 100% 0 0)';
-  glowEl.style.opacity=0;
-  glowEl.style.strokeDashoffset=lineLen;
-  dotEl.style.opacity=0;
-  const dur=2400,start=performance.now(),ease=t=>1-Math.pow(1-t,3.2);
-  lineEl.animate([{strokeDashoffset:lineLen},{strokeDashoffset:0}],{duration:dur,easing:'cubic-bezier(.18,.76,.18,1)',fill:'forwards'});
-  areaEl.animate([{opacity:0,clipPath:'inset(0 100% 0 0)'},{opacity:1,clipPath:'inset(0 0 0 0)'}],{duration:dur,easing:'cubic-bezier(.18,.76,.18,1)',fill:'forwards'});
-  glowEl.animate([{strokeDashoffset:lineLen,opacity:0},{strokeDashoffset:lineLen*.56,opacity:.58,offset:.34},{strokeDashoffset:lineLen*.12,opacity:.5,offset:.78},{strokeDashoffset:-lineLen*.08,opacity:0}],{duration:dur,easing:'cubic-bezier(.18,.76,.18,1)',fill:'forwards'});
-  dotEl.animate([{opacity:0,transform:'scale(.45)'},{opacity:1,transform:'scale(1)'}],{duration:460,delay:dur-220,easing:'cubic-bezier(.16,1,.3,1)',fill:'forwards'});
-  function count(now){
-    const p=clamp((now-start)/dur,0,1),v=RET.total*ease(p);
+  setChartProgress(0);
+  ret.textContent='+0.0%';
+  const dur=3400,start=performance.now(),ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+  function frame(now){
+    const raw=clamp((now-start)/dur,0,1),p=ease(raw),v=RET.total*p;
+    setChartProgress(p);
     ret.textContent=`+${v.toFixed(1)}%`;
-    if(p<1)requestAnimationFrame(count);else ret.textContent=`+${RET.total.toFixed(1)}%`;
+    if(raw<1)chartAnim=requestAnimationFrame(frame);
+    else{setChartProgress(1);ret.textContent=`+${RET.total.toFixed(1)}%`;}
   }
-  requestAnimationFrame(count);
+  chartAnim=requestAnimationFrame(frame);
 }
 
 /* ============ investor donut + legend ============ */
@@ -1080,8 +1092,18 @@ renderArticles('All');
 
 /* ============ modal ============ */
 const modal=$('#modal'),sheet=$('#sheet');
-let projectSourceEl=null,projectSourceRect=null,closingModal=false;
-function projectRect(el){return (el&&(el.querySelector('.pcard')||el).getBoundingClientRect())||null}
+let projectSourceEl=null,projectSourceRect=null,projectGhost=null,closingModal=false;
+function rectObj(r){return r&&{left:r.left,top:r.top,width:r.width,height:r.height,right:r.right,bottom:r.bottom}}
+function projectRect(el){
+  if(!el)return null;
+  const card=el.querySelector('.pcard')||el,raw=rectObj(card.getBoundingClientRect()),item=rectObj(el.getBoundingClientRect());
+  if(!raw||!item)return raw;
+  const ar=parseFloat(el.style.getPropertyValue('--ar'))||raw.width/raw.height||1.6;
+  const warped=raw.width>innerWidth*.76||raw.height>innerHeight*.72||raw.width>item.width*1.18||raw.height>item.height*1.18;
+  if(!warped)return raw;
+  const w=Math.min(item.width*.67,innerWidth*.58),h=w/ar,left=item.left+(item.width-w)/2,top=item.top+(item.height-h)/2;
+  return {left,top,width:w,height:h,right:left+w,bottom:top+h};
+}
 function setProjectSource(originEl,hide=true){
   if(projectSourceEl)projectSourceEl.classList.remove('is-detail-source');
   projectSourceEl=originEl||null;
@@ -1094,39 +1116,62 @@ function clearProjectSource(){
     c.getAnimations().forEach(a=>a.cancel());
     projectSourceEl.classList.remove('is-detail-source');
   }
+  if(projectGhost){projectGhost.remove();projectGhost=null;}
   projectSourceEl=null;
   projectSourceRect=null;
+}
+function createProjectGhost(originEl,from,to){
+  const card=originEl&&(originEl.querySelector('.pcard')||originEl);
+  if(!card||!from||!to)return null;
+  if(projectGhost)projectGhost.remove();
+  const g=card.cloneNode(true);
+  g.querySelectorAll('video,iframe').forEach(n=>n.remove());
+  g.classList.add('project-morph-ghost');
+  Object.assign(g.style,{left:from.left+'px',top:from.top+'px',width:from.width+'px',height:from.height+'px'});
+  document.body.appendChild(g);
+  projectGhost=g;
+  const dx=to.left-from.left,dy=to.top-from.top,sx=to.width/from.width,sy=to.height/from.height;
+  const a=g.animate([
+    {transform:'translate3d(0,0,0) scale(1)',opacity:1,offset:0,easing:'cubic-bezier(.34,0,.72,.38)'},
+    {transform:`translate3d(${(dx*.78).toFixed(2)}px,${(dy*.78).toFixed(2)}px,0) scale(${(1+(sx-1)*.78).toFixed(5)},${(1+(sy-1)*.78).toFixed(5)})`,opacity:.72,offset:.72,easing:'cubic-bezier(.12,.86,.16,1)'},
+    {transform:`translate3d(${dx.toFixed(2)}px,${dy.toFixed(2)}px,0) scale(${sx.toFixed(5)},${sy.toFixed(5)})`,opacity:0,offset:1}
+  ],{duration:900,fill:'both'});
+  a.finished.finally(()=>{if(projectGhost===g){g.remove();projectGhost=null;}}).catch(()=>{});
+  return g;
 }
 function animateProjectOpen(from){
   if(!from)return;
   if(projectSourceEl)projectSourceEl.classList.add('is-detail-source');
   const to=sheet.getBoundingClientRect();
-  const dx=from.left+from.width/2-(to.left+to.width/2),dy=from.top+from.height/2-(to.top+to.height/2);
+  createProjectGhost(projectSourceEl,from,to);
+  const dx=from.left-to.left,dy=from.top-to.top;
   const sx=from.width/to.width,sy=from.height/to.height;
   sheet.style.opacity='1';
+  sheet.style.transformOrigin='top left';
   sheet.animate([
-    {transform:`translate3d(${dx}px,${dy}px,0) scale(${sx},${sy})`,opacity:.98,borderRadius:'6px',offset:0,easing:'cubic-bezier(.28,0,.72,.38)'},
-    {transform:`translate3d(${(dx*.18).toFixed(2)}px,${(dy*.18).toFixed(2)}px,0) scale(${(1-(1-sx)*.18).toFixed(4)},${(1-(1-sy)*.18).toFixed(4)})`,opacity:1,borderRadius:'7px',offset:.62,easing:'cubic-bezier(.14,.86,.22,1)'},
+    {transform:`translate3d(${dx.toFixed(2)}px,${dy.toFixed(2)}px,0) scale(${sx.toFixed(5)},${sy.toFixed(5)})`,opacity:.02,borderRadius:'6px',offset:0,easing:'cubic-bezier(.34,0,.72,.38)'},
+    {transform:`translate3d(${(dx*.16).toFixed(2)}px,${(dy*.16).toFixed(2)}px,0) scale(${(1-(1-sx)*.16).toFixed(5)},${(1-(1-sy)*.16).toFixed(5)})`,opacity:.96,borderRadius:'7px',offset:.66,easing:'cubic-bezier(.12,.86,.16,1)'},
     {transform:'translate3d(0,0,0) scale(1)',opacity:1,borderRadius:'8px',offset:1}
-  ],{duration:820,fill:'both'});
+  ],{duration:880,fill:'both'});
   const info=sheet.querySelector('.project-info');
-  if(info)info.animate([{transform:'translateX(68px)',opacity:0},{transform:'translateX(12px)',opacity:.72,offset:.58},{transform:'translateX(0)',opacity:1}],{duration:680,delay:120,easing:'cubic-bezier(.16,1,.3,1)',fill:'both'});
+  if(info)info.animate([{transform:'translateX(76px)',opacity:0},{transform:'translateX(14px)',opacity:.72,offset:.6},{transform:'translateX(0)',opacity:1}],{duration:700,delay:120,easing:'cubic-bezier(.16,1,.3,1)',fill:'both'});
 }
 function animateProjectClose(done){
   const target=(projectSourceEl&&projectRect(projectSourceEl))||projectSourceRect;
   if(!target){done();return}
   const from=sheet.getBoundingClientRect();
-  const dx=target.left+target.width/2-(from.left+from.width/2),dy=target.top+target.height/2-(from.top+from.height/2);
+  const dx=target.left-from.left,dy=target.top-from.top;
   const sx=target.width/from.width,sy=target.height/from.height;
   const info=sheet.querySelector('.project-info');
   const sourceCard=projectSourceEl&&(projectSourceEl.querySelector('.pcard')||projectSourceEl);
   if(info)info.animate([{transform:'translateX(0)',opacity:1},{transform:'translateX(28px)',opacity:.32,offset:.55},{transform:'translateX(54px)',opacity:0}],{duration:420,easing:'cubic-bezier(.55,0,.15,1)',fill:'both'});
+  sheet.style.transformOrigin='top left';
   const anim=sheet.animate([
     {transform:'translate3d(0,0,0) scale(1)',opacity:1,borderRadius:'8px',offset:0,easing:'cubic-bezier(.5,0,.9,.42)'},
-    {transform:`translate3d(${(dx*.78).toFixed(2)}px,${(dy*.78).toFixed(2)}px,0) scale(${(1-(1-sx)*.78).toFixed(4)},${(1-(1-sy)*.78).toFixed(4)})`,opacity:.82,borderRadius:'6px',offset:.66,easing:'cubic-bezier(.12,.9,.22,1)'},
-    {transform:`translate3d(${dx}px,${dy}px,0) scale(${sx},${sy})`,opacity:0,borderRadius:'6px',offset:1}
-  ],{duration:720,fill:'both'});
-  const reveal=sourceCard?sourceCard.animate([{opacity:0,transform:'scale(.985)'},{opacity:.62,transform:'scale(.995)',offset:.64},{opacity:1,transform:'scale(1)'}],{duration:330,delay:430,easing:'cubic-bezier(.16,1,.3,1)',fill:'both'}):null;
+    {transform:`translate3d(${(dx*.74).toFixed(2)}px,${(dy*.74).toFixed(2)}px,0) scale(${(1-(1-sx)*.74).toFixed(5)},${(1-(1-sy)*.74).toFixed(5)})`,opacity:.88,borderRadius:'6px',offset:.68,easing:'cubic-bezier(.12,.9,.18,1)'},
+    {transform:`translate3d(${dx.toFixed(2)}px,${dy.toFixed(2)}px,0) scale(${sx.toFixed(5)},${sy.toFixed(5)})`,opacity:0,borderRadius:'6px',offset:1}
+  ],{duration:760,fill:'both'});
+  const reveal=sourceCard?sourceCard.animate([{opacity:0,transform:'scale(.985)'},{opacity:.72,transform:'scale(.997)',offset:.62},{opacity:1,transform:'scale(1)'}],{duration:330,delay:460,easing:'cubic-bezier(.16,1,.3,1)',fill:'both'}):null;
   Promise.allSettled([anim.finished,reveal&&reveal.finished].filter(Boolean)).then(done);
 }
 function showModal(html,cls,originEl){
@@ -1136,7 +1181,8 @@ function showModal(html,cls,originEl){
   sheet.getAnimations().forEach(a=>a.cancel());
   sheet.style.opacity='';
   sheet.style.transform='';
-  const from=originEl?(originEl.querySelector('.pcard')||originEl).getBoundingClientRect():null;
+  sheet.style.transformOrigin='';
+  const from=originEl?projectRect(originEl):null;
   if(cls==='project'&&from){setProjectSource(originEl,false);sheet.style.opacity='0'}else clearProjectSource();
   sheet.innerHTML=`<button class="sheet-close" aria-label="Close">✕</button>`+html;
   sheet.querySelector('.sheet-close').addEventListener('click',closeModal);
@@ -1149,6 +1195,7 @@ function finishModalClose(){
   sheet.innerHTML='';
   sheet.style.opacity='';
   sheet.style.transform='';
+  sheet.style.transformOrigin='';
   clearProjectSource();
   closingModal=false;
 }
