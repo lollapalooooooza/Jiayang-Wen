@@ -10,7 +10,7 @@
 <link rel="icon" type="image/jpeg" href="images/website_icon.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;450;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;450;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#f3f2ee;
@@ -27,6 +27,7 @@
   --serif:'Playfair Display',Georgia,serif;
   --sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
   --mono:'JetBrains Mono',ui-monospace,monospace;
+  --hand:'Caveat',cursive;
   --ease:cubic-bezier(.22,.68,.18,1);
   --ease-out:cubic-bezier(.16,1,.3,1);
   --hdr:64px;
@@ -55,9 +56,20 @@ body.in-builder header.hdr{background-color:transparent;border-bottom-color:tran
 body.film-on header.hdr{background-color:#0b0907;border-bottom-color:#0b0907;backdrop-filter:none;-webkit-backdrop-filter:none}
 body.film-on .brand,body.film-on .tabs,body.film-on .hdr-right{opacity:0;visibility:hidden;transition:opacity .7s var(--ease),visibility .7s var(--ease)}
 .hdr-inner{max-width:var(--maxw);height:100%;margin:0 auto;padding:0 40px;display:flex;align-items:center;justify-content:space-between;gap:24px}
-.brand{font-family:var(--serif);font-size:18px;font-weight:600;letter-spacing:-0.01em;white-space:nowrap;transition:opacity .45s var(--ease),visibility .45s var(--ease)}
+.brand{position:relative;display:block;width:188px;height:34px;white-space:nowrap;transition:opacity .45s var(--ease),visibility .45s var(--ease)}
 .tabs,.hdr-right{transition:opacity .45s var(--ease),visibility .45s var(--ease)}
-.brand b{color:var(--accent)}
+.brand-layer{position:absolute;left:0;top:50%;display:flex;align-items:center;gap:6px;opacity:0;transform:translateY(calc(-50% + 8px)) scale(.96);filter:blur(4px);transition:opacity .5s var(--ease),transform .62s var(--ease-out),filter .5s var(--ease);pointer-events:none}
+.brand-cli{font-family:var(--mono);font-size:13px;letter-spacing:.02em;color:#263fdd;text-transform:lowercase}
+.brand-cli::before{content:'>';color:rgba(38,63,221,.55);margin-right:4px}
+.brand-cli .cursor{display:inline-block;width:7px;height:15px;margin-left:2px;background:#263fdd;opacity:.78;animation:blink 1.1s steps(1,end) infinite}
+.brand-creator{font-family:var(--hand);font-size:30px;font-weight:700;letter-spacing:.01em;line-height:1}
+.brand-creator .c1{color:#355fc9}.brand-creator .c2{color:#4f874e}.brand-creator .c3{color:#ff7043}
+.brand-investor{align-items:baseline;font-family:var(--serif);color:#243331}
+.brand-investor .ticker{font-size:23px;font-weight:600;letter-spacing:.02em;line-height:1}
+.brand-investor .price{font-family:var(--mono);font-size:9px;letter-spacing:.08em;color:#6d756e;text-transform:uppercase;margin-left:2px}
+.brand-investor .up{font-family:var(--mono);font-size:9px;color:#1f8a4c;margin-left:0}
+body.mode-builder .brand-cli,body.mode-creator .brand-creator,body.mode-investor .brand-investor{opacity:1;transform:translateY(-50%) scale(1);filter:blur(0)}
+@keyframes blink{50%{opacity:.16}}
 .tabs{position:relative;display:flex;gap:4px}
 .tab{position:relative;background:none;border:none;cursor:pointer;font-family:var(--mono);font-size:11px;letter-spacing:0.13em;text-transform:uppercase;color:var(--muted);padding:9px 16px;border-radius:999px;transition:color .35s var(--ease),background .35s var(--ease)}
 .tab:hover{color:var(--ink)}
@@ -72,7 +84,8 @@ body.film-on .brand,body.film-on .tabs,body.film-on .hdr-right{opacity:0;visibil
   .hdr-right{gap:12px}
   .soc svg{width:16px;height:16px}
   .tab{padding:8px 9px;font-size:9.5px;letter-spacing:0.06em}
-  .brand{font-size:15px}
+  .brand{width:132px;height:30px}
+  .brand-cli{font-size:10px}.brand-creator{font-size:24px}.brand-investor .ticker{font-size:18px}.brand-investor .price,.brand-investor .up{display:none}
 }
 
 /* ============ views ============ */
@@ -123,6 +136,7 @@ main{position:fixed;top:var(--hdr);left:0;right:0;bottom:0}
 .g-bg{top:50%;transform:translateY(-50%);font-size:46vh;color:var(--ink);opacity:0.05;z-index:1}
 .g-front{bottom:-3vh;font-size:40vh;color:var(--accent);opacity:0.92;z-index:4}
 .g-track{position:absolute;top:0;left:0;height:100%;display:flex;align-items:center;padding:0 44vw;gap:6vw;will-change:transform;z-index:3;perspective:2400px;perspective-origin:50% 46%}
+#gallery .g-track{gap:18vw}
 .g-item{position:relative;flex:0 0 auto;height:var(--bh,60vh);transform:translateY(var(--off,0));cursor:pointer}
 .curl{position:relative;height:100%;transform-origin:50% 60%;will-change:transform,opacity;backface-visibility:hidden}
 .g-frame{position:relative;height:100%;border-radius:8px;overflow:visible;background:transparent;box-shadow:0 34px 80px rgba(20,16,10,0.24),0 4px 14px rgba(20,16,10,0.10)}
@@ -182,7 +196,7 @@ main{position:fixed;top:var(--hdr);left:0;right:0;bottom:0}
 .gallery.wk .g-code{color:#2f49d6}
 .gallery.wk .g-progress i{background:#2f49d6}
 @media(max-width:680px){
-  .g-bg{font-size:30vh}.g-track{padding:0 26vw;gap:9vw}.g-item{height:46vh}
+  .g-bg{font-size:30vh}.g-track{padding:0 26vw;gap:9vw}#gallery .g-track{gap:27vw}.g-item{height:46vh}
   .work-row{font-size:15vh}
   .g-item.pi{height:54vh;width:80vw}
   .pcard-bar h3{font-size:18px}
@@ -351,11 +365,15 @@ main{position:fixed;top:var(--hdr);left:0;right:0;bottom:0}
 @media(prefers-reduced-motion:reduce){*{animation-duration:.001s!important;transition-duration:.05s!important}}
 </style>
 </head>
-<body>
+<body class="mode-builder">
 
 <header class="hdr">
   <div class="hdr-inner">
-    <a href="#builder" class="brand" data-tab="builder">Jiayang Wen<b>.</b></a>
+    <a href="#builder" class="brand" data-tab="builder" aria-label="Jiayang Wen">
+      <span class="brand-layer brand-cli">jiayang-wen<span class="cursor"></span></span>
+      <span class="brand-layer brand-creator"><span class="c1">Jia</span><span class="c2">yang</span><span class="c3">Wen</span></span>
+      <span class="brand-layer brand-investor"><span class="ticker">JWEN</span><span class="price">Portfolio</span><span class="up">▲</span></span>
+    </a>
     <nav class="tabs" id="tabs">
       <span class="tab-ink" id="tabInk"></span>
       <button class="tab" data-tab="builder">Builder</button>
@@ -468,7 +486,7 @@ const $=s=>document.querySelector(s), ce=t=>document.createElement(t), clamp=(v,
 
 /* ============ DATA ============ */
 const PROJECTS=[
-  {id:'dot',title:'Dot',meta:'iOS · 2024',cover:'images/dot-landing-cover.jpg',video:null,r:2.08,
+  {id:'dot',title:'Dot',meta:'iOS · 2024',cover:'images/dot-landing-2026.jpg',video:null,r:1.677,
    sub:'A word-of-mouth discovery app for college life.',stack:['SwiftUI','Node.js','Firebase','iOS'],
    links:[{label:'App Store',url:'https://apps.apple.com/us/app/dot-experiences-moments/id6720711586',fill:true},{label:'Website',url:'https://www.dot-passion.com/'}],
    body:['Dot is a social discovery platform for college students — capture and discover unique experiences in a community of explorers.','Built from 40+ user interviews across three campuses into a SwiftUI app with a Node.js + Firebase backend: real-time feed, location discovery, and a media pipeline. A 200-student beta cut time-to-first-post from 5 minutes to 45 seconds before an App-Store launch approved on the first review.']},
@@ -567,6 +585,8 @@ function setView(name,push){
   Object.keys(galleries).forEach(k=>galleries[k].deactivate());
   if(galleries[name])galleries[name].activate();
   document.body.classList.toggle('in-builder',name==='builder');
+  document.body.classList.remove('mode-builder','mode-creator','mode-investor');
+  document.body.classList.add('mode-'+name);
   if(name!=='builder')document.querySelectorAll('#bTrack .pcard-yt').forEach(s=>{s.innerHTML='';});
   if(push!==false&&location.hash!=='#'+name)history.pushState({v:name},'','#'+name);
   // reset scroll of the view
