@@ -64,8 +64,8 @@ body.film-on .brand,body.film-on .tabs,body.film-on .hdr-right{opacity:0;visibil
 .brand-cli .typed{display:inline-block;max-width:0;overflow:hidden;white-space:nowrap;vertical-align:bottom}
 .brand-cli .cursor{display:inline-block;width:7px;height:15px;margin-left:2px;background:#263fdd;opacity:.78;animation:blink 1.1s steps(1,end) infinite}
 .brand-creator{font-family:var(--hand);font-size:30px;font-weight:700;letter-spacing:.01em;line-height:1}
-.brand-creator span{display:inline-block;text-shadow:.7px .35px rgba(20,18,12,.18),-.35px .2px rgba(255,255,255,.72),0 0 .55px currentColor;transform-origin:12% 72%}
-.brand-creator .c1{color:#355fc9;transform:rotate(-2deg)}.brand-creator .c2{color:#4f874e;transform:rotate(1deg)}.brand-creator .c3{color:#ff7043;transform:rotate(-1deg)}
+.brand-creator span{display:inline-block;text-shadow:.7px .35px rgba(20,18,12,.18),-.35px .2px rgba(255,255,255,.72),0 0 .55px currentColor;transform:translateY(0) rotate(var(--r,0deg));transform-origin:12% 72%;opacity:0}
+.brand-creator .c1{color:#355fc9}.brand-creator .c2{color:#4f874e}.brand-creator .c3{color:#ff7043}
 .brand-investor{align-items:baseline;font-family:var(--serif);color:#243331}
 .brand-investor .spark{width:48px;height:18px;display:inline-flex;align-items:center;align-self:center;margin-right:1px}
 .brand-investor .spark svg{width:48px;height:18px;display:block;overflow:visible}
@@ -75,15 +75,13 @@ body.film-on .brand,body.film-on .tabs,body.film-on .hdr-right{opacity:0;visibil
 .brand-investor .up{font-family:var(--mono);font-size:9px;color:#1f8a4c;margin-left:0}
 body.mode-builder .brand-cli,body.mode-creator .brand-creator,body.mode-investor .brand-investor{opacity:1;transform:translateY(-50%) scale(1);filter:blur(0)}
 body.mode-builder .brand-cli .typed{animation:typeBrand .82s steps(11,end) both}
-body.mode-creator .brand-creator .c1{animation:writeBrand .62s .02s var(--ease-out) both}
-body.mode-creator .brand-creator .c2{animation:writeBrand .62s .12s var(--ease-out) both}
-body.mode-creator .brand-creator .c3{animation:writeBrand .62s .22s var(--ease-out) both}
+body.mode-creator .brand-creator span{animation:writeBrand .42s calc(.045s * var(--i)) var(--ease-out) both}
 body.mode-investor .brand-investor .spark path{animation:drawTicker .74s .05s var(--ease-out) both}
 body.mode-investor .brand-investor .ticker,body.mode-investor .brand-investor .price,body.mode-investor .brand-investor .up{animation:tickerIn .42s .52s var(--ease-out) both}
 body:not(.mode-investor) .brand-investor .ticker,body:not(.mode-investor) .brand-investor .price,body:not(.mode-investor) .brand-investor .up{opacity:0;transform:translateX(-8px)}
 @keyframes blink{50%{opacity:.16}}
 @keyframes typeBrand{from{max-width:0}to{max-width:11ch}}
-@keyframes writeBrand{from{clip-path:inset(0 100% 0 0);opacity:.12;filter:blur(1px);transform:translateY(5px) rotate(-4deg)}to{clip-path:inset(0 0 0 0);opacity:1;filter:blur(0)}}
+@keyframes writeBrand{from{clip-path:inset(0 100% 0 0);opacity:.08;filter:blur(1px);transform:translateY(6px) rotate(-7deg) scale(.96)}to{clip-path:inset(0 0 0 0);opacity:1;filter:blur(0);transform:translateY(0) rotate(var(--r,0deg)) scale(1)}}
 @keyframes drawTicker{from{stroke-dashoffset:74}to{stroke-dashoffset:0}}
 @keyframes tickerIn{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:translateX(0)}}
 .tabs{position:relative;display:flex;gap:4px}
@@ -233,8 +231,9 @@ main{position:fixed;top:var(--hdr);left:0;right:0;bottom:0}
 .chart-svg{width:100%;height:auto;display:block;overflow:visible}
 .chart-svg .base{stroke:var(--line);stroke-width:1;stroke-dasharray:2 5}
 .chart-svg .xlab{fill:var(--faint);font-family:var(--mono);font-size:10px;text-anchor:middle;letter-spacing:0.08em}
-.chart-svg .cline{fill:none;stroke:var(--pos);stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round}
-.chart-svg .cdot{fill:var(--pos)}
+.chart-svg .carea{opacity:0;clip-path:inset(0 100% 0 0)}
+.chart-svg .cline{fill:none;stroke:var(--pos);stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round;stroke-dasharray:var(--chart-len,1);stroke-dashoffset:var(--chart-len,1)}
+.chart-svg .cdot{fill:var(--pos);opacity:0;transform-box:fill-box;transform-origin:center}
 .chart-svg .cv{stroke:var(--ink);stroke-width:1;opacity:.18}
 .chart-svg .ch{fill:#fff;stroke:var(--pos);stroke-width:2}
 .chart-hit{position:absolute;inset:0;cursor:crosshair}
@@ -397,8 +396,8 @@ main{position:fixed;top:var(--hdr);left:0;right:0;bottom:0}
   <div class="hdr-inner">
     <a href="#builder" class="brand" data-tab="builder" aria-label="Jiayang Wen">
       <span class="brand-layer brand-cli"><span class="typed">jiayang-wen</span><span class="cursor"></span></span>
-      <span class="brand-layer brand-creator"><span class="c1">Jia</span><span class="c2">yang</span><span class="c3">Wen</span></span>
-      <span class="brand-layer brand-investor"><span class="spark" aria-hidden="true"><svg viewBox="0 0 48 18"><path d="M2 15 C9 14 12 11 18 11 S27 5 34 6 S41 2 46 2"/></svg></span><span class="ticker">JWEN</span><span class="price">Portfolio</span><span class="up">▲</span></span>
+      <span class="brand-layer brand-creator" aria-label="Jiayang Wen"><span class="c1" style="--i:0;--r:-2deg">J</span><span class="c1" style="--i:1;--r:1deg">i</span><span class="c1" style="--i:2;--r:-1deg">a</span><span class="c2" style="--i:3;--r:1deg">y</span><span class="c2" style="--i:4;--r:-1deg">a</span><span class="c2" style="--i:5;--r:2deg">n</span><span class="c2" style="--i:6;--r:-1deg">g</span><span style="--i:7;width:5px"></span><span class="c3" style="--i:8;--r:-1deg">W</span><span class="c3" style="--i:9;--r:1deg">e</span><span class="c3" style="--i:10;--r:-2deg">n</span></span>
+      <span class="brand-layer brand-investor"><span class="spark" aria-hidden="true"><svg viewBox="0 0 48 18"><path d="M2 15 C9 14 12 11 18 11 S27 5 34 6 S41 2 46 2"/></svg></span><span class="ticker">JWEN</span><span class="up">▲</span></span>
     </a>
     <nav class="tabs" id="tabs">
       <span class="tab-ink" id="tabInk"></span>
@@ -638,14 +637,144 @@ const ARTICLES=[
       {label:'Ayar Labs SuperNova',url:'https://ayarlabs.com/resources/supernova-light-source-the-industrys-first-cw-wdm-msa-compliant-16-wavelength-light-source/'}
     ]
   },
-  {tk:'SOXL',cat:'Leveraged ETF',title:'SOXL: broad semi beta',blurb:'A 3x daily semiconductor index sleeve that turns the AI hardware cycle into broad, liquid exposure.',metrics:['Weight 11.53%','Return +303.4%','3x semi index'],body:['Thesis: SOXL is the portfolio broad-beta engine. Where LITX, SNXX, and AAOX express single-name optical or memory views, SOXL captures the wider semiconductor complex: Nvidia, Broadcom, Micron, AMD, equipment, and adjacent chip infrastructure.','Evidence: Direxion states SOXL seeks 300% of the NYSE Semiconductor Index daily performance. The issuer page also shows the index is heavily weighted to semiconductors and semiconductor equipment, with top index constituents including Nvidia, Broadcom, Micron, AMD, Applied Materials, and Marvell. That makes SOXL a diversified expression of the same AI capex cycle driving the single-stock sleeves.','Risk: 3x daily leverage is unforgiving. It compounds well in a clean trend, but gap risk and volatility decay can dominate in sideways markets. Its role should be liquidity and breadth, while single-name ETFs carry the idiosyncratic upside.'],sources:[{label:'Direxion SOXL',url:'https://www.direxion.com/product/daily-semiconductor-bull-bear-3x-etfs'}]},
-  {tk:'INTW',cat:'Leveraged ETF',title:'INTW: Intel turnaround call',blurb:'2x daily INTC exposure built around supply recovery, AI CPU demand, and foundry operating leverage.',metrics:['Weight 9.55%','Return +568.2%','2x INTC daily'],body:['Thesis: INTW is a leveraged turnaround expression. The bullish case is not that Intel is already fixed; it is that improved supply, AI-era CPU demand, and better node execution can shift investor expectations quickly. A 5% initial sleeve has grown to 9.55%, the strongest weight expansion in the book.','Evidence: GraniteShares states INTW seeks 2x the daily percentage change of Intel common stock. Intel reported Q1 2026 revenue of $13.6 billion, up 7% year over year, non-GAAP EPS of $0.29, and Q2 revenue guidance of $13.8 billion to $14.8 billion. Management framed demand as supply-constrained and tied to CPUs, wafers, and advanced packaging.','Risk: Foundry losses, capex intensity, and execution remain material. The leveraged wrapper magnifies both a rerating and any disappointment, so the trade depends on continued revenue beats and credible margin improvement.'],sources:[{label:'GraniteShares INTW',url:'https://graniteshares.com/etfs/intw/'},{label:'Intel Q1 FY26',url:'https://www.intc.com/news-events/press-releases/detail/1767/intel-reports-first-quarter-2026-financial-results'}]},
-  {tk:'BE',cat:'Equity',title:'Bloom Energy: datacenter power bottleneck',blurb:'A direct equity position on onsite power demand as AI datacenters stress grid capacity.',metrics:['Weight 8.76%','Return +206.5%','Unlevered equity'],body:['Thesis: Bloom is the power-infrastructure leg of the AI trade. If compute demand is limited by grid interconnection, permitting, and time-to-power, onsite generation becomes strategic rather than optional. BE gives the portfolio a non-chip way to participate in the datacenter buildout.','Evidence: Bloom reported Q1 2026 revenue of $751.1 million, up 130.4% year over year, with product revenue up 208.4%. It raised full-year 2026 revenue guidance to $3.4 billion to $3.8 billion and guided non-GAAP operating income of $600 million to $750 million. Those figures support the case that demand is translating into scale, not just narrative.','Risk: Customer concentration, project timing, service economics, and manufacturing scale matter. The stock can rerate on growth, but durable value depends on converting backlog into profitable, repeatable deployments.'],sources:[{label:'Bloom Q1 2026',url:'https://investor.bloomenergy.com/press-releases/press-release-details/2026/Bloom-Energy-Reports-Record-First-Quarter-2026-Results-and-Raises-Full-Year-2026-Guidance/default.aspx'}]},
-  {tk:'NBIS',cat:'Equity',title:'Nebius: AI cloud capacity race',blurb:'A direct AI infrastructure equity focused on GPU cloud capacity, contracted power, and ARR expansion.',metrics:['Weight 6.82%','Return +138.8%','Unlevered equity'],body:['Thesis: Nebius is the portfolio AI cloud operator. The stock is less about chips themselves and more about monetizing scarce GPU clusters, power access, and full-stack infrastructure. It diversifies the hardware-heavy book into cloud capacity and contracted datacenter execution.','Evidence: Nebius announced Q1 2026 results on May 13, 2026 and said it secured up to 1.2 GW of power and land for a new owned AI factory in Pennsylvania. The company linked investors to full Q1 financial disclosures and a shareholder letter; the published highlights support the theme of rapid AI-cloud ARR expansion and aggressive capacity buildout.','Risk: The thesis is capital intensive. Power, land, GPUs, customer prepayments, and financing must all line up. Strong revenue growth can coexist with working-capital pressure, so the key diligence items are contracted capacity, cash conversion, and customer concentration.'],sources:[{label:'Nebius Q1 2026',url:'https://nebius.com/newsroom/nebius-reports-first-quarter-2026-financial-results'},{label:'Nebius investors',url:'https://nebius.com/investor-hub'}]},
-  {tk:'AAOX',cat:'Leveraged ETF',title:'AAOX: optical transceiver leverage',blurb:'2x daily AAOI exposure, centered on 800G, 1.6T, datacenter demand, and manufacturing capacity.',metrics:['Weight 4.93%','Return +72.6%','2x AAOI daily'],body:['Thesis: AAOX is a targeted bet on Applied Optoelectronics as an optical transceiver supplier to datacenter and broadband markets. The holding is smaller than LITX because AAOI execution risk is higher, but the same AI networking demand can create sharp upside when orders accelerate.','Evidence: Tradr states AAOX seeks 200% of AAOI daily performance. Applied Optoelectronics reported Q1 2026 revenue of $151.1 million versus $99.9 million a year earlier and cited broad demand in datacenter and CATV. Management also noted customer engagement around 800G transceivers and 1.6 Tb products as AI-driven datacenter investments accelerate.','Risk: AAOI remains volatile and still reported a GAAP net loss in Q1. The leveraged ETF adds path dependence on top of customer/order timing risk. The investment case needs evidence of capacity ramp, margin stability, and sustained datacenter demand.'],sources:[{label:'Tradr AAOX',url:'https://www.tradretfs.com/aaox'},{label:'AAOI Q1 2026',url:'https://investors.ao-inc.com/news-releases/news-release-details/applied-optoelectronics-reports-first-quarter-2026-results'}]},
-  {tk:'NASA',cat:'Thematic ETF',title:'NASA: space economy basket',blurb:'An actively managed space ETF with public launch, satellite, data, and limited pre-IPO exposure.',metrics:['Weight 4.40%','Return +53.9%','Active space ETF'],body:['Thesis: NASA is the portfolio thematic diversifier. It keeps the growth tilt but moves away from semis into launch, satellite communications, Earth observation, and private-space access. The position is small enough to be optionality rather than a dominant risk factor.','Evidence: Tema describes NASA as an actively managed ETF focused on the emerging space economy, including public companies and selected pre-IPO exposure. Tema also announced the fund surpassed $1 billion in AUM in 37 trading days after launching on March 31, 2026, indicating strong market demand for the theme.','Risk: Space remains a narrative-heavy sector with long commercialization timelines. AUM momentum can inflate valuations before cash flows arrive. The core diligence is holdings quality, liquidity, private-position valuation, and whether satellite/launch demand turns into recurring revenue.'],sources:[{label:'Tema NASA',url:'https://temaetfs.com/nasa'},{label:'Tema AUM release',url:'https://temaetfs.com/press/space-innovators-etf-exceeds-1-billion-aum'}]},
-  {tk:'CRCA',cat:'Leveraged ETF',title:'CRCA: Circle stablecoin beta',blurb:'2x daily CRCL exposure, built around regulated stablecoin infrastructure and digital-dollar adoption.',metrics:['Weight 1.58%','Return +10.7%','2x CRCL daily'],body:['Thesis: CRCA is a small, speculative sleeve on Circle. The idea is that stablecoin infrastructure can become a regulated settlement layer, and Circle can monetize issuance, reserves, and network usage if USDC adoption keeps scaling.','Evidence: ProShares states CRCA seeks 2x the daily performance of Circle Class A shares and describes Circle as a leader in USD-backed stablecoins. The ETF structure offers leveraged exposure without margin, but the issuer explicitly warns that returns over holding periods longer than one day can be higher or lower than the daily target.','Risk: This is a young, volatile single-stock ETF tied to crypto sentiment, rate expectations, and regulation. Lower rates can pressure reserve-income economics, while competitive stablecoins can pressure market share. The small 1.58% current weight is appropriate for option-like exposure.'],sources:[{label:'ProShares CRCA',url:'https://www.proshares.com/our-etfs/leveraged-and-inverse/crca'}]},
-  {tk:'GDXU',cat:'ETN',title:'GDXU: macro hedge that lagged',blurb:'A small 3x gold-miners ETN used as a convex macro offset to the AI-heavy growth book.',metrics:['Weight 0.83%','Return -41.6%','3x miners ETN'],body:['Thesis: GDXU is not meant to look like the rest of the portfolio. It is a small macro sleeve against equity-beta concentration, using gold miners as a risk-off/inflation-sensitive expression. Its current weight fell to 0.83%, which limits drag while preserving optionality.','Evidence: BMO lists GDXU as MicroSectors Gold Miners 3X Leveraged ETNs. The product is designed for three-times daily exposure to a gold-miners index, so it can move sharply when gold equities trend but can decay badly when miners chop or reverse.','Risk: The position has underperformed the AI book, with a -41.6% portfolio return contribution. That does not automatically make it wrong; it means the hedge failed during this window. Keep it only if it has a defined macro role, sizing cap, and exit rule.'],sources:[{label:'BMO GDXU',url:'https://www.bmoetns.com/ETN/GDXU.P/'},{label:'MicroSectors GDXU',url:'https://microsectors.com/wp-content/uploads/BMO_GoldMine_100323_A.pdf'}]},
+  {
+    tk:'SOXL',cat:'Leveraged ETF',title:'SOXL: a power-law bet on AI infrastructure saturation',
+    blurb:'A 3x semiconductor instrument tied to the idea that AI compute scarcity can keep the chip cycle stronger for longer.',
+    metrics:['Weight 11.53%','Return +303.4%','Daily target 300%'],
+    body:[
+      'SOXL should not be read only as a short-term semiconductor trading vehicle. In this portfolio it expresses a larger view: AI infrastructure spending has become a self-reinforcing buildout rather than a normal inventory cycle.',
+      'The non-consensus point is breadth. The market understood Nvidia, but it was slower to price the system bottlenecks around advanced packaging, HBM, optical networking, power, cooling, and sovereign AI capacity. When every major platform fears falling behind, compute procurement starts to look like strategic infrastructure.',
+      'SOXL works when trend persistence overwhelms daily-leverage decay. Demand has been supported by hyperscaler capex revisions, constrained supply chains, and a semiconductor index with meaningful exposure to AI compute, memory, equipment, and analog infrastructure.',
+      'The risk is path dependency. Direxion states SOXL seeks 300% of the NYSE Semiconductor Index daily result, not three times cumulative returns. Sideways volatility, valuation compression, or efficiency-driven capex pauses can quickly damage realized returns.',
+      'Conclusion: SOXL is the broad liquid accelerator in the book. It belongs only if the AI infrastructure race remains supply constrained and directional; if the market shifts from scarcity buying to efficiency optimization, the same leverage becomes a liability.'
+    ],
+    sources:[
+      {label:'Direxion SOXL',url:'https://www.direxion.com/product/daily-semiconductor-bull-bear-3x-etfs'},
+      {label:'SOXL Fund Page',url:'https://www.direxion.com/products/direxion-daily-semiconductor-bull-3x-etf'}
+    ]
+  },
+  {
+    tk:'INTW',cat:'Leveraged ETF',title:'INTW: AI infrastructure arbitrage, amplified',
+    blurb:'A 2x Intel-linked sleeve used as a high-beta expression of domestic compute, packaging, and capacity scarcity.',
+    metrics:['Weight 9.55%','Return +568.2%','2x INTC daily'],
+    body:[
+      'INTW is a leveraged wrapper, so the underwriting starts with structure. GraniteShares states the fund seeks 200% of Intel daily performance and should not be expected to deliver two times cumulative returns over longer periods.',
+      'The deeper thesis is AI infrastructure arbitrage. The market often focuses on hyperscalers, but compute scarcity also rewards operators and suppliers that can secure power, advanced packaging, GPU/CPU capacity, and deployment windows faster than competitors.',
+      'For Intel exposure, the relevant debate is not whether the company is already fixed. It is whether domestic manufacturing, advanced packaging, and AI-era platform demand can create a faster expectation reset than consensus models assume.',
+      'The risk profile is severe: daily leverage, Intel execution, foundry economics, capital intensity, and any normalization in AI infrastructure scarcity. A choppy tape can punish the wrapper even when the long-term thesis is intact.',
+      'Conclusion: INTW is best treated as a tactical accelerator on AI infrastructure scarcity and U.S. semiconductor optionality, not as a passive Intel holding.'
+    ],
+    sources:[
+      {label:'GraniteShares INTW',url:'https://graniteshares.com/etfs/intw/'},
+      {label:'INTW Factsheet',url:'https://graniteshares.com/media/rrzj5vr4/intw-graniteshares-2x-long-intc-daily-etf.pdf'},
+      {label:'Intel Investors',url:'https://www.intc.com/'}
+    ]
+  },
+  {
+    tk:'BE',cat:'Equity',title:'Bloom Energy: selling time-to-power',
+    blurb:'Bloom is less a fuel-cell story than a way for AI datacenters to turn power delays into deployable capacity.',
+    metrics:['Weight 8.76%','Return +206.5%','Oracle 90-day power'],
+    body:[
+      'Bloom Energy was long analyzed as a clean-energy company. The AI era changes the frame: the strategic product is not only electricity, but time-to-power.',
+      'Datacenter operators increasingly face a simple bottleneck: GPUs, customers, financing, and land may be available, while grid interconnection takes years. Bloom systems become valuable because they can be deployed onsite quickly and reduce dependence on utility timelines.',
+      'Oracle is the clearest proof point. Bloom announced it would provide onsite fuel-cell power for select Oracle Cloud Infrastructure AI datacenters within roughly 90 days, a timeline that directly addresses AI deployment urgency.',
+      'The risk is execution. Multi-gigawatt support requires manufacturing scale, supply-chain discipline, fuel economics, customer diversification, and project delivery. If grid upgrades accelerate or investor expectations become euphoric, the premium can compress.',
+      'Conclusion: Bloom is an AI power-bottleneck equity. The thesis works while time-to-power is a scarce asset; it weakens if utility capacity catches up or deployments fail to convert into durable margins.'
+    ],
+    sources:[
+      {label:'Bloom + Oracle',url:'https://investor.bloomenergy.com/press-releases/press-release-details/2025/Oracle-and-Bloom-Energy-Collaborate-to-Deliver-Power-to-Data-Centers-at-the-Speed-of-AI/default.aspx'},
+      {label:'Bloom Q1 2026',url:'https://investor.bloomenergy.com/press-releases/press-release-details/2026/Bloom-Energy-Reports-Record-First-Quarter-2026-Results-and-Raises-Full-Year-2026-Guidance/default.aspx'}
+    ]
+  },
+  {
+    tk:'NBIS',cat:'Equity',title:'Nebius: AI-native infrastructure capacity',
+    blurb:'A pure AI infrastructure equity whose value sits in scarce GPU capacity, power access, and specialized cloud execution.',
+    metrics:['Weight 6.82%','Return +138.8%','Microsoft $17.4b deal'],
+    body:[
+      'Nebius is not a generic cloud company. It is a specialized AI infrastructure platform built around GPU density, networking, rapid deployment, and frontier-workload support.',
+      'The non-consensus insight is that hyperscalers can become customers of external AI infrastructure when their own deployment speed lags demand. That turns neocloud capacity into a strategic asset rather than a commodity hosting service.',
+      'The Microsoft agreement changed the perception of the company. Nebius announced a multi-year AI infrastructure deal using dedicated capacity from its Vineland, New Jersey datacenter, and its 6-K described total contract value of about $17.4 billion through 2031.',
+      'Risks are large: financing, GPU procurement, customer concentration, utilization, power delivery, and execution across a capital-intensive buildout. If hyperscaler capacity catches up, neocloud pricing power can normalize.',
+      'Conclusion: NBIS is a direct bet that global AI demand is scaling faster than the world can build compute infrastructure. It deserves a premium only if long-duration contracts convert into profitable, financed capacity growth.'
+    ],
+    sources:[
+      {label:'Nebius Microsoft Deal',url:'https://nebius.com/newsroom/nebius-announces-multi-billion-dollar-agreement-with-microsoft-for-ai-infrastructure'},
+      {label:'Nebius 6-K',url:'https://assets.nebius.com/assets/86625727-9e66-46c1-af79-c27d57434e3c/25-25580-1_Nebius%20Group%20N.V._6-K.pdf?cache-buster=2025-09-08T21%3A23%3A09.625Z'},
+      {label:'Nebius Q3 Letter',url:'https://assets.nebius.com/assets/94ab89ea-f954-4516-89f0-1c137e0edd56/Nebius%20Group%20Q3%20Shareholder%20Letter.pdf?cache-buster=2025-11-11T11%3A46%3A23.648Z'}
+    ]
+  },
+  {
+    tk:'AAOX',cat:'Leveraged ETF',title:'AAOX/AAOI: the AI optics second-source trade',
+    blurb:'A 2x AAOI expression tied to hyperscale optical bandwidth, second-source procurement, and 800G capacity.',
+    metrics:['Weight 4.93%','Return +72.6%','2x AAOI daily'],
+    body:[
+      'Applied Optoelectronics is not simply a legacy optical supplier that caught an AI rally. The sharper thesis is that AAOI sits at the intersection of hyperscale bandwidth scarcity, domestic manufacturing optionality, and cloud-customer second-source pressure.',
+      'AI clusters cannot scale if the optical network cannot move data efficiently across racks and buildings. That makes qualified, high-volume, interoperable production more valuable than backward-looking margin history.',
+      'AAOI disclosed plans for meaningful 800G revenue and then showed financial acceleration: Q2 2025 revenue of $103.0 million versus $43.3 million a year earlier, followed by Q3 2025 revenue of $118.6 million and non-GAAP gross margin of 31.0%.',
+      'The bull case is not that AAOI becomes a larger incumbent. It is that hyperscalers need credible second sources, and AAOI has enough vertical integration and manufacturing control to capture incremental AI optical demand.',
+      'Risks remain severe: customer concentration, profitability history, pricing pressure once supply catches up, and the daily-reset decay embedded in AAOX. The position needs evidence of production scale and durable margin, not just orders.'
+    ],
+    sources:[
+      {label:'Tradr AAOX',url:'https://www.tradretfs.com/aaox'},
+      {label:'AAOI 2024 10-K',url:'https://www.sec.gov/Archives/edgar/data/1158114/000143774925005575/aaoi20241231_10k.htm'},
+      {label:'AAOI Q2 2025',url:'https://investors.ao-inc.com/news-releases/news-release-details/applied-optoelectronics-reports-second-quarter-2025-results'},
+      {label:'AAOI Q3 2025',url:'https://investors.ao-inc.com/news-releases/news-release-details/applied-optoelectronics-reports-third-quarter-2025-results'}
+    ]
+  },
+  {
+    tk:'NASA',cat:'Thematic ETF',title:'NASA: space infrastructure as defense-cloud',
+    blurb:'A space infrastructure basket focused on orbit as a recurring platform for networks, sensing, defense, and data.',
+    metrics:['Weight 4.40%','Return +53.9%','Active space ETF'],
+    body:[
+      'The space trade is not a romantic rocket thesis. The stronger argument is that orbit is becoming infrastructure for communications, defense, earth observation, positioning, and data relay.',
+      'Reusable launch, miniaturized satellites, LEO connectivity, and defense demand move the sector from episodic aerospace projects toward repeatable revenue layers. Launch matters, but value can also accrue to satellite manufacturing, telecom partnerships, components, and data services.',
+      'Rocket Lab illustrates the investable stack: Q3 2025 revenue reached a record $155 million, up 48% year over year, with exposure beyond launch through Space Systems. AST SpaceMobile-type direct-to-device partnerships show another path where space becomes an extension of terrestrial networks.',
+      'The risk is technical and financial. Launch failures, spectrum issues, deployment delays, funding gaps, and SpaceX competition can all compress public-space valuations. A strong theme can still be a poor investment when priced as inevitability.',
+      'Conclusion: NASA exposure is most compelling as a defense-cloud infrastructure trade. The thesis is that orbit becomes an operating environment for networks, sensors, and data rather than a one-off destination.'
+    ],
+    sources:[
+      {label:'Tema NASA',url:'https://temaetfs.com/nasa'},
+      {label:'PwC Space Trends',url:'https://www.pwc.com/us/en/industries/industrial-products/library/space-industry-trends.html'},
+      {label:'Rocket Lab Q3 2025',url:'https://investors.rocketlabcorp.com/news-releases/news-release-details/rocket-lab-announces-third-quarter-2025-financial-results-posts'},
+      {label:'AT&T Satellite',url:'https://about.att.com/pages/satellite.html'}
+    ]
+  },
+  {
+    tk:'CRCA',cat:'Leveraged ETF',title:'CRCA/CRCL: digital-dollar float with rate risk',
+    blurb:'A 2x Circle expression where USDC growth, reserve income, distribution economics, and regulation all matter.',
+    metrics:['Weight 1.58%','Return +10.7%','2x CRCL daily'],
+    body:[
+      'Circle is often framed as a crypto stock, but the better model is a digital-dollar issuer with bank-like float economics and a long-term ambition to become an internet-native settlement network.',
+      'The near-term engine is USDC circulation and reserve income. The long-term upside is whether Circle can convert trusted stablecoin distribution into payments, treasury, cross-border settlement, developer platforms, and tokenized-asset utility.',
+      'Q3 2025 showed the operating leverage: USDC in circulation reached $73.7 billion, up 108% year over year; total revenue and reserve income reached $740 million; net income was $214 million; and adjusted EBITDA was $166 million.',
+      'The fragility is also clear. Short-term rates drive reserve income, partners can capture distribution economics, and new regulation can invite banks, payment firms, and large platforms into stablecoins. CRCA adds daily leveraged path dependency on top.',
+      'Conclusion: CRCA works if USDC circulation and transaction utility grow faster than reserve yields fall and distribution costs leak economics. It is a small option on stablecoins becoming core settlement infrastructure.'
+    ],
+    sources:[
+      {label:'ProShares CRCA',url:'https://www.proshares.com/our-etfs/leveraged-and-inverse/crca'},
+      {label:'Circle Q3 2025',url:'https://www.circle.com/pressroom/circle-reports-third-quarter-2025-results'},
+      {label:'Circle 10-Q',url:'https://www.sec.gov/Archives/edgar/data/1876042/000187604225000047/crcl-20250930.htm'},
+      {label:'Circle USDC',url:'https://www.circle.com/usdc'}
+    ]
+  },
+  {
+    tk:'GDXU',cat:'ETN',title:'GDXU: monetary distrust plus miner discipline',
+    blurb:'A leveraged gold-miner instrument, not a simple bullion proxy, built around macro distrust and operating leverage.',
+    metrics:['Weight 0.83%','Return -41.6%','3x miners ETN'],
+    body:[
+      'GDXU is a leveraged gold-miner instrument, not a conservative gold allocation. Gold reflects monetary distrust, real-rate anxiety, fiscal pressure, geopolitics, and central-bank reserve diversification; miners add operating leverage and execution risk.',
+      'The non-consensus view is that miners outperform bullion only when gold rises faster than mining costs and management teams resist the historical temptation to destroy capital through aggressive expansion.',
+      'The setup improved as gold reached record highs and large miners still carried a trust discount from years of poor capital allocation. If higher realized prices flow through to free cash flow, the equity re-rating can be sharper than bullion itself.',
+      'Risks are obvious: daily compounding decay, cost inflation, mine disruption, labor and permitting issues, stronger real rates, a stronger dollar, or renewed empire-building by management teams.',
+      'Conclusion: GDXU is a tactical accelerator on a gold-miner thesis. It belongs only if gold remains structurally supported, costs stay controlled, and capital discipline improves.'
+    ],
+    sources:[
+      {label:'BMO GDXU',url:'https://www.bmoetns.com/ETN/GDXU.P/'},
+      {label:'VanEck GDX Holdings',url:'https://www.vaneck.com/us/en/investments/gold-miners-etf-gdx/'},
+      {label:'World Gold Council 2025',url:'https://www.gold.org/goldhub/research/central-bank-gold-reserves-survey-2025'},
+      {label:'Reuters UBS Gold Target',url:'https://www.reuters.com/markets/commodities/ubs-raises-gold-price-target-3800oz-by-end-2025-2025-09-12/'}
+    ]
+  },
 ];
 
 /* ============ reveal ============ */
@@ -656,7 +785,7 @@ document.querySelectorAll('.reveal').forEach(watch);
 /* ============ tabs / routing ============ */
 const VIEWS=['builder','creator','investor'];
 const tabs=[...document.querySelectorAll('.tab')], tabInk=$('#tabInk');
-let current=null;
+let current=null,investorIntroPlayed=false;
 function moveInk(btn){tabInk.style.width=btn.offsetWidth+'px';tabInk.style.transform=`translate(${btn.offsetLeft}px,-50%)`}
 function setView(name,push){
   if(!VIEWS.includes(name))name='builder';
@@ -669,6 +798,7 @@ function setView(name,push){
   document.body.classList.toggle('in-builder',name==='builder');
   document.body.classList.remove('mode-builder','mode-creator','mode-investor');
   document.body.classList.add('mode-'+name);
+  if(name==='investor')requestAnimationFrame(()=>playInvestorIntro());
   if(name!=='builder')document.querySelectorAll('#bTrack .pcard-yt').forEach(s=>{s.innerHTML='';});
   if(push!==false&&location.hash!=='#'+name)history.pushState({v:name},'','#'+name);
   // reset scroll of the view
@@ -844,9 +974,10 @@ galleries={builder:bGal,creator:cGal};
 addEventListener('keydown',e=>{const g=galleries[current];if(!g)return;if(e.key==='ArrowRight')g.stepTo(g.index+1);if(e.key==='ArrowLeft')g.stepTo(g.index-1)});
 
 /* ============ investor: return chart ============ */
-(function renderChart(){
+let chartFx=null;
+function renderChart(){
   const box=$('#chart'); if(!box)return;
-  $('#perfRet').textContent=`+${RET.total.toFixed(1)}%`;
+  $('#perfRet').textContent='+0.0%';
   const W=1000,H=360,pL=6,pR=6,pT=22,pB=28;
   const xs=RET.dates.map(d=>new Date(d).getTime());
   const tmin=xs[0],tmax=xs[xs.length-1];
@@ -859,7 +990,13 @@ addEventListener('keydown',e=>{const g=galleries[current];if(!g)return;if(e.key=
   const pts=RET.vals.map((v,i)=>[X(xs[i]),Y(v)]);
   const line=pts.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' ');
   const area=line+` L ${pts[pts.length-1][0].toFixed(1)} ${y0.toFixed(1)} L ${pts[0][0].toFixed(1)} ${y0.toFixed(1)} Z`;
-  box.innerHTML=`<svg class="chart-svg" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none"><defs><linearGradient id="ag" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--pos)" stop-opacity="0.10"/><stop offset="1" stop-color="var(--pos)" stop-opacity="0"/></linearGradient></defs><line class="base" x1="${pL}" y1="${y0.toFixed(1)}" x2="${W-pR}" y2="${y0.toFixed(1)}"/>${ml}<path d="${area}" fill="url(#ag)"/><path class="cline" d="${line}" vector-effect="non-scaling-stroke"/><circle class="cdot" cx="${pts[pts.length-1][0].toFixed(1)}" cy="${pts[pts.length-1][1].toFixed(1)}" r="3.4"/><g id="chov" style="opacity:0"><line class="cv" x1="0" x2="0" y1="${pT}" y2="${(H-pB).toFixed(1)}" vector-effect="non-scaling-stroke"/><circle class="ch" r="4.6"/></g></svg><div class="chart-hit" id="chit"></div><div class="ctip" id="ctip"></div>`;
+  box.innerHTML=`<svg class="chart-svg" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none"><defs><linearGradient id="ag" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--pos)" stop-opacity="0.10"/><stop offset="1" stop-color="var(--pos)" stop-opacity="0"/></linearGradient></defs><line class="base" x1="${pL}" y1="${y0.toFixed(1)}" x2="${W-pR}" y2="${y0.toFixed(1)}"/>${ml}<path class="carea" d="${area}" fill="url(#ag)"/><path class="cline" d="${line}" vector-effect="non-scaling-stroke"/><circle class="cdot" cx="${pts[pts.length-1][0].toFixed(1)}" cy="${pts[pts.length-1][1].toFixed(1)}" r="3.4"/><g id="chov" style="opacity:0"><line class="cv" x1="0" x2="0" y1="${pT}" y2="${(H-pB).toFixed(1)}" vector-effect="non-scaling-stroke"/><circle class="ch" r="4.6"/></g></svg><div class="chart-hit" id="chit"></div><div class="ctip" id="ctip"></div>`;
+  const lineEl=box.querySelector('.cline'),areaEl=box.querySelector('.carea'),dotEl=box.querySelector('.cdot');
+  const lineLen=lineEl.getTotalLength();
+  lineEl.style.setProperty('--chart-len',lineLen);
+  lineEl.style.strokeDasharray=lineLen;
+  lineEl.style.strokeDashoffset=lineLen;
+  chartFx={lineEl,areaEl,dotEl,lineLen};
   const hov=box.querySelector('#chov'),cv=hov.querySelector('.cv'),ch=hov.querySelector('.ch'),tip=$('#ctip'),hit=$('#chit');
   hit.addEventListener('mousemove',e=>{
     const r=hit.getBoundingClientRect(),vbx=(e.clientX-r.left)/r.width*W;
@@ -870,7 +1007,30 @@ addEventListener('keydown',e=>{const g=galleries[current];if(!g)return;if(e.key=
     const v=RET.vals[bi];tip.innerHTML=`${new Date(RET.dates[bi]).toLocaleDateString('en-US',{month:'short',day:'numeric'})} &nbsp;<b>${v>=0?'+':''}${v.toFixed(1)}%</b>`;
   });
   hit.addEventListener('mouseleave',()=>{hov.style.opacity='0';tip.style.opacity='0'});
-})();
+}
+renderChart();
+function playInvestorIntro(){
+  if(investorIntroPlayed||!chartFx)return;
+  investorIntroPlayed=true;
+  const ret=$('#perfRet'),{lineEl,areaEl,dotEl,lineLen}=chartFx;
+  lineEl.getAnimations().forEach(a=>a.cancel());
+  areaEl.getAnimations().forEach(a=>a.cancel());
+  dotEl.getAnimations().forEach(a=>a.cancel());
+  lineEl.style.strokeDashoffset=lineLen;
+  areaEl.style.opacity=0;
+  areaEl.style.clipPath='inset(0 100% 0 0)';
+  dotEl.style.opacity=0;
+  const dur=1850,start=performance.now(),ease=t=>1-Math.pow(1-t,3.2);
+  lineEl.animate([{strokeDashoffset:lineLen},{strokeDashoffset:0}],{duration:dur,easing:'cubic-bezier(.18,.76,.18,1)',fill:'forwards'});
+  areaEl.animate([{opacity:0,clipPath:'inset(0 100% 0 0)'},{opacity:1,clipPath:'inset(0 0 0 0)'}],{duration:dur+120,delay:80,easing:'cubic-bezier(.18,.76,.18,1)',fill:'forwards'});
+  dotEl.animate([{opacity:0,transform:'scale(.45)'},{opacity:1,transform:'scale(1)'}],{duration:420,delay:dur-180,easing:'cubic-bezier(.16,1,.3,1)',fill:'forwards'});
+  function count(now){
+    const p=clamp((now-start)/dur,0,1),v=RET.total*ease(p);
+    ret.textContent=`+${v.toFixed(1)}%`;
+    if(p<1)requestAnimationFrame(count);else ret.textContent=`+${RET.total.toFixed(1)}%`;
+  }
+  requestAnimationFrame(count);
+}
 
 /* ============ investor donut + legend ============ */
 const R=80,C=2*Math.PI*R,GAP=4,donut=$('#donut');
@@ -902,29 +1062,35 @@ renderArticles('All');
 const modal=$('#modal'),sheet=$('#sheet');
 let projectSourceEl=null,projectSourceRect=null,closingModal=false;
 function projectRect(el){return (el&&(el.querySelector('.pcard')||el).getBoundingClientRect())||null}
-function setProjectSource(originEl){
+function setProjectSource(originEl,hide=true){
   if(projectSourceEl)projectSourceEl.classList.remove('is-detail-source');
   projectSourceEl=originEl||null;
   projectSourceRect=originEl?projectRect(originEl):null;
-  if(projectSourceEl)projectSourceEl.classList.add('is-detail-source');
+  if(projectSourceEl&&hide)projectSourceEl.classList.add('is-detail-source');
 }
 function clearProjectSource(){
-  if(projectSourceEl)projectSourceEl.classList.remove('is-detail-source');
+  if(projectSourceEl){
+    const c=projectSourceEl.querySelector('.pcard')||projectSourceEl;
+    c.getAnimations().forEach(a=>a.cancel());
+    projectSourceEl.classList.remove('is-detail-source');
+  }
   projectSourceEl=null;
   projectSourceRect=null;
 }
 function animateProjectOpen(from){
   if(!from)return;
+  if(projectSourceEl)projectSourceEl.classList.add('is-detail-source');
   const to=sheet.getBoundingClientRect();
   const dx=from.left+from.width/2-(to.left+to.width/2),dy=from.top+from.height/2-(to.top+to.height/2);
   const sx=from.width/to.width,sy=from.height/to.height;
   sheet.style.opacity='1';
   sheet.animate([
-    {transform:`translate3d(${dx}px,${dy}px,0) scale(${sx},${sy})`,opacity:.96,borderRadius:'6px'},
-    {transform:'translate3d(0,0,0) scale(1)',opacity:1,borderRadius:'8px'}
-  ],{duration:720,easing:'cubic-bezier(.16,1,.3,1)',fill:'both'});
+    {transform:`translate3d(${dx}px,${dy}px,0) scale(${sx},${sy})`,opacity:.98,borderRadius:'6px',offset:0,easing:'cubic-bezier(.28,0,.72,.38)'},
+    {transform:`translate3d(${(dx*.18).toFixed(2)}px,${(dy*.18).toFixed(2)}px,0) scale(${(1-(1-sx)*.18).toFixed(4)},${(1-(1-sy)*.18).toFixed(4)})`,opacity:1,borderRadius:'7px',offset:.62,easing:'cubic-bezier(.14,.86,.22,1)'},
+    {transform:'translate3d(0,0,0) scale(1)',opacity:1,borderRadius:'8px',offset:1}
+  ],{duration:820,fill:'both'});
   const info=sheet.querySelector('.project-info');
-  if(info)info.animate([{transform:'translateX(54px)',opacity:0},{transform:'translateX(0)',opacity:1}],{duration:620,delay:150,easing:'cubic-bezier(.16,1,.3,1)',fill:'both'});
+  if(info)info.animate([{transform:'translateX(68px)',opacity:0},{transform:'translateX(12px)',opacity:.72,offset:.58},{transform:'translateX(0)',opacity:1}],{duration:680,delay:120,easing:'cubic-bezier(.16,1,.3,1)',fill:'both'});
 }
 function animateProjectClose(done){
   const target=(projectSourceEl&&projectRect(projectSourceEl))||projectSourceRect;
@@ -933,12 +1099,15 @@ function animateProjectClose(done){
   const dx=target.left+target.width/2-(from.left+from.width/2),dy=target.top+target.height/2-(from.top+from.height/2);
   const sx=target.width/from.width,sy=target.height/from.height;
   const info=sheet.querySelector('.project-info');
-  if(info)info.animate([{transform:'translateX(0)',opacity:1},{transform:'translateX(46px)',opacity:0}],{duration:360,easing:'cubic-bezier(.7,0,.2,1)',fill:'both'});
+  const sourceCard=projectSourceEl&&(projectSourceEl.querySelector('.pcard')||projectSourceEl);
+  if(info)info.animate([{transform:'translateX(0)',opacity:1},{transform:'translateX(28px)',opacity:.32,offset:.55},{transform:'translateX(54px)',opacity:0}],{duration:420,easing:'cubic-bezier(.55,0,.15,1)',fill:'both'});
   const anim=sheet.animate([
-    {transform:'translate3d(0,0,0) scale(1)',opacity:1,borderRadius:'8px'},
-    {transform:`translate3d(${dx}px,${dy}px,0) scale(${sx},${sy})`,opacity:.98,borderRadius:'6px'}
-  ],{duration:640,easing:'cubic-bezier(.16,1,.3,1)',fill:'both'});
-  anim.finished.then(done,done);
+    {transform:'translate3d(0,0,0) scale(1)',opacity:1,borderRadius:'8px',offset:0,easing:'cubic-bezier(.5,0,.9,.42)'},
+    {transform:`translate3d(${(dx*.78).toFixed(2)}px,${(dy*.78).toFixed(2)}px,0) scale(${(1-(1-sx)*.78).toFixed(4)},${(1-(1-sy)*.78).toFixed(4)})`,opacity:.82,borderRadius:'6px',offset:.66,easing:'cubic-bezier(.12,.9,.22,1)'},
+    {transform:`translate3d(${dx}px,${dy}px,0) scale(${sx},${sy})`,opacity:0,borderRadius:'6px',offset:1}
+  ],{duration:720,fill:'both'});
+  const reveal=sourceCard?sourceCard.animate([{opacity:0,transform:'scale(.985)'},{opacity:.62,transform:'scale(.995)',offset:.64},{opacity:1,transform:'scale(1)'}],{duration:330,delay:430,easing:'cubic-bezier(.16,1,.3,1)',fill:'both'}):null;
+  Promise.allSettled([anim.finished,reveal&&reveal.finished].filter(Boolean)).then(done);
 }
 function showModal(html,cls,originEl){
   closingModal=false;
@@ -948,7 +1117,7 @@ function showModal(html,cls,originEl){
   sheet.style.opacity='';
   sheet.style.transform='';
   const from=originEl?(originEl.querySelector('.pcard')||originEl).getBoundingClientRect():null;
-  if(cls==='project'&&from){setProjectSource(originEl);sheet.style.opacity='0'}else clearProjectSource();
+  if(cls==='project'&&from){setProjectSource(originEl,false);sheet.style.opacity='0'}else clearProjectSource();
   sheet.innerHTML=`<button class="sheet-close" aria-label="Close">✕</button>`+html;
   sheet.querySelector('.sheet-close').addEventListener('click',closeModal);
   requestAnimationFrame(()=>{modal.classList.add('open');if(cls==='project'&&from)requestAnimationFrame(()=>animateProjectOpen(from));});
