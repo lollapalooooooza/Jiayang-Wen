@@ -56,20 +56,36 @@ body.in-builder header.hdr{background-color:transparent;border-bottom-color:tran
 body.film-on header.hdr{background-color:#0b0907;border-bottom-color:#0b0907;backdrop-filter:none;-webkit-backdrop-filter:none}
 body.film-on .brand,body.film-on .tabs,body.film-on .hdr-right{opacity:0;visibility:hidden;transition:opacity .7s var(--ease),visibility .7s var(--ease)}
 .hdr-inner{max-width:var(--maxw);height:100%;margin:0 auto;padding:0 40px;display:flex;align-items:center;justify-content:space-between;gap:24px}
-.brand{position:relative;display:block;width:188px;height:34px;white-space:nowrap;transition:opacity .45s var(--ease),visibility .45s var(--ease)}
+.brand{position:relative;display:block;width:204px;height:34px;white-space:nowrap;transition:opacity .45s var(--ease),visibility .45s var(--ease)}
 .tabs,.hdr-right{transition:opacity .45s var(--ease),visibility .45s var(--ease)}
 .brand-layer{position:absolute;left:0;top:50%;display:flex;align-items:center;gap:6px;opacity:0;transform:translateY(calc(-50% + 8px)) scale(.96);filter:blur(4px);transition:opacity .5s var(--ease),transform .62s var(--ease-out),filter .5s var(--ease);pointer-events:none}
 .brand-cli{font-family:var(--mono);font-size:13px;letter-spacing:.02em;color:#263fdd;text-transform:lowercase}
 .brand-cli::before{content:'>';color:rgba(38,63,221,.55);margin-right:4px}
+.brand-cli .typed{display:inline-block;max-width:0;overflow:hidden;white-space:nowrap;vertical-align:bottom}
 .brand-cli .cursor{display:inline-block;width:7px;height:15px;margin-left:2px;background:#263fdd;opacity:.78;animation:blink 1.1s steps(1,end) infinite}
 .brand-creator{font-family:var(--hand);font-size:30px;font-weight:700;letter-spacing:.01em;line-height:1}
-.brand-creator .c1{color:#355fc9}.brand-creator .c2{color:#4f874e}.brand-creator .c3{color:#ff7043}
+.brand-creator span{display:inline-block;text-shadow:.7px .35px rgba(20,18,12,.18),-.35px .2px rgba(255,255,255,.72),0 0 .55px currentColor;transform-origin:12% 72%}
+.brand-creator .c1{color:#355fc9;transform:rotate(-2deg)}.brand-creator .c2{color:#4f874e;transform:rotate(1deg)}.brand-creator .c3{color:#ff7043;transform:rotate(-1deg)}
 .brand-investor{align-items:baseline;font-family:var(--serif);color:#243331}
+.brand-investor .spark{width:48px;height:18px;display:inline-flex;align-items:center;align-self:center;margin-right:1px}
+.brand-investor .spark svg{width:48px;height:18px;display:block;overflow:visible}
+.brand-investor .spark path{fill:none;stroke:#1f8a4c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:74;stroke-dashoffset:74;filter:drop-shadow(0 1px 0 rgba(31,138,76,.16))}
 .brand-investor .ticker{font-size:23px;font-weight:600;letter-spacing:.02em;line-height:1}
 .brand-investor .price{font-family:var(--mono);font-size:9px;letter-spacing:.08em;color:#6d756e;text-transform:uppercase;margin-left:2px}
 .brand-investor .up{font-family:var(--mono);font-size:9px;color:#1f8a4c;margin-left:0}
 body.mode-builder .brand-cli,body.mode-creator .brand-creator,body.mode-investor .brand-investor{opacity:1;transform:translateY(-50%) scale(1);filter:blur(0)}
+body.mode-builder .brand-cli .typed{animation:typeBrand .82s steps(11,end) both}
+body.mode-creator .brand-creator .c1{animation:writeBrand .62s .02s var(--ease-out) both}
+body.mode-creator .brand-creator .c2{animation:writeBrand .62s .12s var(--ease-out) both}
+body.mode-creator .brand-creator .c3{animation:writeBrand .62s .22s var(--ease-out) both}
+body.mode-investor .brand-investor .spark path{animation:drawTicker .74s .05s var(--ease-out) both}
+body.mode-investor .brand-investor .ticker,body.mode-investor .brand-investor .price,body.mode-investor .brand-investor .up{animation:tickerIn .42s .52s var(--ease-out) both}
+body:not(.mode-investor) .brand-investor .ticker,body:not(.mode-investor) .brand-investor .price,body:not(.mode-investor) .brand-investor .up{opacity:0;transform:translateX(-8px)}
 @keyframes blink{50%{opacity:.16}}
+@keyframes typeBrand{from{max-width:0}to{max-width:11ch}}
+@keyframes writeBrand{from{clip-path:inset(0 100% 0 0);opacity:.12;filter:blur(1px);transform:translateY(5px) rotate(-4deg)}to{clip-path:inset(0 0 0 0);opacity:1;filter:blur(0)}}
+@keyframes drawTicker{from{stroke-dashoffset:74}to{stroke-dashoffset:0}}
+@keyframes tickerIn{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:translateX(0)}}
 .tabs{position:relative;display:flex;gap:4px}
 .tab{position:relative;background:none;border:none;cursor:pointer;font-family:var(--mono);font-size:11px;letter-spacing:0.13em;text-transform:uppercase;color:var(--muted);padding:9px 16px;border-radius:999px;transition:color .35s var(--ease),background .35s var(--ease)}
 .tab:hover{color:var(--ink)}
@@ -284,6 +300,7 @@ main{position:fixed;top:var(--hdr);left:0;right:0;bottom:0}
 /* ============ modal ============ */
 .modal{position:fixed;inset:0;z-index:600;display:flex;justify-content:center;overflow-y:auto;background:rgba(18,15,10,0.42);backdrop-filter:blur(7px);opacity:0;pointer-events:none;transition:opacity .45s var(--ease)}
 .modal.open{opacity:1;pointer-events:auto}
+.modal.closing{pointer-events:none}
 .sheet{position:relative;width:min(860px,100%);margin:auto;background:var(--surface);border-radius:22px;transform:translateY(34px) scale(.985);transition:transform .5s var(--ease-out);box-shadow:0 40px 100px rgba(0,0,0,.3)}
 .modal.open .sheet{transform:none}
 .sheet-media{position:relative;aspect-ratio:16/9;border-radius:22px 22px 0 0;overflow:hidden;background:var(--surface-2)}
@@ -298,7 +315,12 @@ main{position:fixed;top:var(--hdr);left:0;right:0;bottom:0}
 .sheet-body h5{font-family:var(--mono);font-size:10px;letter-spacing:0.13em;text-transform:uppercase;color:var(--faint);margin:26px 0 11px}
 .sheet-body p{color:var(--ink-2);font-size:15px;line-height:1.75;margin-bottom:13px}
 .sheet-body p.dim{color:var(--muted)}
-.report-body{padding-top:46px}
+.report-body{max-width:930px;padding:48px 58px 54px;background:#fffdf8}
+.report-body .mono{color:#8f3d28;border-bottom:1px solid #ded8cb;padding-bottom:12px;margin-bottom:22px}
+.report-body h2{font-family:var(--serif);font-size:clamp(34px,4vw,48px);line-height:1.02;letter-spacing:-0.025em;margin-bottom:12px;color:#171512}
+.report-body .sub{font-family:var(--serif);font-size:20px;line-height:1.45;color:#4f4a43;border-bottom:1px solid #ded8cb;padding-bottom:20px;margin-bottom:20px}
+.report-body p{font-family:Georgia,'Times New Roman',serif;font-size:16.2px;line-height:1.72;color:#2d2a25;margin-bottom:15px}
+.report-body p:first-of-type::first-letter{font-family:var(--serif);float:left;font-size:52px;line-height:.86;margin:7px 9px 0 0;color:#171512}
 .report-metrics{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 22px}
 .report-label{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin:24px 0 8px}
 .source-list{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
@@ -328,6 +350,7 @@ main{position:fixed;top:var(--hdr);left:0;right:0;bottom:0}
 .project-info .links{margin-top:18px}
 .project-detail .btn{padding:12px 18px;font-size:14px}
 .project-detail .sheet-close{top:18px;right:18px;background:rgba(255,255,255,.98);box-shadow:0 14px 36px rgba(0,0,0,.18)}
+.g-item.pi.is-detail-source .pcard{opacity:0;transform:scale(.985);transition:opacity .24s var(--ease),transform .24s var(--ease)}
 @media(max-width:860px){
   .modal.project{padding:18px;align-items:flex-start}
   .sheet.project-detail{width:100%;grid-template-columns:1fr;margin:80px auto 28px}
@@ -336,6 +359,7 @@ main{position:fixed;top:var(--hdr);left:0;right:0;bottom:0}
   .project-info h5{display:block}
   .project-info .tags{display:flex}
   .project-detail .sheet-close{top:14px;right:14px}
+  .report-body{padding:42px 24px 46px}
 }
 /* lightbox variant for paintings */
 .modal.light{background:rgba(18,15,10,0.82)}
@@ -370,9 +394,9 @@ main{position:fixed;top:var(--hdr);left:0;right:0;bottom:0}
 <header class="hdr">
   <div class="hdr-inner">
     <a href="#builder" class="brand" data-tab="builder" aria-label="Jiayang Wen">
-      <span class="brand-layer brand-cli">jiayang-wen<span class="cursor"></span></span>
+      <span class="brand-layer brand-cli"><span class="typed">jiayang-wen</span><span class="cursor"></span></span>
       <span class="brand-layer brand-creator"><span class="c1">Jia</span><span class="c2">yang</span><span class="c3">Wen</span></span>
-      <span class="brand-layer brand-investor"><span class="ticker">JWEN</span><span class="price">Portfolio</span><span class="up">▲</span></span>
+      <span class="brand-layer brand-investor"><span class="spark" aria-hidden="true"><svg viewBox="0 0 48 18"><path d="M2 15 C9 14 12 11 18 11 S27 5 34 6 S41 2 46 2"/></svg></span><span class="ticker">JWEN</span><span class="price">Portfolio</span><span class="up">▲</span></span>
     </a>
     <nav class="tabs" id="tabs">
       <span class="tab-ink" id="tabInk"></span>
@@ -488,7 +512,7 @@ const $=s=>document.querySelector(s), ce=t=>document.createElement(t), clamp=(v,
 const PROJECTS=[
   {id:'dot',title:'Dot',meta:'iOS · 2024',cover:'images/dot-landing-2026.jpg',video:null,r:1.677,
    sub:'A word-of-mouth discovery app for college life.',stack:['SwiftUI','Node.js','Firebase','iOS'],
-   links:[{label:'App Store',url:'https://apps.apple.com/us/app/dot-experiences-moments/id6720711586',fill:true},{label:'Website',url:'https://www.dot-passion.com/'}],
+   links:[{label:'Try it',url:'https://dot-passion.com/',fill:true},{label:'App Store',url:'https://apps.apple.com/us/app/dot-experiences-moments/id6720711586'}],
    body:['Dot is a social discovery platform for college students — capture and discover unique experiences in a community of explorers.','Built from 40+ user interviews across three campuses into a SwiftUI app with a Node.js + Firebase backend: real-time feed, location discovery, and a media pipeline. A 200-student beta cut time-to-first-post from 5 minutes to 45 seconds before an App-Store launch approved on the first review.']},
   {id:'stern',title:'Stern Dashboard',meta:'Full-stack · Wk 01',cover:'images/stern-dashboard-cover.png',video:null,r:1.65,
    sub:'Portfolio management dashboard for the NYU Stern MIF Thematic Investment Team.',stack:['React','Vercel','Charts','Cron'],
@@ -498,8 +522,8 @@ const PROJECTS=[
    sub:'An interactive fortune experience with a cinematic, fate-driven reveal.',stack:['HTML','CSS','JavaScript','Canvas'],
    links:[{label:'Try it',url:'https://lollapalooooooza.github.io/Red-Pocket/',fill:true},{label:'GitHub',url:'https://github.com/lollapalooooooza/Red-Pocket'}],
    body:['Opening a virtual red pocket unfolds into a cinematic, fate-driven world — a small interactive toy about luck and anticipation.']},
-  {id:'demo',title:'echoNest',meta:'Video',youtube:'k4QkM0LALmk',r:1.778,sub:'A short video demo with a cinematic product-demo rhythm.',stack:['Video'],links:[{label:'Watch on YouTube',url:'https://www.youtube.com/watch?v=k4QkM0LALmk',fill:true}],body:['echoNest is a compact demo reel built around atmosphere, pacing, and a quick product-story reveal.']},
-  {id:'doti',title:'Doti',meta:'Video',youtube:'pOCMaykK5CY',r:1.778,sub:'A demo video for the Dot college-life discovery experience.',stack:['Video','Product','iOS'],links:[{label:'Watch on YouTube',url:'https://youtu.be/pOCMaykK5CY',fill:true}],body:['Doti presents Dot as a lightweight guide for better college life, centered on discovering campus places, food, and social moments through a word-of-mouth community.']},
+  {id:'demo',title:'echoNest',meta:'Video',youtube:'k4QkM0LALmk',r:1.778,sub:'A short video demo with a cinematic product-demo rhythm.',stack:['Video'],links:[{label:'Try it',url:'https://echonest.pro/',fill:true},{label:'Watch on YouTube',url:'https://www.youtube.com/watch?v=k4QkM0LALmk'}],body:['echoNest is a compact demo reel built around atmosphere, pacing, and a quick product-story reveal.']},
+  {id:'doti',title:'Doti',meta:'Video',youtube:'pOCMaykK5CY',r:1.778,sub:'A demo video for the Dot college-life discovery experience.',stack:['Video','Product','iOS'],links:[{label:'Try it',url:'https://xdot.app/',fill:true},{label:'Watch on YouTube',url:'https://youtu.be/pOCMaykK5CY'}],body:['Doti presents Dot as a lightweight guide for better college life, centered on discovering campus places, food, and social moments through a word-of-mouth community.']},
 ];
 
 // ratio = width/height (true painting proportions)
@@ -553,9 +577,65 @@ const RET={
 };
 
 const ARTICLES=[
-  {tk:'LITX',cat:'Leveraged ETF',title:'LITX: AI optics, amplified',blurb:'A 2x daily Lumentum sleeve whose payoff is tied to optical networking demand and leverage discipline.',metrics:['Weight 19.43%','Return +353.2%','2x LITE daily'],body:['Thesis: LITX is the portfolio pure-play on AI optical infrastructure. The fund targets 200% of Lumentum daily performance, so the position converts a high-conviction view on lasers, optical circuit switches, and co-packaged optics into a tactical, high-beta sleeve. Its current 19.43% weight reflects both the original 15% allocation and strong price drift.','Evidence: Tradr defines LITX as 2x daily exposure to Lumentum, while Lumentum highlighted margin expansion from pricing, product mix, laser chips, and scale-across components. Management also pointed to co-packaged optics and optical circuit switches as future earnings drivers, which matches the AI datacenter bottleneck thesis.','Risk: This is not a buy-and-hold substitute for LITE. Daily reset leverage can diverge materially from two times the underlying cumulative return, especially in volatile reversals. The right lens is position sizing, trend quality, and drawdown control.'],sources:[{label:'Tradr LITX',url:'https://www.tradretfs.com/litx'},{label:'Lumentum Q3 FY26',url:'https://investor.lumentum.com/financial-news-releases/news-details/2026/Lumentum-Announces-Third-Quarter-of-Fiscal-Year-2026-Financial-Results/default.aspx'}]},
-  {tk:'SNXX',cat:'Leveraged ETF',title:'SNXX: NAND cycle torque',blurb:'2x daily SanDisk exposure, positioned around enterprise SSD pricing, datacenter mix, and memory scarcity.',metrics:['Weight 18.67%','Return +553.3%','2x SNDK daily'],body:['Thesis: SNXX is the memory-cycle accelerator. The holding benefits when SanDisk earnings revisions move faster than the market can discount enterprise SSD demand. In this portfolio it has become the second-largest position, rising from a 10% starting weight to 18.67%.','Evidence: Tradr states SNXX seeks 200% of SanDisk daily performance. SanDisk reported fiscal Q3 2026 revenue of $5.95 billion, up 97% sequentially, with datacenter revenue up 233% sequentially. Guidance for fiscal Q4 revenue of $7.75 billion to $8.25 billion supports the idea that NAND pricing and customer mix are still moving favorably.','Risk: The same operating leverage that made SNXX powerful can reverse if pricing normalizes, hyperscaler orders pause, or the daily leveraged fund compounds through chop. Treat this as a tactical memory-cycle instrument, not a core semiconductor holding.'],sources:[{label:'Tradr SNXX',url:'https://www.tradretfs.com/snxx'},{label:'SanDisk Q3 FY26',url:'https://investor.sandisk.com/news-releases/news-release-details/sandisk-reports-fiscal-third-quarter-2026-financial-results'}]},
-  {tk:'SIVEF',cat:'Equity',title:'Sivers: small-cap photonics option',blurb:'An unlevered small-cap bet on photonics and wireless components for AI datacenter and SATCOM markets.',metrics:['Weight 13.51%','Return +372.6%','Unlevered equity'],body:['Thesis: Sivers is the asymmetric small-cap in the book. Unlike the leveraged ETFs, SIVEF owns operating execution directly: photonics, wireless, customer qualification, and production ramps. That makes the return profile less mechanical but potentially more convex if design wins convert into product revenue.','Evidence: Sivers describes itself as a global leader in photonics and wireless technologies. Its interim-report archive shows a record 2025 setup, and the Q4 2025 update highlighted full-year revenue growth and a larger opportunity pipeline. The portfolio weight has drifted from 10% to 13.51%, showing strong contribution without fund-level leverage.','Risk: Liquidity, customer concentration, and timing are the main issues. Small suppliers can rally long before revenue conversion, then reset hard if orders slip. The report card should be backlog quality, gross margin, and evidence that AI datacenter/SATCOM programs are moving from engineering to production.'],sources:[{label:'Sivers reports',url:'https://www.sivers-semiconductors.com/investors/interim-reports/'},{label:'Sivers IR',url:'https://www.sivers-semiconductors.com/investors/'}]},
+  {
+    tk:'LITX',cat:'Leveraged ETF',title:'LITX/LITE: scarcity premium in AI photonics',
+    blurb:'A leveraged Lumentum expression where the real underwriting question is whether optical supply becomes a strategic AI bottleneck.',
+    metrics:['Weight 19.43%','Return +353.2%','Cloud & Networking 86%'],
+    body:[
+      'LITX is best understood as a leveraged trading expression of Lumentum rather than as a company-level security. The fundamental view therefore starts with LITE: a former cyclical optical-component supplier being reclassified into an AI-infrastructure bottleneck company.',
+      'The non-consensus insight is that AI demand is shifting from accelerators alone to the fabric connecting them. Large training clusters and scale-out inference systems need bandwidth density, lower power per bit, low latency, reliability, and qualified photonic manufacturing capacity. Scarcity increasingly sits in InP lasers, EMLs, transceivers, coherent modules, packaging know-how, and hyperscaler trust.',
+      'The data already show the mix shift. FY2025 revenue was $1.645 billion, up 21% year over year; Cloud & Networking reached $1.411 billion, up 30%, or roughly 86% of total revenue. The latest reported quarter reached $533.8 million of revenue, up 58% year over year, with non-GAAP gross margin of 39.4% and non-GAAP operating margin of 18.7%. Management guided the next quarter to $630 million to $670 million, implying revenue acceleration and operating leverage.',
+      'The key debate is whether Lumentum can become a strategic capacity holder rather than remain a price-taking component vendor. If cloud customers treat optical supply as a deployment constraint, earnings power can be revised upward faster than revenue estimates alone suggest.',
+      'Risks remain real: hyperscaler buildouts can pause, architecture shifts can change the hot product set, and AI-infrastructure sentiment can punish even strong quarters when valuation expects perfection. Daily reset leverage also makes LITX path-dependent.',
+      'Conclusion: the right dashboard is not just quarterly revenue. Track InP capacity, gross-margin durability, 1.6T qualification, OCS/CPO traction, and whether cloud customers keep paying to secure supply. If those signals hold, Lumentum graduates from fiber-optic recovery story to scarce AI photonics infrastructure.'
+    ],
+    sources:[
+      {label:'Lumentum FY2025 Results',url:'https://investor.lumentum.com/financial-news-releases/news-details/2025/Lumentum-Announces-Fourth-Quarter-and-Full-Fiscal-Year-2025-Results/'},
+      {label:'Lumentum FY2026 Q1 Results',url:'https://investor.lumentum.com/financial-news-releases/news-details/2025/Lumentum-Announces-First-Quarter-of-Fiscal-Year-2026-Financial-Results/default.aspx'},
+      {label:'Lumentum FY2025 Form 10-K',url:'https://www.sec.gov/Archives/edgar/data/1633978/000162828025040830/lite-20250628.htm'},
+      {label:'Tradr LITX',url:'https://www.tradretfs.com/litx'}
+    ]
+  },
+  {
+    tk:'SNXX',cat:'Leveraged ETF',title:'SNXX/SNDK: AI storage is not just a memory cycle',
+    blurb:'A daily leveraged Sandisk expression where datacenter SSD demand may change the shape, but not the cyclicality, of NAND.',
+    metrics:['Weight 18.67%','Return +553.3%','Revenue +23% YoY'],
+    body:[
+      'SNXX is a leveraged daily expression of Sandisk, so the fundamental question is SNDK. The market default is familiar: NAND pricing rises, supply follows, margins peak, and investors eventually get punished. That framework is still useful, but AI infrastructure can change the shape of the cycle.',
+      'The under-modeled part of AI is storage. Training checkpoints, model versions, embeddings, vector databases, inference logs, video datasets, retrieval systems, and edge-AI workloads all require fast, dense, power-efficient storage. The question is whether more NAND demand becomes tied to datacenter architecture rather than consumer-device replacement cycles.',
+      'Recent numbers support the mix-shift argument. Sandisk generated $2.31 billion of revenue in the latest reported quarter, up 21% sequentially and 23% year over year, with GAAP net income of $112 million and non-GAAP EPS of $1.22. Datacenter revenue rose 26% sequentially, and management cited hyperscaler qualification activity alongside demand exceeding supply, ASP-per-gigabyte improvement, and strong free cash flow.',
+      'The Kioxia joint venture is both moat and constraint. It gives Sandisk scale, technology access, yield learning, and shared capital intensity, but it also means capacity and investment decisions are coordinated through a partnership structure. Investors should underwrite that complexity rather than assign a permanently impaired multiple.',
+      'The bull case is that a newly independent Sandisk can tell a cleaner story exactly as AI storage demand improves: flash focus, enterprise SSD prioritization, and cash flow used to strengthen the balance sheet. The bear case is classic NAND: supply response, customer over-ordering, pricing reversals, and cyclicality hidden by one strong quarter.',
+      'Conclusion: SNXX embeds a memory-cycle trade plus an AI-infrastructure option. Watch datacenter revenue mix, enterprise SSD share, ASP/bit trends, NAND supply discipline, Flash Ventures capex obligations, and free-cash-flow conversion. If those improve together, Sandisk may deserve a less cyclical multiple.'
+    ],
+    sources:[
+      {label:'Sandisk FY2026 Q1 Results',url:'https://investor.sandisk.com/news-releases/news-release-details/sandisk-reports-fiscal-first-quarter-2026-financial-results'},
+      {label:'Sandisk FY2026 Q1 Presentation',url:'https://investor.sandisk.com/static-files/a1cf180d-5720-4475-a3cc-345cfc8aab38'},
+      {label:'Sandisk S-1/A',url:'https://www.sec.gov/Archives/edgar/data/2023554/000119312525134938/d934557ds1a.htm'},
+      {label:'Kioxia Strategy Meeting 2025',url:'https://www.kioxia-holdings.com/content/dam/kioxia-hd/en-jp/ir/event/asset/Kioxia-Corporate-Strategy-Meeting-2025-script-en.pdf'},
+      {label:'Tradr SNXX',url:'https://www.tradretfs.com/snxx'}
+    ]
+  },
+  {
+    tk:'SIVEF',cat:'Equity',title:'SIVEF/SIVE: small-cap call option on optical I/O',
+    blurb:'A milestone-based semiconductor equity where AI optical I/O and high-frequency wireless can matter more than current revenue scale.',
+    metrics:['Weight 13.51%','Return +372.6%','2024 sales SEK 243.7m'],
+    body:[
+      'Sivers is the highest-uncertainty name in the portfolio and should not be treated as a clean earnings compounder. The better framing is a milestone-based call option on two large markets relative to today’s revenue base: AI optical I/O and high-frequency wireless/SATCOM.',
+      'The non-consensus view is that the Photonics business could become strategically important before reported revenue fully reflects it. Electrical interconnect is under pressure from bandwidth, latency, heat, and power limits. Architectures that use optical I/O, external laser sources, co-packaged optics, and multi-wavelength light engines increase the value of precise laser-array suppliers.',
+      'Ayar Labs is the critical signal. Its SuperNova light source is designed for up to 16 wavelengths and supports optical I/O architectures that can deliver dramatic bandwidth and power-efficiency gains. The expanded Sivers/Ayar partnership focuses on product qualification and manufacturing readiness for high-volume optical I/O solutions in AI datacenters.',
+      'The financial picture is improving but still fragile. In 2024, Sivers generated SEK 243.7 million of net sales, up 3%, with adjusted EBITDA of negative SEK 15.6 million. In Q3 2025, revenue reached SEK 72.5 million, up 24% year over year, while adjusted EBITDA improved slightly. This is not enough for a traditional valuation thesis, but it keeps the company close to potential commercialization milestones.',
+      'Wireless gives Sivers a second path to value. SATCOM, defense communications, fixed wireless, and beamforming applications can provide revenue diversification, customer validation, and product discipline while Photonics attempts to convert from engineering work to purchase commitments.',
+      'Conclusion: SIVEF is attractive only if the probability-weighted value of future photonics and wireless design wins exceeds what current revenue implies. The downside is dilution and funding risk if milestones slip; the upside is asymmetric if one architecture win changes the revenue model.'
+    ],
+    sources:[
+      {label:'Sivers 2024 Year-End Report',url:'https://www.sivers-semiconductors.com/press/sivers-semiconductors-ab-publ-publishes-year-end-report-q4-january-december-2024/'},
+      {label:'Sivers 2024 Annual Report',url:'https://www.sivers-semiconductors.com/wp-content/uploads/2025/04/Sivers_AnnualReport_2024.pdf'},
+      {label:'Sivers Q3 2025 Interim Report',url:'https://www.sivers-semiconductors.com/press/sivers-semiconductors-ab-publ-publishes-interim-report-q3-july-september-2025/'},
+      {label:'Sivers and Ayar Labs',url:'https://www.sivers-semiconductors.com/press/sivers-semiconductors-and-ayar-labs-to-expand-their-partnership-on-enabling-high-volume-manufacturing-of-optical-i-o-solutions-for-scalable-cost-effective-ai-infrastructure/'},
+      {label:'Ayar Labs SuperNova',url:'https://ayarlabs.com/resources/supernova-light-source-the-industrys-first-cw-wdm-msa-compliant-16-wavelength-light-source/'}
+    ]
+  },
   {tk:'SOXL',cat:'Leveraged ETF',title:'SOXL: broad semi beta',blurb:'A 3x daily semiconductor index sleeve that turns the AI hardware cycle into broad, liquid exposure.',metrics:['Weight 11.53%','Return +303.4%','3x semi index'],body:['Thesis: SOXL is the portfolio broad-beta engine. Where LITX, SNXX, and AAOX express single-name optical or memory views, SOXL captures the wider semiconductor complex: Nvidia, Broadcom, Micron, AMD, equipment, and adjacent chip infrastructure.','Evidence: Direxion states SOXL seeks 300% of the NYSE Semiconductor Index daily performance. The issuer page also shows the index is heavily weighted to semiconductors and semiconductor equipment, with top index constituents including Nvidia, Broadcom, Micron, AMD, Applied Materials, and Marvell. That makes SOXL a diversified expression of the same AI capex cycle driving the single-stock sleeves.','Risk: 3x daily leverage is unforgiving. It compounds well in a clean trend, but gap risk and volatility decay can dominate in sideways markets. Its role should be liquidity and breadth, while single-name ETFs carry the idiosyncratic upside.'],sources:[{label:'Direxion SOXL',url:'https://www.direxion.com/product/daily-semiconductor-bull-bear-3x-etfs'}]},
   {tk:'INTW',cat:'Leveraged ETF',title:'INTW: Intel turnaround call',blurb:'2x daily INTC exposure built around supply recovery, AI CPU demand, and foundry operating leverage.',metrics:['Weight 9.55%','Return +568.2%','2x INTC daily'],body:['Thesis: INTW is a leveraged turnaround expression. The bullish case is not that Intel is already fixed; it is that improved supply, AI-era CPU demand, and better node execution can shift investor expectations quickly. A 5% initial sleeve has grown to 9.55%, the strongest weight expansion in the book.','Evidence: GraniteShares states INTW seeks 2x the daily percentage change of Intel common stock. Intel reported Q1 2026 revenue of $13.6 billion, up 7% year over year, non-GAAP EPS of $0.29, and Q2 revenue guidance of $13.8 billion to $14.8 billion. Management framed demand as supply-constrained and tied to CPUs, wafers, and advanced packaging.','Risk: Foundry losses, capex intensity, and execution remain material. The leveraged wrapper magnifies both a rerating and any disappointment, so the trade depends on continued revenue beats and credible margin improvement.'],sources:[{label:'GraniteShares INTW',url:'https://graniteshares.com/etfs/intw/'},{label:'Intel Q1 FY26',url:'https://www.intc.com/news-events/press-releases/detail/1767/intel-reports-first-quarter-2026-financial-results'}]},
   {tk:'BE',cat:'Equity',title:'Bloom Energy: datacenter power bottleneck',blurb:'A direct equity position on onsite power demand as AI datacenters stress grid capacity.',metrics:['Weight 8.76%','Return +206.5%','Unlevered equity'],body:['Thesis: Bloom is the power-infrastructure leg of the AI trade. If compute demand is limited by grid interconnection, permitting, and time-to-power, onsite generation becomes strategic rather than optional. BE gives the portfolio a non-chip way to participate in the datacenter buildout.','Evidence: Bloom reported Q1 2026 revenue of $751.1 million, up 130.4% year over year, with product revenue up 208.4%. It raised full-year 2026 revenue guidance to $3.4 billion to $3.8 billion and guided non-GAAP operating income of $600 million to $750 million. Those figures support the case that demand is translating into scale, not just narrative.','Risk: Customer concentration, project timing, service economics, and manufacturing scale matter. The stock can rerate on growth, but durable value depends on converting backlog into profitable, repeatable deployments.'],sources:[{label:'Bloom Q1 2026',url:'https://investor.bloomenergy.com/press-releases/press-release-details/2026/Bloom-Energy-Reports-Record-First-Quarter-2026-Results-and-Raises-Full-Year-2026-Guidance/default.aspx'}]},
@@ -818,6 +898,19 @@ renderArticles('All');
 
 /* ============ modal ============ */
 const modal=$('#modal'),sheet=$('#sheet');
+let projectSourceEl=null,projectSourceRect=null,closingModal=false;
+function projectRect(el){return (el&&(el.querySelector('.pcard')||el).getBoundingClientRect())||null}
+function setProjectSource(originEl){
+  if(projectSourceEl)projectSourceEl.classList.remove('is-detail-source');
+  projectSourceEl=originEl||null;
+  projectSourceRect=originEl?projectRect(originEl):null;
+  if(projectSourceEl)projectSourceEl.classList.add('is-detail-source');
+}
+function clearProjectSource(){
+  if(projectSourceEl)projectSourceEl.classList.remove('is-detail-source');
+  projectSourceEl=null;
+  projectSourceRect=null;
+}
 function animateProjectOpen(from){
   if(!from)return;
   const to=sheet.getBoundingClientRect();
@@ -831,19 +924,56 @@ function animateProjectOpen(from){
   const info=sheet.querySelector('.project-info');
   if(info)info.animate([{transform:'translateX(54px)',opacity:0},{transform:'translateX(0)',opacity:1}],{duration:620,delay:150,easing:'cubic-bezier(.16,1,.3,1)',fill:'both'});
 }
+function animateProjectClose(done){
+  const target=(projectSourceEl&&projectRect(projectSourceEl))||projectSourceRect;
+  if(!target){done();return}
+  const from=sheet.getBoundingClientRect();
+  const dx=target.left+target.width/2-(from.left+from.width/2),dy=target.top+target.height/2-(from.top+from.height/2);
+  const sx=target.width/from.width,sy=target.height/from.height;
+  const info=sheet.querySelector('.project-info');
+  if(info)info.animate([{transform:'translateX(0)',opacity:1},{transform:'translateX(46px)',opacity:0}],{duration:360,easing:'cubic-bezier(.7,0,.2,1)',fill:'both'});
+  const anim=sheet.animate([
+    {transform:'translate3d(0,0,0) scale(1)',opacity:1,borderRadius:'8px'},
+    {transform:`translate3d(${dx}px,${dy}px,0) scale(${sx},${sy})`,opacity:.98,borderRadius:'6px'}
+  ],{duration:640,easing:'cubic-bezier(.16,1,.3,1)',fill:'both'});
+  anim.finished.then(done,done);
+}
 function showModal(html,cls,originEl){
+  closingModal=false;
   modal.className='modal'+(cls?' '+cls:'');
   sheet.className='sheet'+(cls==='light'?' lb':cls==='project'?' project-detail':'');
   sheet.getAnimations().forEach(a=>a.cancel());
   sheet.style.opacity='';
+  sheet.style.transform='';
   const from=originEl?(originEl.querySelector('.pcard')||originEl).getBoundingClientRect():null;
-  if(cls==='project'&&from)sheet.style.opacity='0';
+  if(cls==='project'&&from){setProjectSource(originEl);sheet.style.opacity='0'}else clearProjectSource();
   sheet.innerHTML=`<button class="sheet-close" aria-label="Close">✕</button>`+html;
   sheet.querySelector('.sheet-close').addEventListener('click',closeModal);
   requestAnimationFrame(()=>{modal.classList.add('open');if(cls==='project'&&from)requestAnimationFrame(()=>animateProjectOpen(from));});
   document.body.style.overflow='hidden';
 }
-function closeModal(){sheet.getAnimations().forEach(a=>a.cancel());modal.classList.remove('open');document.body.style.overflow='';setTimeout(()=>{if(!modal.classList.contains('open'))sheet.innerHTML='';},520)}
+function finishModalClose(){
+  modal.classList.remove('open','closing');
+  document.body.style.overflow='';
+  sheet.innerHTML='';
+  sheet.style.opacity='';
+  sheet.style.transform='';
+  clearProjectSource();
+  closingModal=false;
+}
+function closeModal(){
+  if(closingModal||!modal.classList.contains('open'))return;
+  sheet.getAnimations().forEach(a=>a.cancel());
+  if(sheet.classList.contains('project-detail')&&projectSourceRect){
+    closingModal=true;
+    modal.classList.add('closing');
+    animateProjectClose(finishModalClose);
+    return;
+  }
+  modal.classList.remove('open');
+  document.body.style.overflow='';
+  setTimeout(()=>{if(!modal.classList.contains('open')){sheet.innerHTML='';clearProjectSource();}},520)
+}
 modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});
 addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
 function openProject(p,originEl){
