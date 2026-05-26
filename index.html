@@ -125,8 +125,9 @@ main{position:fixed;top:var(--hdr);left:0;right:0;bottom:0}
 .g-track{position:absolute;top:0;left:0;height:100%;display:flex;align-items:center;padding:0 44vw;gap:6vw;will-change:transform;z-index:3;perspective:2400px;perspective-origin:50% 46%}
 .g-item{position:relative;flex:0 0 auto;height:var(--bh,60vh);transform:translateY(var(--off,0));cursor:pointer}
 .curl{position:relative;height:100%;transform-origin:50% 60%;will-change:transform,opacity;backface-visibility:hidden}
-.g-frame{position:relative;height:100%;border-radius:8px;overflow:hidden;background:var(--surface);box-shadow:0 34px 80px rgba(20,16,10,0.24),0 4px 14px rgba(20,16,10,0.10)}
-.g-frame img{height:100%;width:auto;display:block;object-fit:cover;will-change:transform}
+.g-frame{position:relative;height:100%;border-radius:8px;overflow:visible;background:transparent;box-shadow:0 34px 80px rgba(20,16,10,0.24),0 4px 14px rgba(20,16,10,0.10)}
+.g-frame img{position:relative;height:100%;width:100%;display:block;object-fit:contain;will-change:transform}
+.g-frame.transparent{box-shadow:none;background:transparent}
 /* builder project block — media + editorial caption strip */
 .g-item.pi{height:46vh;width:calc(46vh * var(--ar,1.4))}
 .pcard{position:relative;height:100%;border-radius:6px;overflow:hidden;background:var(--surface-2);box-shadow:0 36px 86px rgba(10,12,30,0.28),0 6px 18px rgba(10,12,30,0.13)}
@@ -173,11 +174,11 @@ main{position:fixed;top:var(--hdr);left:0;right:0;bottom:0}
 .work-layer{position:absolute;inset:0;pointer-events:none;perspective:640px;perspective-origin:50% 50%;will-change:transform,perspective-origin;user-select:none;-webkit-user-select:none}
 .work-layer.back{z-index:1}
 .work-layer.front{z-index:5}
-.work-row{position:absolute;left:0;top:calc(var(--row) * 25%);height:25%;display:flex;align-items:center;white-space:nowrap;transform-style:preserve-3d;font-family:var(--sans);font-weight:800;font-size:23vh;line-height:1;letter-spacing:0.04em;color:#2f49d6;text-shadow:0 10px 0 rgba(20,28,80,0.30),0 22px 32px rgba(20,28,80,0.22);user-select:none;-webkit-user-select:none}
+.work-row{position:absolute;left:0;top:calc(var(--row) * 25%);height:25%;display:flex;align-items:center;white-space:nowrap;transform-style:preserve-3d;will-change:transform;backface-visibility:hidden;font-family:var(--sans);font-weight:900;font-size:23vh;line-height:1;letter-spacing:0;color:#2f49d6;text-rendering:geometricPrecision;-webkit-font-smoothing:antialiased;-webkit-text-stroke:1px rgba(18,30,120,0.16);paint-order:stroke fill;text-shadow:4px 7px 0 rgba(20,28,80,0.24),9px 14px 0 rgba(20,28,80,0.12),0 24px 34px rgba(20,28,80,0.18);user-select:none;-webkit-user-select:none}
 .gallery.wk .g-track{z-index:3;gap:29vw;padding:0 40vw;perspective:640px;perspective-origin:50% 50%}
 .gallery.wk .g-item{transform-style:preserve-3d;backface-visibility:hidden}
 .gallery.wk .curl,.gallery.wk .pcard{backface-visibility:hidden;transform:translateZ(0)}
-.gallery.wk .work-row .wl{display:inline-block;margin-right:0.1em;will-change:transform;transform-origin:50% 50%}
+.gallery.wk .work-row .wl{display:inline-block;margin-right:0.1em;will-change:transform;transform-origin:50% 50%;backface-visibility:hidden}
 .gallery.wk .g-code{color:#2f49d6}
 .gallery.wk .g-progress i{background:#2f49d6}
 @media(max-width:680px){
@@ -617,19 +618,16 @@ function makeGallery({root,track,bg,front,frontParallax=0.6,bar,idxEl,nameEl,nam
     }
   }
   function itemTarget(i){const m=metrics[i];return m?m.l+m.w/2-mid:0}
-  function snapToNearest(dir=0){
+  function snapToNearest(){
     if(!metrics.length)return;
     let bi=0,bd=1e9;
     const sorted=metrics.map((m,i)=>({i,t:itemTarget(i)})).sort((a,b)=>a.t-b.t);
-    if(infinite&&dir){
-      const pad=Math.max(24,mid*0.04);
-      const next=dir>0?sorted.find(x=>x.t>G.target+pad):[...sorted].reverse().find(x=>x.t<G.target-pad);
-      if(next){G.target=next.t;return;}
-    }
     sorted.forEach(x=>{const d=Math.abs(x.t-G.target);if(d<bd){bd=d;bi=x.i;}});
-    G.target=infinite?itemTarget(bi):clamp(itemTarget(bi),0,G.max);
+    const t=itemTarget(bi),range=Math.max(180,mid*0.46);
+    const pull=clamp(1-bd/range,0,1)*0.34;
+    if(pull>0.04)G.target+=((infinite?t:clamp(t,0,G.max))-G.target)*pull;
   }
-  function queueSnap(dir){lastDir=dir||lastDir;clearTimeout(snapTimer);snapTimer=setTimeout(()=>snapToNearest(lastDir),115)}
+  function queueSnap(dir){lastDir=dir||lastDir;clearTimeout(snapTimer);snapTimer=setTimeout(snapToNearest,190)}
   function tick(){
     G.cur+=(G.target-G.cur)*0.105; if(Math.abs(G.target-G.cur)<0.06)G.cur=G.target;
     if(infinite&&loopLen>0){
@@ -648,11 +646,11 @@ function makeGallery({root,track,bg,front,frontParallax=0.6,bar,idxEl,nameEl,nam
       rowMetas.forEach(row=>{
         const phase=visualCur*row.speed;
         const lx=row.cell?-((((phase%row.cell)+row.cell)%row.cell)+row.cell):-phase;
-        row.el.style.transform=`translate3d(${lx.toFixed(1)}px,0,0)`;
+        row.el.style.transform=`translate3d(${lx.toFixed(2)}px,0,0)`;
         row.letters.forEach(L=>{
           const sx=L.bx+L.lw/2+lx,ln=(sx-mid)/(mid||1),an=Math.min(Math.abs(ln),1);
           const tz=-LDEPTH*(1-an*an),rz=clamp(ln*row.angle*row.dir,-15,15);
-          L.el.style.transform=`translateZ(${tz.toFixed(0)}px) rotateZ(${rz.toFixed(2)}deg)`;
+          L.el.style.transform=`translateZ(${tz.toFixed(1)}px) rotateZ(${rz.toFixed(3)}deg)`;
         });
       });
     }
@@ -684,7 +682,7 @@ function makeGallery({root,track,bg,front,frontParallax=0.6,bar,idxEl,nameEl,nam
   }
   function start(){if(!rafing){rafing=true;requestAnimationFrame(tick);}}
   function stepTo(i){i=clamp(i,0,items.length-1);const m=metrics[i];if(m)G.target=infinite?itemTarget(i):clamp(itemTarget(i),0,G.max);}
-  root.addEventListener('wheel',e=>{if(!active)return;e.preventDefault();const raw=Math.abs(e.deltaY)>=Math.abs(e.deltaX)?e.deltaY:e.deltaX,dy=raw*0.7;G.target=infinite?(G.target+dy):clamp(G.target+dy,0,G.max);if(infinite)queueSnap(Math.sign(raw)||lastDir);},{passive:false});
+  root.addEventListener('wheel',e=>{if(!active)return;e.preventDefault();const raw=Math.abs(e.deltaY)>=Math.abs(e.deltaX)?e.deltaY:e.deltaX,dy=raw*0.86;G.target=infinite?(G.target+dy):clamp(G.target+dy,0,G.max);if(infinite)queueSnap(Math.sign(raw)||lastDir);},{passive:false});
   root.addEventListener('pointerdown',e=>{if(e.target.closest('.g-controls'))return;dragging=true;moved=0;dsx=e.clientX;dst=G.target;root.classList.add('drag');try{root.setPointerCapture(e.pointerId)}catch(_){}});
   root.addEventListener('pointermove',e=>{if(!dragging)return;const dx=e.clientX-dsx;moved+=Math.abs(dx);G.target=infinite?(dst-dx):clamp(dst-dx,0,G.max);if(infinite)lastDir=Math.sign(-dx)||lastDir;});
   function endDrag(){if(dragging&&infinite)queueSnap(lastDir);dragging=false;root.classList.remove('drag');}
@@ -701,13 +699,15 @@ const B_OFF=['-9vh','7vh','-3vh','11vh','-12vh','4vh'];
   const projI=i%PROJECTS.length;
   it.style.setProperty('--ar',p.r||1.4);it.style.setProperty('--off',B_OFF[projI%B_OFF.length]);
   if(p.youtube)it.dataset.yt=p.youtube;
+  let downX=0,downY=0;
   const media=p.soon
     ?`<div class="ph">${p.emoji||'—'}</div><span class="pcard-tag soon">Coming soon</span>`
     :p.youtube
       ?`<img src="${p.cover||`https://img.youtube.com/vi/${p.youtube}/maxresdefault.jpg`}" alt="${p.title}" loading="lazy"><div class="pcard-yt"></div><span class="pcard-tag">▶ video</span><span class="pcard-open">Open ↗</span>`
       :`<img src="${p.cover}" alt="${p.title}" loading="lazy">${p.video?`<video muted loop playsinline preload="none" data-src="${p.video}"></video><span class="pcard-tag">▶ demo</span>`:''}<span class="pcard-open">Open ↗</span>`;
   it.innerHTML=`<div class="curl"><div class="pcard">${media}<div class="pcard-cap"><h3>${p.title}</h3><p>${p.sub}</p><span class="pc-meta">${p.meta}</span></div></div></div>`;
-  it.addEventListener('click',()=>{if(bGal.moved<6)openProject(p)});
+  it.addEventListener('pointerdown',e=>{downX=e.clientX;downY=e.clientY;});
+  it.addEventListener('click',e=>{if(Math.hypot(e.clientX-downX,e.clientY-downY)<10)openProject(p)});
   if(p.video){const v=it.querySelector('video');it.addEventListener('mouseenter',()=>{if(!v.src){v.src=v.dataset.src;v.addEventListener('loadeddata',()=>v.classList.add('ready'),{once:true})}v.play().catch(()=>{})});it.addEventListener('mouseleave',()=>v.pause())}
   bTrack.appendChild(it);
 });
@@ -719,7 +719,8 @@ const gTrack=$('#gTrack');
 $('#gTot').textContent=String(PAINTINGS.length).padStart(2,'0');
 PAINTINGS.forEach((p,i)=>{
   const it=ce('div');it.className='g-item';it.dataset.i=i;it.style.setProperty('--off',(i%2?'3.5vh':'-3.5vh'));it.style.width=`calc(var(--bh,60vh) * ${p.r})`;
-  it.innerHTML=`<div class="curl"><div class="g-frame"><img src="${p.src}" alt="${p.title}" loading="lazy"></div></div><div class="g-cap"><h4>${p.title}</h4><span>${p.year}</span></div>`;
+  const frameClass='g-frame'+(/\.png($|\?)/i.test(p.src)?' transparent':'');
+  it.innerHTML=`<div class="curl"><div class="${frameClass}"><img src="${p.src}" alt="${p.title}" loading="lazy"></div></div><div class="g-cap"><h4>${p.title}</h4><span>${p.year}</span></div>`;
   it.addEventListener('click',()=>{if(cGal.moved<6)openPainting(p)});
   gTrack.appendChild(it);
 });
