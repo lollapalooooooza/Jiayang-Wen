@@ -174,11 +174,11 @@ main{position:fixed;top:var(--hdr);left:0;right:0;bottom:0}
 .work-layer{position:absolute;inset:0;pointer-events:none;perspective:640px;perspective-origin:50% 50%;will-change:transform,perspective-origin;user-select:none;-webkit-user-select:none}
 .work-layer.back{z-index:1}
 .work-layer.front{z-index:5}
-.work-row{position:absolute;left:0;top:calc(var(--row) * 25%);height:25%;display:flex;align-items:center;white-space:nowrap;transform-style:preserve-3d;will-change:transform;backface-visibility:hidden;font-family:var(--sans);font-weight:900;font-size:23vh;line-height:1;letter-spacing:0;color:#2f49d6;text-rendering:geometricPrecision;-webkit-font-smoothing:antialiased;-webkit-text-stroke:1px rgba(18,30,120,0.16);paint-order:stroke fill;text-shadow:4px 7px 0 rgba(20,28,80,0.24),9px 14px 0 rgba(20,28,80,0.12),0 24px 34px rgba(20,28,80,0.18);user-select:none;-webkit-user-select:none}
+.work-row{position:absolute;left:0;top:calc(var(--row) * 25%);height:25%;display:block;white-space:nowrap;transform-style:preserve-3d;will-change:transform;backface-visibility:hidden;font-family:var(--sans);font-weight:800;font-size:23vh;line-height:1;letter-spacing:0.04em;color:#2f49d6;text-rendering:geometricPrecision;-webkit-font-smoothing:antialiased;text-shadow:0 10px 0 rgba(20,28,80,0.30),0 22px 32px rgba(20,28,80,0.22);user-select:none;-webkit-user-select:none}
 .gallery.wk .g-track{z-index:3;gap:29vw;padding:0 40vw;perspective:640px;perspective-origin:50% 50%}
 .gallery.wk .g-item{transform-style:preserve-3d;backface-visibility:hidden}
 .gallery.wk .curl,.gallery.wk .pcard{backface-visibility:hidden;transform:translateZ(0)}
-.gallery.wk .work-row .wl{display:inline-block;margin-right:0.1em;will-change:transform;transform-origin:50% 50%;backface-visibility:hidden}
+.gallery.wk .work-row .wl{position:absolute;left:0;top:50%;display:block;will-change:transform;transform-origin:50% 50%;backface-visibility:hidden}
 .gallery.wk .g-code{color:#2f49d6}
 .gallery.wk .g-progress i{background:#2f49d6}
 @media(max-width:680px){
@@ -484,12 +484,15 @@ const PROJECTS=[
 
 // ratio = width/height (true painting proportions)
 const PAINTINGS=[
-  {src:'images/nvren.jpeg',title:'Balance',year:'2024',r:1.504},
-  {src:'images/gugong.jpeg',title:'The Forbidden City',year:'2024',r:0.615},
   {src:'images/poker.jpeg',title:'Bluff',year:'2024',r:1.508},
+  {src:'images/hongshu.jpeg',title:'Red Tree',year:'2024',r:0.796},
+  {src:'images/nvren.jpeg',title:'Balance',year:'2024',r:1.504},
+  {src:'images/zihuaxiang.jpeg',title:'Self Portrait',year:'2024',r:0.807},
+  {src:'images/gezi.jpeg',title:'Pigeon',year:'2024',r:0.987},
+  {src:'images/jiezou.jpeg',title:'Rhythm',year:'2024',r:0.993},
   {src:'images/shizishu.jpeg',title:'Persimmon Tree',year:'2024',r:0.661},
   {src:'images/centralpark.jpeg',title:'Central Park',year:'2024',r:1.508},
-  {src:'images/hongshu.jpeg',title:'Red Tree',year:'2024',r:0.796},
+  {src:'images/gugong.jpeg',title:'The Forbidden City',year:'2024',r:0.615},
   {src:'images/gongyuan.jpeg',title:'Washington Square Park',year:'2024',r:1.346},
   {src:'images/jiaotang.jpeg',title:'Church',year:'2024',r:0.792},
   {src:'images/shizilin.jpeg',title:'Lion Grove Garden',year:'2024',r:1.409},
@@ -503,9 +506,6 @@ const PAINTINGS=[
   {src:'images/cezanne practice.jpg',title:'cezanne practice',year:'2019',r:0.863},
   {src:'images/shanxi.jpeg',title:'Shanxi',year:'2024',r:0.738},
   {src:'images/xiaozhen.jpeg',title:'Italian Town',year:'2024',r:1.255},
-  {src:'images/zihuaxiang.jpeg',title:'Self Portrait',year:'2024',r:0.807},
-  {src:'images/gezi.jpeg',title:'Pigeon',year:'2024',r:0.987},
-  {src:'images/jiezou.jpeg',title:'Rhythm',year:'2024',r:0.993},
 ];
 
 // Holdings — start weight (as given) vs current drifted weight + total return since inception.
@@ -607,13 +607,13 @@ function makeGallery({root,track,bg,front,frontParallax=0.6,bar,idxEl,nameEl,nam
         const speed=(ch==='O'||ch==='R')?rowsParallax*0.61:rowsParallax*0.45;
         const angle=(ch==='R'||ch==='K')?10.5:10.8,dir=(ch==='R'||ch==='K')?1:-1;
         r.textContent='';const probe=document.createElement('span');probe.className='wl';probe.textContent=ch;r.appendChild(probe);
-        const lw=probe.offsetWidth||80;const cell=lw*1.16;
+        const lw=probe.offsetWidth||80,spacing=parseFloat(getComputedStyle(r).fontSize)*0.10,cell=lw+spacing;
         r.textContent='';
         const rowLetters=[];
-        const rowReps=Math.max(8,Math.ceil(root.clientWidth/cell)+8);
+        const rowReps=Math.max(10,Math.ceil(root.clientWidth/cell)+10);
         for(let k=0;k<rowReps;k++){const s=document.createElement('span');s.className='wl';s.textContent=ch;r.appendChild(s);rowLetters.push({el:s,bx:0,lw:lw});}
-        rowLetters.forEach(L=>{L.bx=L.el.offsetLeft;L.lw=L.el.offsetWidth||lw;});
-        rowMetas.push({el:r,ch,ri,ry,speed,angle,dir,cell,letters:rowLetters});
+        rowLetters.forEach((L,k)=>{L.bx=k*cell;L.lw=L.el.offsetWidth||lw;});
+        rowMetas.push({el:r,ch,ri,ry,speed,angle,dir,cell,span:rowReps*cell,pad:cell*3,letters:rowLetters});
       }));
     }
   }
@@ -645,12 +645,12 @@ function makeGallery({root,track,bg,front,frontParallax=0.6,bar,idxEl,nameEl,nam
       const LDEPTH=140;
       rowMetas.forEach(row=>{
         const phase=visualCur*row.speed;
-        const lx=row.cell?-((((phase%row.cell)+row.cell)%row.cell)+row.cell):-phase;
-        row.el.style.transform=`translate3d(${lx.toFixed(2)}px,0,0)`;
+        row.el.style.transform='translate3d(0,0,0)';
         row.letters.forEach(L=>{
-          const sx=L.bx+L.lw/2+lx,ln=(sx-mid)/(mid||1),an=Math.min(Math.abs(ln),1);
+          const wrapped=((L.bx-phase)%row.span+row.span)%row.span-row.pad;
+          const sx=wrapped+L.lw/2,ln=(sx-mid)/(mid||1),an=Math.min(Math.abs(ln),1);
           const tz=-LDEPTH*(1-an*an),rz=clamp(ln*row.angle*row.dir,-15,15);
-          L.el.style.transform=`translateZ(${tz.toFixed(1)}px) rotateZ(${rz.toFixed(3)}deg)`;
+          L.el.style.transform=`translate3d(${wrapped.toFixed(2)}px,-50%,${tz.toFixed(1)}px) rotateZ(${rz.toFixed(3)}deg)`;
         });
       });
     }
@@ -699,19 +699,27 @@ const B_OFF=['-9vh','7vh','-3vh','11vh','-12vh','4vh'];
   const projI=i%PROJECTS.length;
   it.style.setProperty('--ar',p.r||1.4);it.style.setProperty('--off',B_OFF[projI%B_OFF.length]);
   if(p.youtube)it.dataset.yt=p.youtube;
-  let downX=0,downY=0;
+  it.dataset.proj=projI;
   const media=p.soon
     ?`<div class="ph">${p.emoji||'—'}</div><span class="pcard-tag soon">Coming soon</span>`
     :p.youtube
       ?`<img src="${p.cover||`https://img.youtube.com/vi/${p.youtube}/maxresdefault.jpg`}" alt="${p.title}" loading="lazy"><div class="pcard-yt"></div><span class="pcard-tag">▶ video</span><span class="pcard-open">Open ↗</span>`
       :`<img src="${p.cover}" alt="${p.title}" loading="lazy">${p.video?`<video muted loop playsinline preload="none" data-src="${p.video}"></video><span class="pcard-tag">▶ demo</span>`:''}<span class="pcard-open">Open ↗</span>`;
   it.innerHTML=`<div class="curl"><div class="pcard">${media}<div class="pcard-cap"><h3>${p.title}</h3><p>${p.sub}</p><span class="pc-meta">${p.meta}</span></div></div></div>`;
-  it.addEventListener('pointerdown',e=>{downX=e.clientX;downY=e.clientY;});
-  it.addEventListener('click',e=>{if(Math.hypot(e.clientX-downX,e.clientY-downY)<10)openProject(p)});
   if(p.video){const v=it.querySelector('video');it.addEventListener('mouseenter',()=>{if(!v.src){v.src=v.dataset.src;v.addEventListener('loadeddata',()=>v.classList.add('ready'),{once:true})}v.play().catch(()=>{})});it.addEventListener('mouseleave',()=>v.pause())}
   bTrack.appendChild(it);
 });
-const bGal=makeGallery({root:$('#bGallery'),track:bTrack,arc:true,rowsEls:[$('#bBack'),$('#bFront')],rowsParallax:0.32,infinite:true,loopCopies:3});
+const bRoot=$('#bGallery');
+const bGal=makeGallery({root:bRoot,track:bTrack,arc:true,rowsEls:[$('#bBack'),$('#bFront')],rowsParallax:0.32,infinite:true,loopCopies:3});
+let bClickX=0,bClickY=0,bClickItem=null;
+bTrack.addEventListener('pointerdown',e=>{bClickItem=e.target.closest('.g-item.pi');bClickX=e.clientX;bClickY=e.clientY;},true);
+bRoot.addEventListener('click',e=>{
+  const it=bClickItem;
+  if(!it||document.querySelector('#modal.open'))return;
+  if(Math.hypot(e.clientX-bClickX,e.clientY-bClickY)>12)return;
+  const p=PROJECTS[+it.dataset.proj];
+  if(p){e.preventDefault();e.stopPropagation();openProject(p);}
+},true);
 // Moving YouTube cards stay thumbnail-only; the modal loads the iframe on click.
 
 /* ============ creator gallery ============ */
