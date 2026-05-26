@@ -47,13 +47,13 @@ button{font-family:inherit}
 .reveal.in{opacity:1;transform:none}
 
 /* ============ header ============ */
-header.hdr{position:fixed;top:0;left:0;right:0;height:var(--hdr);z-index:300;background:rgba(243,242,238,0.2);backdrop-filter:saturate(160%) blur(20px);-webkit-backdrop-filter:saturate(160%) blur(20px);border-bottom:1px solid var(--line-soft);transition:background .6s var(--ease),border-color .6s var(--ease)}
+header.hdr{position:fixed;top:0;left:0;right:0;height:var(--hdr);z-index:300;background-color:rgba(243,242,238,0.2);backdrop-filter:saturate(160%) blur(20px);-webkit-backdrop-filter:saturate(160%) blur(20px);border-bottom:1px solid var(--line-soft);transition:background-color .8s var(--ease),border-color .8s var(--ease),backdrop-filter .8s var(--ease),-webkit-backdrop-filter .8s var(--ease)}
 /* Builder: full-screen dot bg, header floats transparently */
 body.in-builder{background-color:#ecebe5;background-image:radial-gradient(rgba(20,22,40,0.22) 1.3px,transparent 1.5px);background-size:26px 26px}
-body.in-builder header.hdr{background:transparent;border-bottom-color:transparent;backdrop-filter:none;-webkit-backdrop-filter:none}
+body.in-builder header.hdr{background-color:transparent;border-bottom-color:transparent;backdrop-filter:none;-webkit-backdrop-filter:none}
 /* AI Film: header goes black, brand/tabs/icons fade out, only Exit visible */
-body.film-on header.hdr{background:#000;border-bottom-color:#000;backdrop-filter:none;-webkit-backdrop-filter:none}
-body.film-on .brand,body.film-on .tabs,body.film-on .hdr-right{opacity:0;visibility:hidden;transition:opacity .45s var(--ease),visibility .45s var(--ease)}
+body.film-on header.hdr{background-color:#0b0907;border-bottom-color:#0b0907;backdrop-filter:none;-webkit-backdrop-filter:none}
+body.film-on .brand,body.film-on .tabs,body.film-on .hdr-right{opacity:0;visibility:hidden;transition:opacity .7s var(--ease),visibility .7s var(--ease)}
 .hdr-inner{max-width:var(--maxw);height:100%;margin:0 auto;padding:0 40px;display:flex;align-items:center;justify-content:space-between;gap:24px}
 .brand{font-family:var(--serif);font-size:18px;font-weight:600;letter-spacing:-0.01em;white-space:nowrap;transition:opacity .45s var(--ease),visibility .45s var(--ease)}
 .tabs,.hdr-right{transition:opacity .45s var(--ease),visibility .45s var(--ease)}
@@ -127,24 +127,25 @@ main{position:fixed;top:var(--hdr);left:0;right:0;bottom:0}
 .curl{position:relative;height:100%;transform-origin:50% 60%;will-change:transform,opacity;backface-visibility:hidden}
 .g-frame{position:relative;height:100%;border-radius:8px;overflow:hidden;background:var(--surface);box-shadow:0 34px 80px rgba(20,16,10,0.24),0 4px 14px rgba(20,16,10,0.10)}
 .g-frame img{height:100%;width:auto;display:block;object-fit:cover;will-change:transform}
-/* builder project block — true image aspect ratio, caption overlaid */
-.g-item.pi{height:51vh;width:calc(51vh * var(--ar,1.4))}
-.pcard{position:relative;height:100%;border-radius:12px;overflow:hidden;background:var(--surface-2);box-shadow:0 40px 90px rgba(10,12,30,0.30),0 6px 18px rgba(10,12,30,0.14)}
-.pcard img,.pcard video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+/* builder project block — media + editorial caption strip */
+.g-item.pi{height:46vh;width:calc(46vh * var(--ar,1.4))}
+.pcard{position:relative;height:100%;border-radius:6px;overflow:hidden;background:var(--surface-2);box-shadow:0 36px 86px rgba(10,12,30,0.28),0 6px 18px rgba(10,12,30,0.13)}
+.pcard img,.pcard video{position:absolute;left:0;right:0;top:0;width:100%;height:calc(100% - 76px);object-fit:cover}
 .pcard img{will-change:transform}
 .pcard video{opacity:0;transition:opacity .5s var(--ease)}
 .g-item.pi.is-center:hover .pcard video.ready{opacity:1}
-.pcard .ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:72px;background:#e6e4dd}
+.pcard .ph{position:absolute;left:0;right:0;top:0;bottom:76px;display:flex;align-items:center;justify-content:center;font-size:72px;background:#e6e4dd}
 .pcard-tag{position:absolute;top:14px;left:14px;font-family:var(--mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;background:rgba(255,255,255,0.93);color:var(--ink);padding:6px 11px;border-radius:999px;display:flex;gap:6px;align-items:center;z-index:2}
 .pcard-tag.soon{background:rgba(20,18,12,0.5);color:#fff}
 .pcard-open{position:absolute;right:14px;top:14px;z-index:2;font-family:var(--mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;background:rgba(10,10,12,0.8);color:#fff;padding:6px 11px;border-radius:999px;opacity:0;transform:translateY(-4px);transition:all .4s var(--ease)}
 .g-item.pi.is-center .pcard-open{opacity:1;transform:none}
-.pcard-yt{position:absolute;inset:0;z-index:1;background:#000;overflow:hidden}
+.pcard-yt{position:absolute;left:0;right:0;top:0;bottom:76px;z-index:1;background:#000;overflow:hidden;pointer-events:none}
+.pcard-yt:empty{display:none}
 .pcard-yt iframe{position:absolute;inset:-1px;width:calc(100% + 2px);height:calc(100% + 2px);border:0;display:block;pointer-events:none}
-.pcard-cap{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:40px 22px 20px;background:linear-gradient(transparent,rgba(8,8,16,0.72));color:#fff}
-.pcard-cap h3{font-family:var(--serif);font-size:24px;font-weight:600;letter-spacing:-0.015em}
-.pcard-cap p{font-size:12.5px;color:rgba(255,255,255,0.78);margin-top:5px;line-height:1.45;max-width:90%}
-.pcard-cap .pc-meta{display:inline-block;margin-top:9px;font-family:var(--mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.6)}
+.pcard-cap{position:absolute;left:0;right:0;bottom:0;height:76px;z-index:2;padding:12px 15px 10px;background:rgba(12,10,8,0.92);color:#fff;display:grid;align-content:center;border-top:1px solid rgba(255,255,255,0.08)}
+.pcard-cap h3{font-family:var(--serif);font-size:19px;font-weight:600;letter-spacing:0;line-height:1.06}
+.pcard-cap p{font-size:11.5px;color:rgba(255,255,255,0.74);margin-top:4px;line-height:1.28;max-width:92%;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
+.pcard-cap .pc-meta{display:inline-block;margin-top:6px;font-family:var(--mono);font-size:8.5px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.58)}
 .g-cap{position:absolute;left:2px;bottom:-34px;display:flex;align-items:baseline;gap:10px;opacity:0;transform:translateY(-4px);transition:opacity .5s var(--ease),transform .5s var(--ease)}
 .g-item.is-center .g-cap{opacity:1;transform:none}
 .g-cap h4{font-family:var(--serif);font-size:17px;font-weight:500;font-style:italic}
@@ -167,14 +168,15 @@ main{position:fixed;top:var(--hdr);left:0;right:0;bottom:0}
 .g-progress{position:absolute;left:40px;right:40px;bottom:20px;height:1px;background:var(--line);z-index:6}
 .g-progress i{position:absolute;left:0;top:0;height:100%;background:var(--accent);width:0}
 /* ---- Builder: light WORK gallery, blue letters, Z-axis depth ---- */
-.gallery.wk{background:#ecebe5}
+.gallery.wk{background:#ecebe5;user-select:none;-webkit-user-select:none}
 .gallery.wk::before{content:'';position:absolute;inset:0;z-index:0;pointer-events:none;background-image:radial-gradient(rgba(20,22,40,0.22) 1.3px,transparent 1.5px);background-size:26px 26px;opacity:.55}
-.work-layer{position:absolute;inset:0;pointer-events:none;perspective:640px;perspective-origin:50% 50%;will-change:transform,perspective-origin}
+.work-layer{position:absolute;inset:0;pointer-events:none;perspective:640px;perspective-origin:50% 50%;will-change:transform,perspective-origin;user-select:none;-webkit-user-select:none}
 .work-layer.back{z-index:1}
 .work-layer.front{z-index:5}
-.work-row{position:absolute;left:0;top:calc(var(--row) * 25%);height:25%;display:flex;align-items:center;white-space:nowrap;transform-style:preserve-3d;font-family:var(--sans);font-weight:800;font-size:23vh;line-height:1;letter-spacing:0.04em;color:#2f49d6;text-shadow:0 10px 0 rgba(20,28,80,0.30),0 22px 32px rgba(20,28,80,0.22)}
+.work-row{position:absolute;left:0;top:calc(var(--row) * 25%);height:25%;display:flex;align-items:center;white-space:nowrap;transform-style:preserve-3d;font-family:var(--sans);font-weight:800;font-size:23vh;line-height:1;letter-spacing:0.04em;color:#2f49d6;text-shadow:0 10px 0 rgba(20,28,80,0.30),0 22px 32px rgba(20,28,80,0.22);user-select:none;-webkit-user-select:none}
 .gallery.wk .g-track{z-index:3;gap:29vw;padding:0 40vw;perspective:640px;perspective-origin:50% 50%}
-.gallery.wk .g-item{transform-style:preserve-3d}
+.gallery.wk .g-item{transform-style:preserve-3d;backface-visibility:hidden}
+.gallery.wk .curl,.gallery.wk .pcard{backface-visibility:hidden;transform:translateZ(0)}
 .gallery.wk .work-row .wl{display:inline-block;margin-right:0.1em;will-change:transform;transform-origin:50% 50%}
 .gallery.wk .g-code{color:#2f49d6}
 .gallery.wk .g-progress i{background:#2f49d6}
@@ -211,17 +213,17 @@ main{position:fixed;top:var(--hdr);left:0;right:0;bottom:0}
 .alloc{position:sticky;top:84px}
 .alloc-head{display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:20px}
 .alloc-title{font-family:var(--serif);font-size:20px;font-weight:600;letter-spacing:-0.01em}
-.alloc-toggle{width:34px;height:34px;border-radius:9px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .3s var(--ease)}
-.alloc-toggle:hover{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.alloc-toggle{width:34px;height:34px;border-radius:9px;border:none;background:transparent;color:var(--ink);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:color .3s var(--ease),transform .3s var(--ease)}
+.alloc-toggle:hover{background:transparent;color:var(--accent);transform:scale(1.08)}
 .alloc-toggle svg{width:16px;height:16px;fill:currentColor}
 .alloc-toggle .ic-pie{display:none}
 .alloc.show-list .alloc-toggle .ic-list{display:none}
 .alloc.show-list .alloc-toggle .ic-pie{display:block}
-.alloc-body{display:flex;flex-direction:column;justify-content:center;min-height:360px}
+.alloc-body{display:flex;flex-direction:column;justify-content:center;height:360px;min-height:360px}
 .alloc-body .legend{display:none}
 .alloc.show-list .donut-box{display:none}
 .alloc.show-list .alloc-body .legend{display:flex}
-.donut-box{display:flex;justify-content:center}
+.donut-box{display:flex;justify-content:center;align-items:center;height:300px;min-height:300px}
 .donut{position:relative;flex:0 0 auto}
 .donut svg{transform:rotate(-90deg);display:block}
 .donut .seg{fill:none;stroke-width:16;transition:stroke-width .35s var(--ease),opacity .35s var(--ease);cursor:pointer}
@@ -230,7 +232,7 @@ main{position:fixed;top:var(--hdr);left:0;right:0;bottom:0}
 .donut-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;pointer-events:none}
 .donut-center .big{font-family:var(--serif);font-size:26px;font-weight:600;line-height:1}
 .donut-center .sm{font-family:var(--mono);font-size:8.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--faint);margin-top:5px}
-.legend{display:flex;flex-direction:column}
+.legend{display:flex;flex-direction:column;justify-content:center;height:300px;min-height:300px}
 .legend-row{display:grid;grid-template-columns:9px minmax(0,1fr) auto auto;gap:11px;align-items:center;padding:7px 4px;border-bottom:1px solid var(--line-soft);cursor:default;transition:background .2s}
 .legend-row:last-child{border-bottom:none}
 .legend-row:hover{background:var(--surface-2)}
@@ -254,6 +256,8 @@ main{position:fixed;top:var(--hdr);left:0;right:0;bottom:0}
 .art-card h4{font-family:var(--serif);font-size:20px;font-weight:600;letter-spacing:-0.01em;line-height:1.2;margin-bottom:9px;transition:color .3s}
 .art-card:hover h4{color:var(--accent)}
 .art-card p{font-size:13px;color:var(--muted);line-height:1.6;flex:1}
+.art-metrics{display:flex;flex-wrap:wrap;gap:7px;margin:13px 0 1px}
+.art-metrics span,.report-metrics span{font-family:var(--mono);font-size:9px;letter-spacing:0.07em;text-transform:uppercase;color:var(--ink-2);border:1px solid var(--line);background:var(--surface-2);border-radius:999px;padding:5px 8px}
 .art-card .more{margin-top:14px;font-family:var(--mono);font-size:9.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--faint)}
 @media(max-width:920px){.inv-grid{grid-template-columns:1fr;gap:44px}.alloc{position:static}.research-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:560px){.research-grid{grid-template-columns:1fr}}
@@ -279,6 +283,11 @@ main{position:fixed;top:var(--hdr);left:0;right:0;bottom:0}
 .sheet-body h5{font-family:var(--mono);font-size:10px;letter-spacing:0.13em;text-transform:uppercase;color:var(--faint);margin:26px 0 11px}
 .sheet-body p{color:var(--ink-2);font-size:15px;line-height:1.75;margin-bottom:13px}
 .sheet-body p.dim{color:var(--muted)}
+.report-body{padding-top:46px}
+.report-metrics{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 22px}
+.report-label{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin:24px 0 8px}
+.source-list{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+.source-list a{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);border-bottom:1px solid currentColor;padding-bottom:2px}
 .tags{display:flex;flex-wrap:wrap;gap:8px}
 .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:0.03em;color:var(--muted);background:var(--surface-2);border:1px solid var(--line);padding:6px 12px;border-radius:999px}
 .links{display:flex;flex-wrap:wrap;gap:11px;margin-top:24px}
@@ -286,6 +295,31 @@ main{position:fixed;top:var(--hdr);left:0;right:0;bottom:0}
 .btn:hover{border-color:var(--ink)}
 .btn.fill{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 .btn.fill:hover{background:#000}
+/* project detail: selected block expands, text block extends from the right */
+.modal.project{align-items:center;justify-content:center;padding:32px;background:rgba(18,15,10,0.48)}
+.sheet.project-detail{width:min(1160px,calc(100vw - 56px));margin:auto;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(310px,.72fr);gap:0;background:transparent;border-radius:0;box-shadow:none;overflow:visible;transform:scale(.82);transition:transform .68s var(--ease-out)}
+.modal.open .sheet.project-detail{transform:scale(1)}
+.project-hero{position:relative;min-height:430px;aspect-ratio:16/10;background:#090807;overflow:hidden;border-radius:6px 0 0 6px;box-shadow:0 44px 110px rgba(0,0,0,.34)}
+.project-hero img,.project-hero iframe{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border:0;display:block}
+.project-hero iframe{background:#000}
+.project-hero .ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:82px;background:#e6e4dd}
+.project-info{position:relative;min-height:430px;background:rgba(255,255,255,0.96);border:1px solid var(--line);border-left:0;border-radius:0 6px 6px 0;padding:34px 36px;display:flex;flex-direction:column;justify-content:center;box-shadow:0 44px 110px rgba(0,0,0,.2);opacity:0;transform:translateX(-26px) scaleX(.86);transform-origin:left center;transition:opacity .52s var(--ease) .14s,transform .72s var(--ease-out) .08s}
+.modal.open .project-info{opacity:1;transform:none}
+.project-info .mono{margin-bottom:13px;color:var(--accent)}
+.project-info h2{font-family:var(--serif);font-size:clamp(32px,4.5vw,52px);font-weight:600;line-height:.98;letter-spacing:0;margin-bottom:14px}
+.project-info .sub{font-size:16px;color:var(--muted);line-height:1.55;margin-bottom:18px}
+.project-info .brief{font-size:14px;line-height:1.72;color:var(--ink-2);margin-bottom:12px}
+.project-info h5{font-family:var(--mono);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--faint);margin:18px 0 9px}
+.project-info .tags{margin-bottom:2px}
+.project-info .links{margin-top:23px}
+.project-detail .sheet-close{top:-18px;right:-18px;background:rgba(255,255,255,.98);box-shadow:0 14px 36px rgba(0,0,0,.18)}
+@media(max-width:860px){
+  .modal.project{padding:18px;align-items:flex-start}
+  .sheet.project-detail{width:100%;grid-template-columns:1fr;margin:80px auto 28px;transform:scale(.92)}
+  .project-hero{min-height:0;aspect-ratio:16/10;border-radius:6px 6px 0 0}
+  .project-info{min-height:0;border-left:1px solid var(--line);border-top:0;border-radius:0 0 6px 6px;padding:28px 24px;transform:translateY(-18px) scaleY(.9);transform-origin:top center}
+  .project-detail .sheet-close{top:-14px;right:-8px}
+}
 /* lightbox variant for paintings */
 .modal.light{background:rgba(18,15,10,0.82)}
 .sheet.lb{background:transparent;box-shadow:none;width:auto;max-width:92vw}
@@ -358,7 +392,7 @@ main{position:fixed;top:var(--hdr);left:0;right:0;bottom:0}
       <div class="g-track" id="gTrack"></div>
       <span class="g-name" id="gName">— Oil on canvas</span>
       <div class="g-ui">
-        <span class="g-code"><b id="gIdx">01</b> <span class="tot">/ <span id="gTot">16</span></span></span>
+        <span class="g-code"><b id="gIdx">01</b> <span class="tot">/ <span id="gTot">22</span></span></span>
         <div class="g-controls">
           <button class="g-film" id="gFilm">▶ AI Film</button>
           <button class="g-btn" id="gPrev" aria-label="Previous">←</button>
@@ -382,7 +416,7 @@ main{position:fixed;top:var(--hdr);left:0;right:0;bottom:0}
           <div class="chart" id="chart"></div>
         </div>
         <!-- RIGHT 30% — allocation -->
-        <div class="alloc reveal">
+        <div class="alloc show-list reveal">
           <div class="alloc-head">
             <span class="alloc-title">Holdings</span>
             <button class="alloc-toggle" id="allocToggle" aria-label="Switch view" title="Switch list / chart">
@@ -431,7 +465,7 @@ const $=s=>document.querySelector(s), ce=t=>document.createElement(t), clamp=(v,
 
 /* ============ DATA ============ */
 const PROJECTS=[
-  {id:'dot',title:'Dot',meta:'iOS · 2024',cover:'images/dot_cover.png',video:null,r:0.48,
+  {id:'dot',title:'Dot',meta:'iOS · 2024',cover:'images/dot-landing-cover.jpg',video:null,r:2.08,
    sub:'A word-of-mouth discovery app for college life.',stack:['SwiftUI','Node.js','Firebase','iOS'],
    links:[{label:'App Store',url:'https://apps.apple.com/us/app/dot-experiences-moments/id6720711586',fill:true},{label:'Website',url:'https://www.dot-passion.com/'}],
    body:['Dot is a social discovery platform for college students — capture and discover unique experiences in a community of explorers.','Built from 40+ user interviews across three campuses into a SwiftUI app with a Node.js + Firebase backend: real-time feed, location discovery, and a media pipeline. A 200-student beta cut time-to-first-post from 5 minutes to 45 seconds before an App-Store launch approved on the first review.']},
@@ -443,8 +477,8 @@ const PROJECTS=[
    sub:'An interactive fortune experience with a cinematic, fate-driven reveal.',stack:['HTML','CSS','JavaScript','Canvas'],
    links:[{label:'Try it',url:'https://lollapalooooooza.github.io/Red-Pocket/',fill:true},{label:'GitHub',url:'https://github.com/lollapalooooooza/Red-Pocket'}],
    body:['Opening a virtual red pocket unfolds into a cinematic, fate-driven world — a small interactive toy about luck and anticipation.']},
-  {id:'demo',title:'Demo Reel',meta:'Video',youtube:'k4QkM0LALmk',r:1.778,sub:'A short video demo.',stack:['Video'],links:[{label:'Watch on YouTube',url:'https://www.youtube.com/watch?v=k4QkM0LALmk',fill:true}],body:['A short demo. (Replace with description.)']},
-  {id:'doti',title:'Doti',meta:'Video',youtube:'pOCMaykK5CY',r:1.778,sub:'A demo video.',stack:['Video'],links:[{label:'Watch on YouTube',url:'https://youtu.be/pOCMaykK5CY',fill:true}],body:['A demo video. (Replace with description.)']},
+  {id:'demo',title:'echoNest',meta:'Video',youtube:'k4QkM0LALmk',r:1.778,sub:'A short video demo with a cinematic product-demo rhythm.',stack:['Video'],links:[{label:'Watch on YouTube',url:'https://www.youtube.com/watch?v=k4QkM0LALmk',fill:true}],body:['echoNest is a compact demo reel built around atmosphere, pacing, and a quick product-story reveal.']},
+  {id:'doti',title:'Doti',meta:'Video',youtube:'pOCMaykK5CY',r:1.778,sub:'A demo video for the Dot college-life discovery experience.',stack:['Video','Product','iOS'],links:[{label:'Watch on YouTube',url:'https://youtu.be/pOCMaykK5CY',fill:true}],body:['Doti presents Dot as a lightweight guide for better college life, centered on discovering campus places, food, and social moments through a word-of-mouth community.']},
 ];
 
 // ratio = width/height (true painting proportions)
@@ -459,7 +493,13 @@ const PAINTINGS=[
   {src:'images/jiaotang.jpeg',title:'Church',year:'2024',r:0.792},
   {src:'images/shizilin.jpeg',title:'Lion Grove Garden',year:'2024',r:1.409},
   {src:'images/suzhou.jpeg',title:'Suzhou',year:'2024',r:0.794},
-  {src:'images/hua.jpeg',title:'Flower',year:'2024',r:1.333},
+  {src:'images/rose.jpg',title:'Flower',year:'2024',r:0.840},
+  {src:'images/dream boat.jpg',title:'dream boat',year:'2021',r:1.169},
+  {src:'images/fish.png',title:'fish',year:'2020',r:1.000},
+  {src:'images/sunshine.jpg',title:'sunshine',year:'2023',r:1.292},
+  {src:'images/monet practice.jpg',title:'monet practice',year:'2019',r:0.826},
+  {src:'images/baba practice.jpg',title:'baba practice',year:'2019',r:0.956},
+  {src:'images/cezanne practice.jpg',title:'cezanne practice',year:'2019',r:0.863},
   {src:'images/shanxi.jpeg',title:'Shanxi',year:'2024',r:0.738},
   {src:'images/xiaozhen.jpeg',title:'Italian Town',year:'2024',r:1.255},
   {src:'images/zihuaxiang.jpeg',title:'Self Portrait',year:'2024',r:0.807},
@@ -492,13 +532,17 @@ const RET={
 };
 
 const ARTICLES=[
-  {tk:'LITX',cat:'Stock',title:'LITX: leveraged optics beta',blurb:'A 2× daily long on Lumentum (LITE) — concentrated exposure to the AI optical-component cycle.',body:['LITX (Tradr 2× Long LITE) delivers two times the daily return of Lumentum, a supplier of optical components into AI/datacenter networking.','Daily-rebalanced leverage compounds powerfully in a sustained uptrend — and just as violently against you in a drawdown. Largest position by current weight.','Draft note — add your full thesis, entry rationale, and risk limits.']},
-  {tk:'SOXL',cat:'Stock',title:'SOXL: 3× semiconductors',blurb:'Direxion Daily Semiconductor Bull 3× — high-beta exposure to the chip complex.',body:['SOXL targets three times the daily performance of a semiconductor index — the sharpest expression of the AI hardware trade in the book.','Leverage and path-dependence make sizing and rebalancing discipline essential.','Draft note — expand with index methodology and stop framework.']},
-  {tk:'NBIS',cat:'Stock',title:'Nebius: European AI infrastructure',blurb:'An un-leveraged equity — building GPU clusters for AI training in Europe.',body:['Nebius is standing up cloud and GPU infrastructure for AI training, primarily in Europe.','The only major un-leveraged single name here, held for the structural compute-demand thesis rather than short-term beta.','Draft note — add valuation work and milestones.']},
-  {tk:'BE',cat:'Stock',title:'Bloom Energy: powering the datacenter',blurb:'Solid-oxide fuel cells riding the datacenter power crunch.',body:['Bloom Energy makes solid-oxide fuel cells; the surge in datacenter power demand gives on-site generation an urgent use case.','A growing backlog and improving margins support the case; execution and capital intensity are the risks.','Draft note — expand with backlog detail.']},
-  {tk:'GDXU',cat:'Stock',title:'GDXU: a leveraged macro hedge',blurb:'Gold miners 3× — a small, tactical sleeve against the high-beta book.',body:['GDXU is a leveraged gold-miners position, sized small (under 1% now) as a macro/diversification sleeve.','It has lagged in this rally (−42%), which is the point of a hedge — it is not expected to track the growth names.','Draft note — define the hedge ratio and review cadence.']},
-  {tk:'RISK',cat:'Industry',title:'Trading with leverage: sizing & decay',blurb:'Why daily-rebalanced 2×/3× ETFs amplify both compounding and volatility drag.',body:['Most of this book is daily-rebalanced leveraged ETFs. In a trending market they compound far beyond their stated multiple; in choppy or falling markets, volatility drag erodes value even if the underlying recovers.','This makes position sizing, rebalancing, and an exit discipline the real edge — far more than picking the underlying.','Draft note — formalize the sizing rules used here.']},
-  {tk:'AI',cat:'Industry',title:'The 2026 AI & semis melt-up',blurb:'How optics, compute, power, and memory drove the leveraged sleeves this year.',body:['The portfolio rode a powerful 2026 rally across AI-adjacent names — optics (LITE), semis, and compute infrastructure — magnified by leverage.','The flip side is concentration and correlation: in a sector drawdown these positions fall together and faster. Diversification here is thematic, not real.','Draft note — add correlation analysis and scenario stress tests.']},
+  {tk:'LITX',cat:'Leveraged ETF',title:'LITX: AI optics, amplified',blurb:'A 2x daily Lumentum sleeve whose payoff is tied to optical networking demand and leverage discipline.',metrics:['Weight 19.43%','Return +353.2%','2x LITE daily'],body:['Thesis: LITX is the portfolio pure-play on AI optical infrastructure. The fund targets 200% of Lumentum daily performance, so the position converts a high-conviction view on lasers, optical circuit switches, and co-packaged optics into a tactical, high-beta sleeve. Its current 19.43% weight reflects both the original 15% allocation and strong price drift.','Evidence: Tradr defines LITX as 2x daily exposure to Lumentum, while Lumentum highlighted margin expansion from pricing, product mix, laser chips, and scale-across components. Management also pointed to co-packaged optics and optical circuit switches as future earnings drivers, which matches the AI datacenter bottleneck thesis.','Risk: This is not a buy-and-hold substitute for LITE. Daily reset leverage can diverge materially from two times the underlying cumulative return, especially in volatile reversals. The right lens is position sizing, trend quality, and drawdown control.'],sources:[{label:'Tradr LITX',url:'https://www.tradretfs.com/litx'},{label:'Lumentum Q3 FY26',url:'https://investor.lumentum.com/financial-news-releases/news-details/2026/Lumentum-Announces-Third-Quarter-of-Fiscal-Year-2026-Financial-Results/default.aspx'}]},
+  {tk:'SNXX',cat:'Leveraged ETF',title:'SNXX: NAND cycle torque',blurb:'2x daily SanDisk exposure, positioned around enterprise SSD pricing, datacenter mix, and memory scarcity.',metrics:['Weight 18.67%','Return +553.3%','2x SNDK daily'],body:['Thesis: SNXX is the memory-cycle accelerator. The holding benefits when SanDisk earnings revisions move faster than the market can discount enterprise SSD demand. In this portfolio it has become the second-largest position, rising from a 10% starting weight to 18.67%.','Evidence: Tradr states SNXX seeks 200% of SanDisk daily performance. SanDisk reported fiscal Q3 2026 revenue of $5.95 billion, up 97% sequentially, with datacenter revenue up 233% sequentially. Guidance for fiscal Q4 revenue of $7.75 billion to $8.25 billion supports the idea that NAND pricing and customer mix are still moving favorably.','Risk: The same operating leverage that made SNXX powerful can reverse if pricing normalizes, hyperscaler orders pause, or the daily leveraged fund compounds through chop. Treat this as a tactical memory-cycle instrument, not a core semiconductor holding.'],sources:[{label:'Tradr SNXX',url:'https://www.tradretfs.com/snxx'},{label:'SanDisk Q3 FY26',url:'https://investor.sandisk.com/news-releases/news-release-details/sandisk-reports-fiscal-third-quarter-2026-financial-results'}]},
+  {tk:'SIVEF',cat:'Equity',title:'Sivers: small-cap photonics option',blurb:'An unlevered small-cap bet on photonics and wireless components for AI datacenter and SATCOM markets.',metrics:['Weight 13.51%','Return +372.6%','Unlevered equity'],body:['Thesis: Sivers is the asymmetric small-cap in the book. Unlike the leveraged ETFs, SIVEF owns operating execution directly: photonics, wireless, customer qualification, and production ramps. That makes the return profile less mechanical but potentially more convex if design wins convert into product revenue.','Evidence: Sivers describes itself as a global leader in photonics and wireless technologies. Its interim-report archive shows a record 2025 setup, and the Q4 2025 update highlighted full-year revenue growth and a larger opportunity pipeline. The portfolio weight has drifted from 10% to 13.51%, showing strong contribution without fund-level leverage.','Risk: Liquidity, customer concentration, and timing are the main issues. Small suppliers can rally long before revenue conversion, then reset hard if orders slip. The report card should be backlog quality, gross margin, and evidence that AI datacenter/SATCOM programs are moving from engineering to production.'],sources:[{label:'Sivers reports',url:'https://www.sivers-semiconductors.com/investors/interim-reports/'},{label:'Sivers IR',url:'https://www.sivers-semiconductors.com/investors/'}]},
+  {tk:'SOXL',cat:'Leveraged ETF',title:'SOXL: broad semi beta',blurb:'A 3x daily semiconductor index sleeve that turns the AI hardware cycle into broad, liquid exposure.',metrics:['Weight 11.53%','Return +303.4%','3x semi index'],body:['Thesis: SOXL is the portfolio broad-beta engine. Where LITX, SNXX, and AAOX express single-name optical or memory views, SOXL captures the wider semiconductor complex: Nvidia, Broadcom, Micron, AMD, equipment, and adjacent chip infrastructure.','Evidence: Direxion states SOXL seeks 300% of the NYSE Semiconductor Index daily performance. The issuer page also shows the index is heavily weighted to semiconductors and semiconductor equipment, with top index constituents including Nvidia, Broadcom, Micron, AMD, Applied Materials, and Marvell. That makes SOXL a diversified expression of the same AI capex cycle driving the single-stock sleeves.','Risk: 3x daily leverage is unforgiving. It compounds well in a clean trend, but gap risk and volatility decay can dominate in sideways markets. Its role should be liquidity and breadth, while single-name ETFs carry the idiosyncratic upside.'],sources:[{label:'Direxion SOXL',url:'https://www.direxion.com/product/daily-semiconductor-bull-bear-3x-etfs'}]},
+  {tk:'INTW',cat:'Leveraged ETF',title:'INTW: Intel turnaround call',blurb:'2x daily INTC exposure built around supply recovery, AI CPU demand, and foundry operating leverage.',metrics:['Weight 9.55%','Return +568.2%','2x INTC daily'],body:['Thesis: INTW is a leveraged turnaround expression. The bullish case is not that Intel is already fixed; it is that improved supply, AI-era CPU demand, and better node execution can shift investor expectations quickly. A 5% initial sleeve has grown to 9.55%, the strongest weight expansion in the book.','Evidence: GraniteShares states INTW seeks 2x the daily percentage change of Intel common stock. Intel reported Q1 2026 revenue of $13.6 billion, up 7% year over year, non-GAAP EPS of $0.29, and Q2 revenue guidance of $13.8 billion to $14.8 billion. Management framed demand as supply-constrained and tied to CPUs, wafers, and advanced packaging.','Risk: Foundry losses, capex intensity, and execution remain material. The leveraged wrapper magnifies both a rerating and any disappointment, so the trade depends on continued revenue beats and credible margin improvement.'],sources:[{label:'GraniteShares INTW',url:'https://graniteshares.com/etfs/intw/'},{label:'Intel Q1 FY26',url:'https://www.intc.com/news-events/press-releases/detail/1767/intel-reports-first-quarter-2026-financial-results'}]},
+  {tk:'BE',cat:'Equity',title:'Bloom Energy: datacenter power bottleneck',blurb:'A direct equity position on onsite power demand as AI datacenters stress grid capacity.',metrics:['Weight 8.76%','Return +206.5%','Unlevered equity'],body:['Thesis: Bloom is the power-infrastructure leg of the AI trade. If compute demand is limited by grid interconnection, permitting, and time-to-power, onsite generation becomes strategic rather than optional. BE gives the portfolio a non-chip way to participate in the datacenter buildout.','Evidence: Bloom reported Q1 2026 revenue of $751.1 million, up 130.4% year over year, with product revenue up 208.4%. It raised full-year 2026 revenue guidance to $3.4 billion to $3.8 billion and guided non-GAAP operating income of $600 million to $750 million. Those figures support the case that demand is translating into scale, not just narrative.','Risk: Customer concentration, project timing, service economics, and manufacturing scale matter. The stock can rerate on growth, but durable value depends on converting backlog into profitable, repeatable deployments.'],sources:[{label:'Bloom Q1 2026',url:'https://investor.bloomenergy.com/press-releases/press-release-details/2026/Bloom-Energy-Reports-Record-First-Quarter-2026-Results-and-Raises-Full-Year-2026-Guidance/default.aspx'}]},
+  {tk:'NBIS',cat:'Equity',title:'Nebius: AI cloud capacity race',blurb:'A direct AI infrastructure equity focused on GPU cloud capacity, contracted power, and ARR expansion.',metrics:['Weight 6.82%','Return +138.8%','Unlevered equity'],body:['Thesis: Nebius is the portfolio AI cloud operator. The stock is less about chips themselves and more about monetizing scarce GPU clusters, power access, and full-stack infrastructure. It diversifies the hardware-heavy book into cloud capacity and contracted datacenter execution.','Evidence: Nebius announced Q1 2026 results on May 13, 2026 and said it secured up to 1.2 GW of power and land for a new owned AI factory in Pennsylvania. The company linked investors to full Q1 financial disclosures and a shareholder letter; the published highlights support the theme of rapid AI-cloud ARR expansion and aggressive capacity buildout.','Risk: The thesis is capital intensive. Power, land, GPUs, customer prepayments, and financing must all line up. Strong revenue growth can coexist with working-capital pressure, so the key diligence items are contracted capacity, cash conversion, and customer concentration.'],sources:[{label:'Nebius Q1 2026',url:'https://nebius.com/newsroom/nebius-reports-first-quarter-2026-financial-results'},{label:'Nebius investors',url:'https://nebius.com/investor-hub'}]},
+  {tk:'AAOX',cat:'Leveraged ETF',title:'AAOX: optical transceiver leverage',blurb:'2x daily AAOI exposure, centered on 800G, 1.6T, datacenter demand, and manufacturing capacity.',metrics:['Weight 4.93%','Return +72.6%','2x AAOI daily'],body:['Thesis: AAOX is a targeted bet on Applied Optoelectronics as an optical transceiver supplier to datacenter and broadband markets. The holding is smaller than LITX because AAOI execution risk is higher, but the same AI networking demand can create sharp upside when orders accelerate.','Evidence: Tradr states AAOX seeks 200% of AAOI daily performance. Applied Optoelectronics reported Q1 2026 revenue of $151.1 million versus $99.9 million a year earlier and cited broad demand in datacenter and CATV. Management also noted customer engagement around 800G transceivers and 1.6 Tb products as AI-driven datacenter investments accelerate.','Risk: AAOI remains volatile and still reported a GAAP net loss in Q1. The leveraged ETF adds path dependence on top of customer/order timing risk. The investment case needs evidence of capacity ramp, margin stability, and sustained datacenter demand.'],sources:[{label:'Tradr AAOX',url:'https://www.tradretfs.com/aaox'},{label:'AAOI Q1 2026',url:'https://investors.ao-inc.com/news-releases/news-release-details/applied-optoelectronics-reports-first-quarter-2026-results'}]},
+  {tk:'NASA',cat:'Thematic ETF',title:'NASA: space economy basket',blurb:'An actively managed space ETF with public launch, satellite, data, and limited pre-IPO exposure.',metrics:['Weight 4.40%','Return +53.9%','Active space ETF'],body:['Thesis: NASA is the portfolio thematic diversifier. It keeps the growth tilt but moves away from semis into launch, satellite communications, Earth observation, and private-space access. The position is small enough to be optionality rather than a dominant risk factor.','Evidence: Tema describes NASA as an actively managed ETF focused on the emerging space economy, including public companies and selected pre-IPO exposure. Tema also announced the fund surpassed $1 billion in AUM in 37 trading days after launching on March 31, 2026, indicating strong market demand for the theme.','Risk: Space remains a narrative-heavy sector with long commercialization timelines. AUM momentum can inflate valuations before cash flows arrive. The core diligence is holdings quality, liquidity, private-position valuation, and whether satellite/launch demand turns into recurring revenue.'],sources:[{label:'Tema NASA',url:'https://temaetfs.com/nasa'},{label:'Tema AUM release',url:'https://temaetfs.com/press/space-innovators-etf-exceeds-1-billion-aum'}]},
+  {tk:'CRCA',cat:'Leveraged ETF',title:'CRCA: Circle stablecoin beta',blurb:'2x daily CRCL exposure, built around regulated stablecoin infrastructure and digital-dollar adoption.',metrics:['Weight 1.58%','Return +10.7%','2x CRCL daily'],body:['Thesis: CRCA is a small, speculative sleeve on Circle. The idea is that stablecoin infrastructure can become a regulated settlement layer, and Circle can monetize issuance, reserves, and network usage if USDC adoption keeps scaling.','Evidence: ProShares states CRCA seeks 2x the daily performance of Circle Class A shares and describes Circle as a leader in USD-backed stablecoins. The ETF structure offers leveraged exposure without margin, but the issuer explicitly warns that returns over holding periods longer than one day can be higher or lower than the daily target.','Risk: This is a young, volatile single-stock ETF tied to crypto sentiment, rate expectations, and regulation. Lower rates can pressure reserve-income economics, while competitive stablecoins can pressure market share. The small 1.58% current weight is appropriate for option-like exposure.'],sources:[{label:'ProShares CRCA',url:'https://www.proshares.com/our-etfs/leveraged-and-inverse/crca'}]},
+  {tk:'GDXU',cat:'ETN',title:'GDXU: macro hedge that lagged',blurb:'A small 3x gold-miners ETN used as a convex macro offset to the AI-heavy growth book.',metrics:['Weight 0.83%','Return -41.6%','3x miners ETN'],body:['Thesis: GDXU is not meant to look like the rest of the portfolio. It is a small macro sleeve against equity-beta concentration, using gold miners as a risk-off/inflation-sensitive expression. Its current weight fell to 0.83%, which limits drag while preserving optionality.','Evidence: BMO lists GDXU as MicroSectors Gold Miners 3X Leveraged ETNs. The product is designed for three-times daily exposure to a gold-miners index, so it can move sharply when gold equities trend but can decay badly when miners chop or reverse.','Risk: The position has underperformed the AI book, with a -41.6% portfolio return contribution. That does not automatically make it wrong; it means the hedge failed during this window. Keep it only if it has a defined macro role, sizing cap, and exit rule.'],sources:[{label:'BMO GDXU',url:'https://www.bmoetns.com/ETN/GDXU.P/'},{label:'MicroSectors GDXU',url:'https://microsectors.com/wp-content/uploads/BMO_GoldMine_100323_A.pdf'}]},
 ];
 
 /* ============ reveal ============ */
@@ -531,22 +575,24 @@ addEventListener('resize',()=>{const a=tabs.find(t=>t.classList.contains('active
 
 /* ============ shared curled gallery (coverflow + parallax) ============ */
 let galleries={};
-function makeGallery({root,track,bg,front,frontParallax=0.6,bar,idxEl,nameEl,names,bgWord,parallax=0.36,onCenter,arc=false,rowsEls=null,rowsParallax=0.32,rowsTilt=0,infinite=false}){
+function makeGallery({root,track,bg,front,frontParallax=0.6,bar,idxEl,nameEl,names,bgWord,parallax=0.36,onCenter,arc=false,rowsEls=null,rowsParallax=0.32,rowsTilt=0,infinite=false,loopCopies=1}){
   const items=[...track.children];
   const curls=items.map(it=>it.firstElementChild);
   const imgs=items.map(it=>it.querySelector('img'));
-  const letters=[];
+  const rowMetas=[];
   const G={target:0,cur:0,max:0};
-  let metrics=[],mid=1,lastIdx=-1,active=false,rafing=false,inited=false,loopLen=0;
+  let metrics=[],mid=1,lastIdx=-1,active=false,rafing=false,inited=false,loopLen=0,loopOffset=0,snapTimer=0,lastDir=0;
   let dragging=false,dsx=0,dst=0,moved=0;
   function measure(){
     mid=root.clientWidth/2;
     metrics=items.map(it=>({l:it.offsetLeft,w:it.offsetWidth}));
     G.max=Math.max(0,track.scrollWidth-root.clientWidth);
-    // for infinite scroll: loopLen = distance between an item and its clone (half the duplicated strip)
-    loopLen = (infinite && items.length>=2) ? (metrics[items.length/2|0].l - metrics[0].l) : 0;
+    const copySize=infinite?Math.max(1,Math.floor(items.length/Math.max(1,loopCopies))):items.length;
+    // for infinite scroll: loopLen = distance between one strip and the next clone
+    loopLen = (infinite && metrics[copySize]) ? (metrics[copySize].l - metrics[0].l) : 0;
     if(!inited&&metrics.length){
-      const init = metrics[0].l+metrics[0].w/2-mid;
+      const initIndex=infinite&&loopCopies>1?copySize:0;
+      const init = metrics[initIndex].l+metrics[initIndex].w/2-mid;
       G.cur = G.target = infinite ? init : clamp(init,0,G.max);
       inited=true;
     }
@@ -554,30 +600,61 @@ function makeGallery({root,track,bg,front,frontParallax=0.6,bar,idxEl,nameEl,nam
     if(bg&&bgWord){bg.textContent=bgWord;const w=bg.scrollWidth||1;const need=G.max*parallax+root.clientWidth*1.5;const reps=Math.max(1,Math.ceil(need/(w+1)));bg.textContent=Array(reps).fill(bgWord).join(' ');}
     if(front&&bgWord)front.textContent=Array(16).fill(bgWord).join('  ');
     if(rowsEls){
-      letters.length=0;const need=G.max*rowsParallax+root.clientWidth*2,ch_h=root.clientHeight;
+      rowMetas.length=0;const ch_h=root.clientHeight;
       rowsEls.forEach(layer=>layer.querySelectorAll('.work-row').forEach(r=>{
         const ch=r.dataset.ch||'W',ri=+r.dataset.row||0,ry=ch_h*(ri*0.25+0.125);
+        const speed=(ch==='O'||ch==='R')?rowsParallax*0.61:rowsParallax*0.45;
+        const angle=(ch==='R'||ch==='K')?10.5:10.8,dir=(ch==='R'||ch==='K')?1:-1;
         r.textContent='';const probe=document.createElement('span');probe.className='wl';probe.textContent=ch;r.appendChild(probe);
-        const lw=probe.offsetWidth||80;const cell=lw*1.16;const reps=Math.max(3,Math.ceil(need/cell)+2);
-        r.textContent='';for(let k=0;k<reps;k++){const s=document.createElement('span');s.className='wl';s.textContent=ch;r.appendChild(s);}
-        [...r.children].forEach(s=>letters.push({el:s,bx:s.offsetLeft,lw:s.offsetWidth,ry}));
+        const lw=probe.offsetWidth||80;const cell=lw*1.16;
+        r.textContent='';
+        const rowLetters=[];
+        const rowReps=Math.max(8,Math.ceil(root.clientWidth/cell)+8);
+        for(let k=0;k<rowReps;k++){const s=document.createElement('span');s.className='wl';s.textContent=ch;r.appendChild(s);rowLetters.push({el:s,bx:0,lw:lw});}
+        rowLetters.forEach(L=>{L.bx=L.el.offsetLeft;L.lw=L.el.offsetWidth||lw;});
+        rowMetas.push({el:r,ch,ri,ry,speed,angle,dir,cell,letters:rowLetters});
       }));
     }
   }
+  function itemTarget(i){const m=metrics[i];return m?m.l+m.w/2-mid:0}
+  function snapToNearest(dir=0){
+    if(!metrics.length)return;
+    let bi=0,bd=1e9;
+    const sorted=metrics.map((m,i)=>({i,t:itemTarget(i)})).sort((a,b)=>a.t-b.t);
+    if(infinite&&dir){
+      const pad=Math.max(24,mid*0.04);
+      const next=dir>0?sorted.find(x=>x.t>G.target+pad):[...sorted].reverse().find(x=>x.t<G.target-pad);
+      if(next){G.target=next.t;return;}
+    }
+    sorted.forEach(x=>{const d=Math.abs(x.t-G.target);if(d<bd){bd=d;bi=x.i;}});
+    G.target=infinite?itemTarget(bi):clamp(itemTarget(bi),0,G.max);
+  }
+  function queueSnap(dir){lastDir=dir||lastDir;clearTimeout(snapTimer);snapTimer=setTimeout(()=>snapToNearest(lastDir),115)}
   function tick(){
-    G.cur+=(G.target-G.cur)*0.075; if(Math.abs(G.target-G.cur)<0.06)G.cur=G.target;
-    if(infinite&&loopLen>0){while(G.cur>=loopLen){G.cur-=loopLen;G.target-=loopLen;}while(G.cur<0){G.cur+=loopLen;G.target+=loopLen;}}
+    G.cur+=(G.target-G.cur)*0.105; if(Math.abs(G.target-G.cur)<0.06)G.cur=G.target;
+    if(infinite&&loopLen>0){
+      const low=loopCopies>2?loopLen*0.5:0,high=loopCopies>2?loopLen*1.5:loopLen;
+      while(G.cur>=high){G.cur-=loopLen;G.target-=loopLen;loopOffset+=loopLen;}
+      while(G.cur<low){G.cur+=loopLen;G.target+=loopLen;loopOffset-=loopLen;}
+    }
+    const visualCur=infinite?G.cur+loopOffset:G.cur;
     track.style.transform=`translate3d(${(-G.cur).toFixed(1)}px,0,0)`;
     if(bg)bg.style.transform=`translate3d(${(-G.cur*parallax).toFixed(1)}px,-50%,0)`;
     if(front)front.style.transform=`translate3d(${(-G.cur*frontParallax).toFixed(1)}px,0,0)`;
     if(rowsEls){
-      // WORK letters ride the same elliptical Z-track: centre faces viewer (z≈0, flat),
-      // sides recede into the screen and tilt symmetrically. Vanishing point stays at screen centre.
-      const lx=-G.cur*rowsParallax, po=(mid-lx).toFixed(1)+'px 50%';
-      rowsEls.forEach(l=>{l.style.transform=`translateX(${lx.toFixed(1)}px)`;l.style.perspectiveOrigin=po;});
-      const LDEPTH=140, LANG=11, midYL=root.clientHeight*0.5;
-      // Top rows (W/O) tilt: left CW, right CCW. Bottom rows (R/K) tilt the opposite way: left CCW (−11°), right CW (+11°).
-      for(let k=0;k<letters.length;k++){const L=letters[k];const sx=L.bx+L.lw/2+lx;const ln=(sx-mid)/(mid||1);const an=Math.min(Math.abs(ln),1);const tz=-LDEPTH*(1-an*an);const rowSign=L.ry<midYL?1:-1;const rz=clamp(-ln*LANG*rowSign,-15,15);L.el.style.transform=`translateZ(${tz.toFixed(0)}px) rotateZ(${rz.toFixed(2)}deg)`;}
+      // WORK rows keep independent phases so the wrapped project strip never snaps the letters.
+      rowsEls.forEach(l=>{l.style.transform='';l.style.perspectiveOrigin='50% 50%';});
+      const LDEPTH=140;
+      rowMetas.forEach(row=>{
+        const phase=visualCur*row.speed;
+        const lx=row.cell?-((((phase%row.cell)+row.cell)%row.cell)+row.cell):-phase;
+        row.el.style.transform=`translate3d(${lx.toFixed(1)}px,0,0)`;
+        row.letters.forEach(L=>{
+          const sx=L.bx+L.lw/2+lx,ln=(sx-mid)/(mid||1),an=Math.min(Math.abs(ln),1);
+          const tz=-LDEPTH*(1-an*an),rz=clamp(ln*row.angle*row.dir,-15,15);
+          L.el.style.transform=`translateZ(${tz.toFixed(0)}px) rotateZ(${rz.toFixed(2)}deg)`;
+        });
+      });
     }
     if(bar)bar.style.width=(G.max?clamp(G.cur/G.max,0,1)*100:0)+'%';
     const DEPTH=320, BANG=18;
@@ -591,8 +668,9 @@ function makeGallery({root,track,bg,front,frontParallax=0.6,bar,idxEl,nameEl,nam
         // elliptical Z-track: centre block faces viewer flat & nearest (z≈0); sides recede & tilt symmetrically
         const n=clamp(d,-1.8,1.8), an=Math.min(Math.abs(n),1);
         // block rides the SAME concave ellipse as the letters: centre = flat & farthest (smallest); sides = nearer & tilted
-        const tz=-DEPTH*(1-an*an), rotY=clamp(-n*BANG,-28,28), op=1-Math.min(Math.abs(n),1)*0.15;
-        const warpN=Math.sign(n)*Math.pow(Math.min(Math.abs(n),1.8)/1.8,1.25)*1.8, dx=(warpN-n)*mid*0.32;
+        const tz=-DEPTH*(1-an*an), rotY=clamp(-n*BANG*1.08,-31,31), op=1-Math.min(Math.abs(n),1)*0.04;
+        const edge=Math.pow(Math.min(Math.abs(n),1.8)/1.8,1.55)*2.12;
+        const warpN=Math.sign(n)*edge, dx=(warpN-n)*mid*0.5;
         if(c){c.style.transform=`translate3d(${dx.toFixed(1)}px,0,${tz.toFixed(0)}px) rotateY(${rotY.toFixed(2)}deg)`;c.style.opacity=op.toFixed(3);}
       }else{
         const rotY=clamp(-d*7,-8.5,8.5), sc=1-ad*0.12, op=1-ad*0.42, tz=-ad*60;
@@ -605,11 +683,11 @@ function makeGallery({root,track,bg,front,frontParallax=0.6,bar,idxEl,nameEl,nam
     if(active)requestAnimationFrame(tick); else rafing=false;
   }
   function start(){if(!rafing){rafing=true;requestAnimationFrame(tick);}}
-  function stepTo(i){i=clamp(i,0,items.length-1);const m=metrics[i];if(m)G.target=clamp(m.l+m.w/2-mid,0,G.max);}
-  root.addEventListener('wheel',e=>{if(!active)return;e.preventDefault();const dy=(Math.abs(e.deltaY)>=Math.abs(e.deltaX)?e.deltaY:e.deltaX)*1.15;G.target=infinite?(G.target+dy):clamp(G.target+dy,0,G.max);},{passive:false});
+  function stepTo(i){i=clamp(i,0,items.length-1);const m=metrics[i];if(m)G.target=infinite?itemTarget(i):clamp(itemTarget(i),0,G.max);}
+  root.addEventListener('wheel',e=>{if(!active)return;e.preventDefault();const raw=Math.abs(e.deltaY)>=Math.abs(e.deltaX)?e.deltaY:e.deltaX,dy=raw*0.7;G.target=infinite?(G.target+dy):clamp(G.target+dy,0,G.max);if(infinite)queueSnap(Math.sign(raw)||lastDir);},{passive:false});
   root.addEventListener('pointerdown',e=>{if(e.target.closest('.g-controls'))return;dragging=true;moved=0;dsx=e.clientX;dst=G.target;root.classList.add('drag');try{root.setPointerCapture(e.pointerId)}catch(_){}});
-  root.addEventListener('pointermove',e=>{if(!dragging)return;const dx=e.clientX-dsx;moved+=Math.abs(dx);G.target=infinite?(dst-dx):clamp(dst-dx,0,G.max);});
-  function endDrag(){dragging=false;root.classList.remove('drag');}
+  root.addEventListener('pointermove',e=>{if(!dragging)return;const dx=e.clientX-dsx;moved+=Math.abs(dx);G.target=infinite?(dst-dx):clamp(dst-dx,0,G.max);if(infinite)lastDir=Math.sign(-dx)||lastDir;});
+  function endDrag(){if(dragging&&infinite)queueSnap(lastDir);dragging=false;root.classList.remove('drag');}
   root.addEventListener('pointerup',endDrag);root.addEventListener('pointercancel',endDrag);
   return {activate(){active=true;measure();start();},deactivate(){active=false;},measure,stepTo,get index(){return lastIdx;},get moved(){return moved;}};
 }
@@ -617,8 +695,8 @@ function makeGallery({root,track,bg,front,frontParallax=0.6,bar,idxEl,nameEl,nam
 /* ============ builder gallery ============ */
 const bTrack=$('#bTrack');
 const B_OFF=['-9vh','7vh','-3vh','11vh','-12vh','4vh'];
-// duplicate for seamless infinite scroll; identical --off so clones line up perfectly with originals
-[...PROJECTS,...PROJECTS].forEach((p,i)=>{
+// triple-copy for seamless infinite scroll; wraps happen outside the visible middle strip.
+[...PROJECTS,...PROJECTS,...PROJECTS].forEach((p,i)=>{
   const it=ce('div');it.className='g-item pi';it.dataset.i=i;
   const projI=i%PROJECTS.length;
   it.style.setProperty('--ar',p.r||1.4);it.style.setProperty('--off',B_OFF[projI%B_OFF.length]);
@@ -626,23 +704,15 @@ const B_OFF=['-9vh','7vh','-3vh','11vh','-12vh','4vh'];
   const media=p.soon
     ?`<div class="ph">${p.emoji||'—'}</div><span class="pcard-tag soon">Coming soon</span>`
     :p.youtube
-      ?`<img src="https://img.youtube.com/vi/${p.youtube}/maxresdefault.jpg" alt="${p.title}" loading="lazy"><div class="pcard-yt"></div><span class="pcard-tag">▶ video</span><span class="pcard-open">Open ↗</span>`
+      ?`<img src="${p.cover||`https://img.youtube.com/vi/${p.youtube}/maxresdefault.jpg`}" alt="${p.title}" loading="lazy"><div class="pcard-yt"></div><span class="pcard-tag">▶ video</span><span class="pcard-open">Open ↗</span>`
       :`<img src="${p.cover}" alt="${p.title}" loading="lazy">${p.video?`<video muted loop playsinline preload="none" data-src="${p.video}"></video><span class="pcard-tag">▶ demo</span>`:''}<span class="pcard-open">Open ↗</span>`;
   it.innerHTML=`<div class="curl"><div class="pcard">${media}<div class="pcard-cap"><h3>${p.title}</h3><p>${p.sub}</p><span class="pc-meta">${p.meta}</span></div></div></div>`;
   it.addEventListener('click',()=>{if(bGal.moved<6)openProject(p)});
   if(p.video){const v=it.querySelector('video');it.addEventListener('mouseenter',()=>{if(!v.src){v.src=v.dataset.src;v.addEventListener('loadeddata',()=>v.classList.add('ready'),{once:true})}v.play().catch(()=>{})});it.addEventListener('mouseleave',()=>v.pause())}
   bTrack.appendChild(it);
 });
-const bGal=makeGallery({root:$('#bGallery'),track:bTrack,arc:true,rowsEls:[$('#bBack'),$('#bFront')],rowsParallax:0.32,infinite:true});
-// auto-play YouTube on visibility, pause/unload when off-screen
-const ytIo=new IntersectionObserver(es=>es.forEach(e=>{
-  const slot=e.target.querySelector('.pcard-yt');if(!slot)return;
-  const yt=e.target.dataset.yt;
-  if(e.isIntersecting&&e.intersectionRatio>=0.3&&current==='builder'){
-    if(!slot.querySelector('iframe'))slot.innerHTML=`<iframe src="https://www.youtube.com/embed/${yt}?autoplay=1&mute=1&loop=1&playlist=${yt}&controls=0&modestbranding=1&playsinline=1&rel=0" allow="autoplay; encrypted-media; picture-in-picture" frameborder="0"></iframe>`;
-  }else if(slot.querySelector('iframe')){slot.innerHTML='';}
-}),{threshold:[0,0.3,0.6]});
-document.querySelectorAll('#bTrack .pi[data-yt]').forEach(el=>ytIo.observe(el));
+const bGal=makeGallery({root:$('#bGallery'),track:bTrack,arc:true,rowsEls:[$('#bBack'),$('#bFront')],rowsParallax:0.32,infinite:true,loopCopies:3});
+// Moving YouTube cards stay thumbnail-only; the modal loads the iframe on click.
 
 /* ============ creator gallery ============ */
 const gTrack=$('#gTrack');
@@ -705,30 +775,35 @@ const segs=[...donut.querySelectorAll('.seg')],legs=[...legend.querySelectorAll(
 function hov(i){donut.classList.add('has-hover');segs.forEach(s=>s.classList.toggle('on',+s.dataset.i===i));legs.forEach(l=>l.style.background=+l.dataset.i===i?'var(--surface-2)':'');dBig.textContent=HOLDINGS[i].w+'%';dSm.textContent=HOLDINGS[i].t}
 function unhov(){donut.classList.remove('has-hover');segs.forEach(s=>s.classList.remove('on'));legs.forEach(l=>l.style.background='');dBig.textContent=HOLDINGS.length;dSm.textContent='holdings'}
 segs.concat(legs).forEach(el=>{el.addEventListener('mouseenter',()=>hov(+el.dataset.i));el.addEventListener('mouseleave',unhov)});
-const an=$('#allocNote');if(an)an.textContent='Started Jan 1, 2026 at the target weights; current weights reflect real price moves (Yahoo Finance), so winners grow and laggards shrink. Most positions are daily-rebalanced 2×/3× leveraged ETFs — returns and risk are amplified accordingly. For information only, not investment advice.';
+const an=$('#allocNote');if(an)an.textContent='Started Jan 1, 2026 at target weights. Current weights reflect price drift; leveraged products amplify both upside and drawdowns. For information only, not investment advice.';
 const allocEl=document.querySelector('.alloc'),allocToggle=$('#allocToggle');
 if(allocToggle)allocToggle.addEventListener('click',()=>allocEl.classList.toggle('show-list'));
 
 /* ============ articles ============ */
 const cats=['All',...new Set(ARTICLES.map(a=>a.cat))],filter=$('#artFilter'),agrid=$('#artGrid');
 cats.forEach((c,i)=>{const b=ce('button');b.className='fbtn'+(i===0?' active':'');b.textContent=c;b.addEventListener('click',()=>{filter.querySelectorAll('.fbtn').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderArticles(c)});filter.appendChild(b)});
-function renderArticles(cat){agrid.innerHTML='';ARTICLES.filter(a=>cat==='All'||a.cat===cat).forEach(a=>{const el=ce('article');el.className='art-card';el.innerHTML=`<span class="tk">${a.tk} · ${a.cat}</span><h4>${a.title}</h4><p>${a.blurb}</p><span class="more">Read analysis →</span>`;el.addEventListener('click',()=>openArticle(a));agrid.appendChild(el)})}
+function renderArticles(cat){agrid.innerHTML='';ARTICLES.filter(a=>cat==='All'||a.cat===cat).forEach(a=>{const el=ce('article');el.className='art-card';const chips=(a.metrics||[]).slice(0,3).map(m=>`<span>${m}</span>`).join('');el.innerHTML=`<span class="tk">${a.tk} · ${a.cat}</span><h4>${a.title}</h4><p>${a.blurb}</p><div class="art-metrics">${chips}</div><span class="more">Read analysis →</span>`;el.addEventListener('click',()=>openArticle(a));agrid.appendChild(el)})}
 renderArticles('All');
 
 /* ============ modal ============ */
 const modal=$('#modal'),sheet=$('#sheet');
-function showModal(html,cls){modal.className='modal'+(cls?' '+cls:'');sheet.className='sheet'+(cls==='light'?' lb':'');sheet.innerHTML=`<button class="sheet-close" aria-label="Close">✕</button>`+html;sheet.querySelector('.sheet-close').addEventListener('click',closeModal);requestAnimationFrame(()=>modal.classList.add('open'));document.body.style.overflow='hidden'}
-function closeModal(){modal.classList.remove('open');document.body.style.overflow=''}
+function showModal(html,cls){modal.className='modal'+(cls?' '+cls:'');sheet.className='sheet'+(cls==='light'?' lb':cls==='project'?' project-detail':'');sheet.innerHTML=`<button class="sheet-close" aria-label="Close">✕</button>`+html;sheet.querySelector('.sheet-close').addEventListener('click',closeModal);requestAnimationFrame(()=>modal.classList.add('open'));document.body.style.overflow='hidden'}
+function closeModal(){modal.classList.remove('open');document.body.style.overflow='';setTimeout(()=>{if(!modal.classList.contains('open'))sheet.innerHTML='';},520)}
 modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});
 addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
 function openProject(p){
-  const media=p.soon?`<div class="sheet-media"><div class="ph">${p.emoji||'—'}</div></div>`
-    :p.youtube?`<div class="sheet-media"><iframe src="https://www.youtube.com/embed/${p.youtube}?rel=0&modestbranding=1&autoplay=1" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen frameborder="0"></iframe></div>`
-    :`<div class="sheet-media"><img src="${p.cover}" alt="${p.title}"></div>`;
+  const media=p.soon?`<div class="project-hero"><div class="ph">${p.emoji||'—'}</div></div>`
+    :p.youtube?`<div class="project-hero"><iframe src="https://www.youtube.com/embed/${p.youtube}" title="${p.title}" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen frameborder="0"></iframe></div>`
+    :`<div class="project-hero"><img src="${p.cover}" alt="${p.title}"></div>`;
   const links=(p.links||[]).map(l=>`<a class="btn ${l.fill?'fill':''}" href="${l.url}" target="_blank" rel="noopener">${l.label} ↗</a>`).join('');
-  showModal(`${media}<div class="sheet-body"><span class="mono">${p.meta}${p.soon?' · Coming soon':''}</span><h2>${p.title}</h2><p class="sub">${p.sub}</p>${p.body.map(t=>`<p>${t}</p>`).join('')}<h5>Tech stack</h5><div class="tags">${(p.stack||[]).map(s=>`<span class="tag">${s}</span>`).join('')}</div>${links?`<div class="links">${links}</div>`:''}</div>`);
+  const brief=(p.body||[]).slice(0,2).map(t=>`<p class="brief">${t}</p>`).join('');
+  showModal(`${media}<aside class="project-info"><span class="mono">${p.meta}${p.soon?' · Coming soon':''}</span><h2>${p.title}</h2><p class="sub">${p.sub}</p>${brief}<h5>Stack</h5><div class="tags">${(p.stack||[]).map(s=>`<span class="tag">${s}</span>`).join('')}</div>${links?`<div class="links">${links}</div>`:''}</aside>`,'project');
 }
-function openArticle(a){showModal(`<div class="sheet-body" style="padding-top:46px"><span class="mono">${a.tk} · ${a.cat} Analysis</span><h2>${a.title}</h2><p class="sub">${a.blurb}</p>${a.body.map(t=>`<p>${t}</p>`).join('')}<p class="dim note">Draft analysis — expand with your full DCF, comps, and risk notes.</p></div>`)}
+function openArticle(a){
+  const metrics=(a.metrics||[]).map(m=>`<span>${m}</span>`).join('');
+  const sources=(a.sources||[]).map(s=>`<a href="${s.url}" target="_blank" rel="noopener">${s.label}</a>`).join('');
+  showModal(`<div class="sheet-body report-body"><span class="mono">${a.tk} · ${a.cat} Equity Research</span><h2>${a.title}</h2><p class="sub">${a.blurb}</p><div class="report-metrics">${metrics}</div>${a.body.map(t=>`<p>${t}</p>`).join('')}<div class="report-label">Sources</div><div class="source-list">${sources}</div><p class="dim note">For information only. Leveraged and thematic products can lose value rapidly and require active risk management.</p></div>`)
+}
 function openPainting(p){showModal(`<img src="${p.src}" alt="${p.title}"><div class="lb-cap"><h4>${p.title}</h4><span>Oil on canvas · ${p.year}</span></div>`,'light')}
 /* cinematic film mode — gallery darkens & images fade, video projects in */
 const cinema=$('#cinema'),cinemaStage=$('#cinemaStage'),cGallery=$('#gallery');
