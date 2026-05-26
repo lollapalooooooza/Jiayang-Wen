@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- build: 2026-05-25-rk-tilt-flipped -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -46,9 +47,16 @@ button{font-family:inherit}
 .reveal.in{opacity:1;transform:none}
 
 /* ============ header ============ */
-header.hdr{position:fixed;top:0;left:0;right:0;height:var(--hdr);z-index:300;background:rgba(243,242,238,0.2);backdrop-filter:saturate(160%) blur(20px);-webkit-backdrop-filter:saturate(160%) blur(20px);border-bottom:1px solid var(--line-soft)}
+header.hdr{position:fixed;top:0;left:0;right:0;height:var(--hdr);z-index:300;background:rgba(243,242,238,0.2);backdrop-filter:saturate(160%) blur(20px);-webkit-backdrop-filter:saturate(160%) blur(20px);border-bottom:1px solid var(--line-soft);transition:background .6s var(--ease),border-color .6s var(--ease)}
+/* Builder: full-screen dot bg, header floats transparently */
+body.in-builder{background-color:#ecebe5;background-image:radial-gradient(rgba(20,22,40,0.22) 1.3px,transparent 1.5px);background-size:26px 26px}
+body.in-builder header.hdr{background:transparent;border-bottom-color:transparent;backdrop-filter:none;-webkit-backdrop-filter:none}
+/* AI Film: header goes black, brand/tabs/icons fade out, only Exit visible */
+body.film-on header.hdr{background:#000;border-bottom-color:#000;backdrop-filter:none;-webkit-backdrop-filter:none}
+body.film-on .brand,body.film-on .tabs,body.film-on .hdr-right{opacity:0;visibility:hidden;transition:opacity .45s var(--ease),visibility .45s var(--ease)}
 .hdr-inner{max-width:var(--maxw);height:100%;margin:0 auto;padding:0 40px;display:flex;align-items:center;justify-content:space-between;gap:24px}
-.brand{font-family:var(--serif);font-size:18px;font-weight:600;letter-spacing:-0.01em;white-space:nowrap}
+.brand{font-family:var(--serif);font-size:18px;font-weight:600;letter-spacing:-0.01em;white-space:nowrap;transition:opacity .45s var(--ease),visibility .45s var(--ease)}
+.tabs,.hdr-right{transition:opacity .45s var(--ease),visibility .45s var(--ease)}
 .brand b{color:var(--accent)}
 .tabs{position:relative;display:flex;gap:4px}
 .tab{position:relative;background:none;border:none;cursor:pointer;font-family:var(--mono);font-size:11px;letter-spacing:0.13em;text-transform:uppercase;color:var(--muted);padding:9px 16px;border-radius:999px;transition:color .35s var(--ease),background .35s var(--ease)}
@@ -165,7 +173,7 @@ main{position:fixed;top:var(--hdr);left:0;right:0;bottom:0}
 .work-layer.back{z-index:1}
 .work-layer.front{z-index:5}
 .work-row{position:absolute;left:0;top:calc(var(--row) * 25%);height:25%;display:flex;align-items:center;white-space:nowrap;transform-style:preserve-3d;font-family:var(--sans);font-weight:800;font-size:23vh;line-height:1;letter-spacing:0.04em;color:#2f49d6;text-shadow:0 10px 0 rgba(20,28,80,0.30),0 22px 32px rgba(20,28,80,0.22)}
-.gallery.wk .g-track{z-index:3;gap:24vw;padding:0 40vw;perspective:640px;perspective-origin:50% 50%}
+.gallery.wk .g-track{z-index:3;gap:29vw;padding:0 40vw;perspective:640px;perspective-origin:50% 50%}
 .gallery.wk .g-item{transform-style:preserve-3d}
 .gallery.wk .work-row .wl{display:inline-block;margin-right:0.1em;will-change:transform;transform-origin:50% 50%}
 .gallery.wk .g-code{color:#2f49d6}
@@ -296,7 +304,8 @@ main{position:fixed;top:var(--hdr);left:0;right:0;bottom:0}
 .cinema-stage{width:min(92vw,1180px);aspect-ratio:16/9;border-radius:6px;overflow:hidden;background:#000;transform:scale(.92);opacity:0;transition:transform .8s var(--ease-out) .12s,opacity .7s var(--ease) .12s;box-shadow:0 0 120px rgba(0,0,0,0.8),0 40px 120px rgba(0,0,0,0.6)}
 .cinema.on .cinema-stage{transform:scale(1);opacity:1}
 .cinema-stage iframe{width:100%;height:100%;border:none;display:block}
-.cinema-exit{position:absolute;top:26px;right:30px;z-index:2;font-family:var(--mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.78);background:transparent;border:1px solid rgba(255,255,255,0.28);padding:11px 18px;border-radius:999px;cursor:pointer;opacity:0;transition:opacity .5s var(--ease) .35s,color .3s,border-color .3s,background .3s}
+.cinema-exit{position:fixed;top:14px;right:30px;z-index:999;font-family:var(--mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.88);background:transparent;border:1px solid rgba(255,255,255,0.32);padding:9px 16px;border-radius:999px;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .5s var(--ease) .35s,color .3s,border-color .3s,background .3s}
+.cinema.on~.cinema-exit,body.film-on .cinema-exit{opacity:1;pointer-events:auto}
 .cinema.on .cinema-exit{opacity:1}
 .cinema-exit:hover{color:#000;background:#fff;border-color:#fff}
 .cinema-cap{position:absolute;bottom:30px;left:0;right:0;text-align:center;font-family:var(--mono);font-size:10px;letter-spacing:0.24em;text-transform:uppercase;color:rgba(255,255,255,0.42);opacity:0;transition:opacity .6s var(--ease) .45s}
@@ -435,6 +444,7 @@ const PROJECTS=[
    links:[{label:'Try it',url:'https://lollapalooooooza.github.io/Red-Pocket/',fill:true},{label:'GitHub',url:'https://github.com/lollapalooooooza/Red-Pocket'}],
    body:['Opening a virtual red pocket unfolds into a cinematic, fate-driven world — a small interactive toy about luck and anticipation.']},
   {id:'demo',title:'Demo Reel',meta:'Video',youtube:'k4QkM0LALmk',r:1.778,sub:'A short video demo.',stack:['Video'],links:[{label:'Watch on YouTube',url:'https://www.youtube.com/watch?v=k4QkM0LALmk',fill:true}],body:['A short demo. (Replace with description.)']},
+  {id:'doti',title:'Doti',meta:'Video',youtube:'pOCMaykK5CY',r:1.778,sub:'A demo video.',stack:['Video'],links:[{label:'Watch on YouTube',url:'https://youtu.be/pOCMaykK5CY',fill:true}],body:['A demo video. (Replace with description.)']},
 ];
 
 // ratio = width/height (true painting proportions)
@@ -509,6 +519,7 @@ function setView(name,push){
   tabs.forEach(t=>{const on=t.dataset.tab===name;t.classList.toggle('active',on);if(on)moveInk(t)});
   Object.keys(galleries).forEach(k=>galleries[k].deactivate());
   if(galleries[name])galleries[name].activate();
+  document.body.classList.toggle('in-builder',name==='builder');
   if(name!=='builder')document.querySelectorAll('#bTrack .pcard-yt').forEach(s=>{s.innerHTML='';});
   if(push!==false&&location.hash!=='#'+name)history.pushState({v:name},'','#'+name);
   // reset scroll of the view
@@ -520,20 +531,26 @@ addEventListener('resize',()=>{const a=tabs.find(t=>t.classList.contains('active
 
 /* ============ shared curled gallery (coverflow + parallax) ============ */
 let galleries={};
-function makeGallery({root,track,bg,front,frontParallax=0.6,bar,idxEl,nameEl,names,bgWord,parallax=0.36,onCenter,arc=false,rowsEls=null,rowsParallax=0.32,rowsTilt=0}){
+function makeGallery({root,track,bg,front,frontParallax=0.6,bar,idxEl,nameEl,names,bgWord,parallax=0.36,onCenter,arc=false,rowsEls=null,rowsParallax=0.32,rowsTilt=0,infinite=false}){
   const items=[...track.children];
   const curls=items.map(it=>it.firstElementChild);
   const imgs=items.map(it=>it.querySelector('img'));
   const letters=[];
   const G={target:0,cur:0,max:0};
-  let metrics=[],mid=1,lastIdx=-1,active=false,rafing=false,inited=false;
+  let metrics=[],mid=1,lastIdx=-1,active=false,rafing=false,inited=false,loopLen=0;
   let dragging=false,dsx=0,dst=0,moved=0;
   function measure(){
     mid=root.clientWidth/2;
     metrics=items.map(it=>({l:it.offsetLeft,w:it.offsetWidth}));
     G.max=Math.max(0,track.scrollWidth-root.clientWidth);
-    if(!inited&&metrics.length){G.cur=G.target=clamp(metrics[0].l+metrics[0].w/2-mid,0,G.max);inited=true;}
-    G.target=clamp(G.target,0,G.max);
+    // for infinite scroll: loopLen = distance between an item and its clone (half the duplicated strip)
+    loopLen = (infinite && items.length>=2) ? (metrics[items.length/2|0].l - metrics[0].l) : 0;
+    if(!inited&&metrics.length){
+      const init = metrics[0].l+metrics[0].w/2-mid;
+      G.cur = G.target = infinite ? init : clamp(init,0,G.max);
+      inited=true;
+    }
+    if(!infinite) G.target=clamp(G.target,0,G.max);
     if(bg&&bgWord){bg.textContent=bgWord;const w=bg.scrollWidth||1;const need=G.max*parallax+root.clientWidth*1.5;const reps=Math.max(1,Math.ceil(need/(w+1)));bg.textContent=Array(reps).fill(bgWord).join(' ');}
     if(front&&bgWord)front.textContent=Array(16).fill(bgWord).join('  ');
     if(rowsEls){
@@ -549,6 +566,7 @@ function makeGallery({root,track,bg,front,frontParallax=0.6,bar,idxEl,nameEl,nam
   }
   function tick(){
     G.cur+=(G.target-G.cur)*0.075; if(Math.abs(G.target-G.cur)<0.06)G.cur=G.target;
+    if(infinite&&loopLen>0){while(G.cur>=loopLen){G.cur-=loopLen;G.target-=loopLen;}while(G.cur<0){G.cur+=loopLen;G.target+=loopLen;}}
     track.style.transform=`translate3d(${(-G.cur).toFixed(1)}px,0,0)`;
     if(bg)bg.style.transform=`translate3d(${(-G.cur*parallax).toFixed(1)}px,-50%,0)`;
     if(front)front.style.transform=`translate3d(${(-G.cur*frontParallax).toFixed(1)}px,0,0)`;
@@ -557,8 +575,9 @@ function makeGallery({root,track,bg,front,frontParallax=0.6,bar,idxEl,nameEl,nam
       // sides recede into the screen and tilt symmetrically. Vanishing point stays at screen centre.
       const lx=-G.cur*rowsParallax, po=(mid-lx).toFixed(1)+'px 50%';
       rowsEls.forEach(l=>{l.style.transform=`translateX(${lx.toFixed(1)}px)`;l.style.perspectiveOrigin=po;});
-      const LDEPTH=140, LANG=6;
-      for(let k=0;k<letters.length;k++){const L=letters[k];const sx=L.bx+L.lw/2+lx;const ln=(sx-mid)/(mid||1);const an=Math.min(Math.abs(ln),1);const tz=-LDEPTH*(1-an*an);const ry=clamp(ln*LANG,-11,11);L.el.style.transform=`translateZ(${tz.toFixed(0)}px) rotateY(${ry.toFixed(2)}deg)`;}
+      const LDEPTH=140, LANG=11, midYL=root.clientHeight*0.5;
+      // Top rows (W/O) tilt: left CW, right CCW. Bottom rows (R/K) tilt the opposite way: left CCW (−11°), right CW (+11°).
+      for(let k=0;k<letters.length;k++){const L=letters[k];const sx=L.bx+L.lw/2+lx;const ln=(sx-mid)/(mid||1);const an=Math.min(Math.abs(ln),1);const tz=-LDEPTH*(1-an*an);const rowSign=L.ry<midYL?1:-1;const rz=clamp(-ln*LANG*rowSign,-15,15);L.el.style.transform=`translateZ(${tz.toFixed(0)}px) rotateZ(${rz.toFixed(2)}deg)`;}
     }
     if(bar)bar.style.width=(G.max?clamp(G.cur/G.max,0,1)*100:0)+'%';
     const DEPTH=320, BANG=18;
@@ -572,7 +591,7 @@ function makeGallery({root,track,bg,front,frontParallax=0.6,bar,idxEl,nameEl,nam
         // elliptical Z-track: centre block faces viewer flat & nearest (z≈0); sides recede & tilt symmetrically
         const n=clamp(d,-1.8,1.8), an=Math.min(Math.abs(n),1);
         // block rides the SAME concave ellipse as the letters: centre = flat & farthest (smallest); sides = nearer & tilted
-        const tz=-DEPTH*(1-an*an), rotY=clamp(-n*BANG,-28,28), op=1-Math.min(Math.abs(n),1)*0.1;
+        const tz=-DEPTH*(1-an*an), rotY=clamp(-n*BANG,-28,28), op=1-Math.min(Math.abs(n),1)*0.15;
         const warpN=Math.sign(n)*Math.pow(Math.min(Math.abs(n),1.8)/1.8,1.25)*1.8, dx=(warpN-n)*mid*0.32;
         if(c){c.style.transform=`translate3d(${dx.toFixed(1)}px,0,${tz.toFixed(0)}px) rotateY(${rotY.toFixed(2)}deg)`;c.style.opacity=op.toFixed(3);}
       }else{
@@ -587,9 +606,9 @@ function makeGallery({root,track,bg,front,frontParallax=0.6,bar,idxEl,nameEl,nam
   }
   function start(){if(!rafing){rafing=true;requestAnimationFrame(tick);}}
   function stepTo(i){i=clamp(i,0,items.length-1);const m=metrics[i];if(m)G.target=clamp(m.l+m.w/2-mid,0,G.max);}
-  root.addEventListener('wheel',e=>{if(!active)return;e.preventDefault();G.target=clamp(G.target+(Math.abs(e.deltaY)>=Math.abs(e.deltaX)?e.deltaY:e.deltaX)*1.15,0,G.max);},{passive:false});
+  root.addEventListener('wheel',e=>{if(!active)return;e.preventDefault();const dy=(Math.abs(e.deltaY)>=Math.abs(e.deltaX)?e.deltaY:e.deltaX)*1.15;G.target=infinite?(G.target+dy):clamp(G.target+dy,0,G.max);},{passive:false});
   root.addEventListener('pointerdown',e=>{if(e.target.closest('.g-controls'))return;dragging=true;moved=0;dsx=e.clientX;dst=G.target;root.classList.add('drag');try{root.setPointerCapture(e.pointerId)}catch(_){}});
-  root.addEventListener('pointermove',e=>{if(!dragging)return;const dx=e.clientX-dsx;moved+=Math.abs(dx);G.target=clamp(dst-dx,0,G.max);});
+  root.addEventListener('pointermove',e=>{if(!dragging)return;const dx=e.clientX-dsx;moved+=Math.abs(dx);G.target=infinite?(dst-dx):clamp(dst-dx,0,G.max);});
   function endDrag(){dragging=false;root.classList.remove('drag');}
   root.addEventListener('pointerup',endDrag);root.addEventListener('pointercancel',endDrag);
   return {activate(){active=true;measure();start();},deactivate(){active=false;},measure,stepTo,get index(){return lastIdx;},get moved(){return moved;}};
@@ -598,9 +617,11 @@ function makeGallery({root,track,bg,front,frontParallax=0.6,bar,idxEl,nameEl,nam
 /* ============ builder gallery ============ */
 const bTrack=$('#bTrack');
 const B_OFF=['-9vh','7vh','-3vh','11vh','-12vh','4vh'];
-PROJECTS.forEach((p,i)=>{
+// duplicate for seamless infinite scroll; identical --off so clones line up perfectly with originals
+[...PROJECTS,...PROJECTS].forEach((p,i)=>{
   const it=ce('div');it.className='g-item pi';it.dataset.i=i;
-  it.style.setProperty('--ar',p.r||1.4);it.style.setProperty('--off',B_OFF[i%B_OFF.length]);
+  const projI=i%PROJECTS.length;
+  it.style.setProperty('--ar',p.r||1.4);it.style.setProperty('--off',B_OFF[projI%B_OFF.length]);
   if(p.youtube)it.dataset.yt=p.youtube;
   const media=p.soon
     ?`<div class="ph">${p.emoji||'—'}</div><span class="pcard-tag soon">Coming soon</span>`
@@ -612,7 +633,7 @@ PROJECTS.forEach((p,i)=>{
   if(p.video){const v=it.querySelector('video');it.addEventListener('mouseenter',()=>{if(!v.src){v.src=v.dataset.src;v.addEventListener('loadeddata',()=>v.classList.add('ready'),{once:true})}v.play().catch(()=>{})});it.addEventListener('mouseleave',()=>v.pause())}
   bTrack.appendChild(it);
 });
-const bGal=makeGallery({root:$('#bGallery'),track:bTrack,arc:true,rowsEls:[$('#bBack'),$('#bFront')],rowsParallax:0.32});
+const bGal=makeGallery({root:$('#bGallery'),track:bTrack,arc:true,rowsEls:[$('#bBack'),$('#bFront')],rowsParallax:0.32,infinite:true});
 // auto-play YouTube on visibility, pause/unload when off-screen
 const ytIo=new IntersectionObserver(es=>es.forEach(e=>{
   const slot=e.target.querySelector('.pcard-yt');if(!slot)return;
@@ -713,6 +734,7 @@ function openPainting(p){showModal(`<img src="${p.src}" alt="${p.title}"><div cl
 const cinema=$('#cinema'),cinemaStage=$('#cinemaStage'),cGallery=$('#gallery');
 function openFilm(){
   cGallery.classList.add('film');           // background darkens + image blocks fade out
+  document.body.classList.add('film-on');   // header turns black, brand/tabs/icons fade out
   if(galleries.creator)galleries.creator.deactivate();
   // Inject iframe NOW (within the click's user-gesture window) so autoplay isn't blocked.
   cinemaStage.innerHTML=`<iframe src="https://www.youtube.com/embed/ayd-vBqCWs0?rel=0&modestbranding=1&autoplay=1&playsinline=1&enablejsapi=1" title="AI Short Film — Jiayang Wen" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen frameborder="0"></iframe>`;
@@ -721,6 +743,7 @@ function openFilm(){
 function closeFilm(){
   cinema.classList.remove('on');cinema.setAttribute('aria-hidden','true');
   cGallery.classList.remove('film');         // background lightens + image blocks fade in
+  document.body.classList.remove('film-on'); // header fades back to default
   clearTimeout(cinema._t);
   setTimeout(()=>{cinemaStage.innerHTML='';},600);
   if(current==='creator'&&galleries.creator)galleries.creator.activate();
