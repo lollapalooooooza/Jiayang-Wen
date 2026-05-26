@@ -244,17 +244,19 @@ main{position:fixed;top:var(--hdr);left:0;right:0;bottom:0}
 .alloc{position:sticky;top:84px}
 .alloc-head{display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:20px}
 .alloc-title{font-family:var(--serif);font-size:20px;font-weight:600;letter-spacing:-0.01em}
-.alloc-toggle{width:34px;height:34px;border-radius:9px;border:none;background:transparent;color:var(--ink);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:color .3s var(--ease),transform .3s var(--ease)}
+.alloc-toggle{position:relative;width:34px;height:34px;border-radius:9px;border:none;background:transparent;color:var(--ink);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:color .3s var(--ease),transform .3s var(--ease)}
 .alloc-toggle:hover{background:transparent;color:var(--accent);transform:scale(1.08)}
-.alloc-toggle svg{width:16px;height:16px;fill:currentColor}
-.alloc-toggle .ic-pie{display:none}
-.alloc.show-list .alloc-toggle .ic-list{display:none}
-.alloc.show-list .alloc-toggle .ic-pie{display:block}
-.alloc-body{display:flex;flex-direction:column;justify-content:center;height:360px;min-height:360px}
-.alloc-body .legend{display:none}
-.alloc.show-list .donut-box{display:none}
-.alloc.show-list .alloc-body .legend{display:flex}
-.donut-box{display:flex;justify-content:center;align-items:center;height:300px;min-height:300px}
+.alloc-toggle svg{position:absolute;width:16px;height:16px;fill:currentColor;transition:opacity .34s var(--ease),transform .44s var(--ease-out)}
+.alloc-toggle .ic-list{opacity:1;transform:rotate(0deg) scale(1)}
+.alloc-toggle .ic-pie{opacity:0;transform:rotate(28deg) scale(.72)}
+.alloc.show-list .alloc-toggle .ic-list{opacity:0;transform:rotate(-28deg) scale(.72)}
+.alloc.show-list .alloc-toggle .ic-pie{opacity:1;transform:rotate(0deg) scale(1)}
+.alloc-body{display:grid;align-items:center;height:360px;min-height:360px;overflow:hidden}
+.donut-box,.legend{grid-area:1/1;width:100%;transition:opacity .44s var(--ease),transform .54s var(--ease-out),filter .44s var(--ease);will-change:opacity,transform,filter}
+.donut-box{display:flex;justify-content:center;align-items:center;height:300px;min-height:300px;opacity:1;transform:translateY(0) scale(1);filter:blur(0);pointer-events:auto}
+.legend{opacity:0;transform:translateY(14px) scale(.985);filter:blur(4px);pointer-events:none}
+.alloc.show-list .donut-box{opacity:0;transform:translateY(-14px) scale(.985);filter:blur(4px);pointer-events:none}
+.alloc.show-list .legend{opacity:1;transform:translateY(0) scale(1);filter:blur(0);pointer-events:auto}
 .donut{position:relative;flex:0 0 auto}
 .donut svg{transform:rotate(-90deg);display:block}
 .donut .seg{fill:none;stroke-width:16;transition:stroke-width .35s var(--ease),opacity .35s var(--ease);cursor:pointer}
@@ -522,8 +524,8 @@ const PROJECTS=[
    sub:'An interactive fortune experience with a cinematic, fate-driven reveal.',stack:['HTML','CSS','JavaScript','Canvas'],
    links:[{label:'Try it',url:'https://lollapalooooooza.github.io/Red-Pocket/',fill:true},{label:'GitHub',url:'https://github.com/lollapalooooooza/Red-Pocket'}],
    body:['Opening a virtual red pocket unfolds into a cinematic, fate-driven world — a small interactive toy about luck and anticipation.']},
-  {id:'demo',title:'echoNest',meta:'Video',youtube:'k4QkM0LALmk',r:1.778,sub:'A short video demo with a cinematic product-demo rhythm.',stack:['Video'],links:[{label:'Try it',url:'https://echonest.pro/',fill:true},{label:'Watch on YouTube',url:'https://www.youtube.com/watch?v=k4QkM0LALmk'}],body:['echoNest is a compact demo reel built around atmosphere, pacing, and a quick product-story reveal.']},
-  {id:'doti',title:'Doti',meta:'Video',youtube:'pOCMaykK5CY',r:1.778,sub:'A demo video for the Dot college-life discovery experience.',stack:['Video','Product','iOS'],links:[{label:'Try it',url:'https://xdot.app/',fill:true},{label:'Watch on YouTube',url:'https://youtu.be/pOCMaykK5CY'}],body:['Doti presents Dot as a lightweight guide for better college life, centered on discovering campus places, food, and social moments through a word-of-mouth community.']},
+  {id:'demo',title:'echoNest',meta:'Video',youtube:'k4QkM0LALmk',r:1.778,sub:'Turn knowledge into a live character you can talk with.',stack:['Video','Avatar','AI'],links:[{label:'Try it',url:'https://echonest.pro/',fill:true},{label:'Watch on YouTube',url:'https://www.youtube.com/watch?v=k4QkM0LALmk'}],body:['echoNest lets bloggers, scholars, and influencers build a digital avatar from their knowledge base, then let subscribers interact with it in a live conversational experience.']},
+  {id:'doti',title:'Doti',meta:'Video',youtube:'pOCMaykK5CY',r:1.778,sub:'An agentic creative tool for turning ideas into visual stories in minutes.',stack:['Video','AI','Storyboard'],links:[{label:'Try it',url:'https://xdot.app/',fill:true},{label:'Watch on YouTube',url:'https://youtu.be/pOCMaykK5CY'}],body:['Write one sentence of an idea, feeling, or tagline; Doti turns it into a well-designed storyboard and generated video so anyone can shape a visual story quickly.']},
 ];
 
 // ratio = width/height (true painting proportions)
