@@ -135,9 +135,10 @@ main{position:fixed;top:var(--hdr);left:0;right:0;bottom:0}
 .awards-head h1{font-family:var(--serif);font-size:clamp(42px,6vw,72px);font-weight:600;line-height:.96;letter-spacing:-.035em;margin-top:12px}
 .awards-head p{color:var(--muted);font-size:15px;line-height:1.65;font-weight:300;max-width:360px}
 .awards-grid{display:grid}
-.award-card{display:grid;grid-template-columns:minmax(0,1fr) minmax(250px,360px);gap:32px;align-items:center;padding:26px 0;border-bottom:1px solid var(--line);background:transparent}
+.award-card{display:grid;grid-template-columns:minmax(0,1fr) minmax(250px,360px);gap:32px;align-items:stretch;padding:26px 0;border-bottom:1px solid var(--line);background:transparent}
 .award-card:first-child{padding-top:28px}
-.award-info{min-width:0}
+.award-card--pair{align-items:center}
+.award-info{min-width:0;display:flex;flex-direction:column;justify-content:center}
 .award-info h2{font-family:var(--serif);font-size:clamp(25px,3vw,36px);font-weight:500;line-height:1.08;letter-spacing:-.026em;margin:10px 0 10px;color:var(--ink-2)}
 .award-info p{font-size:14.5px;color:var(--muted);line-height:1.62;max-width:570px}
 .award-media{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:10px;align-content:center;align-items:start;justify-items:center}
@@ -145,13 +146,26 @@ main{position:fixed;top:var(--hdr);left:0;right:0;bottom:0}
 .award-shot img{width:100%;height:auto;display:block;object-fit:contain}
 .award-shot.portrait{max-width:128px}
 .award-shot.wide{max-width:320px}
+.award-card--pair .award-media{grid-template-columns:repeat(2,max-content);gap:30px;justify-content:center;align-items:center}
+.award-card--pair .award-shot{height:168px;width:auto;max-width:none;display:flex;align-items:center;justify-content:center}
+.award-card--pair .award-shot img{height:100%;width:auto;max-width:none}
+.award-card--pair .award-shot.portrait{max-width:none}
+.award-card--single .award-media{display:flex;align-items:center;justify-content:center;min-height:270px;height:100%}
+.award-card--single .award-shot{height:100%;width:auto;max-width:100%;display:flex;align-items:center;justify-content:center}
+.award-card--single .award-shot img{height:100%;width:auto;max-width:100%}
+.award-card--single .award-shot.wide{max-width:520px}
 .award-metrics{display:flex;flex-wrap:wrap;gap:7px;margin-top:16px}
 .award-metrics span{font-family:var(--mono);font-size:9.5px;letter-spacing:.085em;text-transform:uppercase;color:var(--ink-2);border:1px solid var(--line);border-radius:999px;padding:6px 9px;background:rgba(250,249,246,.62)}
 @media(max-width:860px){
   .awards-head{display:block}
   .awards-head p{margin-top:16px}
   .award-card{grid-template-columns:1fr;gap:18px;padding:24px 0}
+  .award-card--pair .award-media{grid-template-columns:repeat(2,max-content);gap:14px;justify-content:start}
+  .award-card--pair .award-shot{height:128px}
   .award-media{justify-items:start}
+  .award-card--single .award-media{min-height:0;height:auto;justify-content:start}
+  .award-card--single .award-shot{height:auto}
+  .award-card--single .award-shot img{width:100%;height:auto}
   .award-shot{max-width:210px}
   .award-shot.portrait{max-width:145px}
   .award-shot.wide{max-width:min(360px,100%)}
@@ -558,7 +572,7 @@ main{position:fixed;top:var(--hdr);left:0;right:0;bottom:0}
         </header>
 
         <div class="awards-grid">
-          <article class="award-card reveal">
+          <article class="award-card award-card--pair reveal">
             <div class="award-media">
               <figure class="award-shot"><img src="images/award-amc12-honor-roll.jpeg" alt="AMC 12 Honor Roll of Distinction certificate"></figure>
               <figure class="award-shot portrait"><img src="images/award-usamo-qualifier.jpg" alt="AIME II score and USA(J)MO qualification proof"></figure>
@@ -575,7 +589,7 @@ main{position:fixed;top:var(--hdr);left:0;right:0;bottom:0}
             </div>
           </article>
 
-          <article class="award-card reveal">
+          <article class="award-card award-card--single reveal">
             <div class="award-media">
               <figure class="award-shot wide"><img src="images/award-usaco-platinum-full-score.jpg" alt="USACO 2021 US Open Platinum full score result"></figure>
             </div>
@@ -584,14 +598,13 @@ main{position:fixed;top:var(--hdr);left:0;right:0;bottom:0}
               <h2>USACO Platinum Full Score</h2>
               <p>Perfect score in the Platinum division, with every listed problem marked correct in the final results.</p>
               <div class="award-metrics">
-                <span>1000 / 1000</span>
                 <span>Platinum</span>
                 <span>Top 0.01%</span>
               </div>
             </div>
           </article>
 
-          <article class="award-card reveal">
+          <article class="award-card award-card--single reveal">
             <div class="award-media">
               <figure class="award-shot"><img src="images/award-physicsbowl-top100.jpeg" alt="AAPT PhysicsBowl Global Top 100 certificate"></figure>
             </div>
@@ -601,12 +614,11 @@ main{position:fixed;top:var(--hdr);left:0;right:0;bottom:0}
               <p>Ranked in the global top 100 for Division 2 in the Thirty-Fifth Annual AAPT PhysicsBowl Contest.</p>
               <div class="award-metrics">
                 <span>Global Top 100</span>
-                <span>Division 2</span>
               </div>
             </div>
           </article>
 
-          <article class="award-card reveal">
+          <article class="award-card award-card--single reveal">
             <div class="award-media">
               <figure class="award-shot"><img src="images/award-arml-top100.jpeg" alt="ARML National Individual Top 100 certificate"></figure>
             </div>
@@ -616,7 +628,6 @@ main{position:fixed;top:var(--hdr);left:0;right:0;bottom:0}
               <p>Placed in the National Individual Top 100 at the ARML Local Mathematics Competition.</p>
               <div class="award-metrics">
                 <span>National Top 100</span>
-                <span>Individual</span>
               </div>
             </div>
           </article>
