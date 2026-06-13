@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jiayang Wen — Builder · Creator · Investor</title>
+<title>Jiayang Wen — Builder · Creator · Investor · Awards</title>
 <meta name="description" content="Jiayang Wen — building products, painting in oil, and investing with conviction.">
 <meta name="theme-color" content="#f3f2ee">
 <link rel="icon" type="image/jpeg" href="images/website_icon.jpg">
@@ -77,6 +77,9 @@ body.film-on .brand,body.film-on .tabs,body.film-on .hdr-right{opacity:0;visibil
 .brand-investor .up{font-family:var(--mono);font-size:9px;color:#1f8a4c;margin-left:0}
 body.mode-builder .brand-cli,body.mode-creator .brand-creator,body.mode-investor .brand-investor{opacity:1;transform:translateY(-50%) scale(1);filter:blur(0)}
 body.mode-builder .brand-cli .typed{animation:typeBrand .82s steps(11,end) both}
+body.mode-awards .brand-cli{opacity:1;transform:translateY(-50%) scale(1);filter:blur(0)}
+body.mode-awards .brand-cli .typed{max-width:12ch}
+body.mode-awards .brand-cli .cursor{display:none}
 body.mode-creator .brand-creator text{animation:handStroke .72s var(--delay,0s) cubic-bezier(.2,.72,.16,1) both}
 body.mode-creator .brand-creator::after{animation:crayonWrite 1.55s .02s cubic-bezier(.22,.8,.18,1) both}
 body.mode-investor .brand-investor .spark path{animation:drawTicker .74s .05s var(--ease-out) both}
@@ -120,6 +123,30 @@ main{position:fixed;top:var(--hdr);left:0;right:0;bottom:0}
 .vhead h1{font-family:var(--serif);font-size:clamp(40px,6.2vw,76px);font-weight:600;line-height:1;letter-spacing:-0.03em}
 .vhead h1 em{font-style:italic;color:var(--accent)}
 .vhead p{max-width:520px;margin-top:20px;font-size:17px;color:var(--muted);line-height:1.6;font-weight:300}
+
+/* ============ awards ============ */
+.awards-view{min-height:100%;background:var(--bg)}
+.awards-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,420px);gap:42px;align-items:end;border-bottom:1px solid var(--line);padding-bottom:30px;margin-bottom:22px}
+.awards-head h1{font-family:var(--serif);font-size:clamp(46px,7vw,88px);font-weight:600;line-height:.95;letter-spacing:-.035em;margin-top:14px}
+.awards-head p{color:var(--muted);font-size:17px;line-height:1.7;font-weight:300;max-width:390px}
+.awards-grid{display:grid;gap:18px}
+.award-card{display:grid;grid-template-columns:minmax(280px,.92fr) minmax(0,1.08fr);gap:26px;padding:22px;border:1px solid var(--line);border-radius:8px;background:rgba(255,255,255,.56);box-shadow:0 18px 50px rgba(20,18,12,.045)}
+.award-info{display:flex;flex-direction:column;justify-content:center;min-width:0}
+.award-info h2{font-family:var(--serif);font-size:clamp(30px,3.8vw,48px);font-weight:500;line-height:1.03;letter-spacing:-.03em;margin:12px 0 14px;color:var(--ink-2)}
+.award-info p{font-size:15px;color:var(--muted);line-height:1.65;max-width:560px}
+.award-media{display:grid;grid-template-columns:repeat(auto-fit,minmax(178px,1fr));gap:12px;align-content:start;align-items:start}
+.award-shot{background:#fff;border:1px solid var(--line-soft);border-radius:6px;overflow:hidden}
+.award-shot img{width:100%;height:auto;display:block;object-fit:contain}
+.award-shot.portrait{max-width:245px;justify-self:center}
+.award-shot.wide{align-self:center}
+.award-metrics{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.award-metrics span{font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-2);border:1px solid var(--line);border-radius:999px;padding:7px 10px;background:rgba(250,249,246,.76)}
+@media(max-width:860px){
+  .awards-head{grid-template-columns:1fr;gap:18px}
+  .award-card{grid-template-columns:1fr;padding:18px}
+  .award-info{order:-1}
+  .award-shot.portrait{max-width:min(270px,72vw)}
+}
 
 /* ============ builder ============ */
 .proj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:34px 34px}
@@ -417,6 +444,7 @@ main{position:fixed;top:var(--hdr);left:0;right:0;bottom:0}
       <button class="tab" data-tab="builder">Builder</button>
       <button class="tab" data-tab="creator">Creator</button>
       <button class="tab" data-tab="investor">Investor</button>
+      <button class="tab" data-tab="awards">Awards</button>
     </nav>
     <div class="hdr-right">
       <a class="soc" href="https://x.com/fastisslow_007" target="_blank" rel="noopener" aria-label="X (Twitter)" title="X"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
@@ -504,6 +532,86 @@ main{position:fixed;top:var(--hdr);left:0;right:0;bottom:0}
       <div class="vfoot">
         <span>© 2025 Jiayang Wen</span>
         <span>Prices via Yahoo Finance · not investment advice</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== AWARDS ===== -->
+  <section class="view" id="view-awards">
+    <div class="view-pad awards-view">
+      <div class="wrap">
+        <header class="awards-head reveal">
+          <div>
+            <span class="mono">competition archive</span>
+            <h1>Awards</h1>
+          </div>
+          <p>Selected high-school results across mathematics, physics, and competitive programming.</p>
+        </header>
+
+        <div class="awards-grid">
+          <article class="award-card reveal">
+            <div class="award-media">
+              <figure class="award-shot"><img src="images/award-amc12-honor-roll.jpeg" alt="AMC 12 Honor Roll of Distinction certificate"></figure>
+              <figure class="award-shot portrait"><img src="images/award-usamo-qualifier.jpg" alt="AIME II score and USA(J)MO qualification proof"></figure>
+            </div>
+            <div class="award-info">
+              <span class="mono">MAA AMC · 2021-2022</span>
+              <h2>AMC 12 & USAMO Qualifier</h2>
+              <p>Honor Roll of Distinction on AMC 12, followed by USA(J)MO qualification through AIME II performance.</p>
+              <div class="award-metrics">
+                <span>China No. 4</span>
+                <span>USAMO Qualifier</span>
+                <span>Top 0.08%</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="award-card reveal">
+            <div class="award-media">
+              <figure class="award-shot wide"><img src="images/award-usaco-platinum-full-score.jpg" alt="USACO 2021 US Open Platinum full score result"></figure>
+            </div>
+            <div class="award-info">
+              <span class="mono">USACO · 2021 US Open</span>
+              <h2>USACO Platinum Full Score</h2>
+              <p>Perfect score in the Platinum division, with every listed problem marked correct in the final results.</p>
+              <div class="award-metrics">
+                <span>1000 / 1000</span>
+                <span>Platinum</span>
+                <span>Top 0.01%</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="award-card reveal">
+            <div class="award-media">
+              <figure class="award-shot"><img src="images/award-physicsbowl-top100.jpeg" alt="AAPT PhysicsBowl Global Top 100 certificate"></figure>
+            </div>
+            <div class="award-info">
+              <span class="mono">AAPT · 2021</span>
+              <h2>PhysicsBowl Global Top 100</h2>
+              <p>Ranked in the global top 100 for Division 2 in the Thirty-Fifth Annual AAPT PhysicsBowl Contest.</p>
+              <div class="award-metrics">
+                <span>Global Top 100</span>
+                <span>Division 2</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="award-card reveal">
+            <div class="award-media">
+              <figure class="award-shot"><img src="images/award-arml-top100.jpeg" alt="ARML National Individual Top 100 certificate"></figure>
+            </div>
+            <div class="award-info">
+              <span class="mono">ARML · 2021</span>
+              <h2>ARML National Individual Top 100</h2>
+              <p>Placed in the National Individual Top 100 at the ARML Local Mathematics Competition.</p>
+              <div class="award-metrics">
+                <span>National Top 100</span>
+                <span>Individual</span>
+              </div>
+            </div>
+          </article>
+        </div>
       </div>
     </div>
   </section>
@@ -796,7 +904,7 @@ const watch=el=>io.observe(el);
 document.querySelectorAll('.reveal').forEach(watch);
 
 /* ============ tabs / routing ============ */
-const VIEWS=['builder','creator','investor'];
+const VIEWS=['builder','creator','investor','awards'];
 const tabs=[...document.querySelectorAll('.tab')], tabInk=$('#tabInk');
 let current=null,investorIntroPlayed=false;
 function moveInk(btn){tabInk.style.width=btn.offsetWidth+'px';tabInk.style.transform=`translate(${btn.offsetLeft}px,-50%)`}
@@ -809,7 +917,7 @@ function setView(name,push){
   Object.keys(galleries).forEach(k=>galleries[k].deactivate());
   if(galleries[name])galleries[name].activate();
   document.body.classList.toggle('in-builder',name==='builder');
-  document.body.classList.remove('mode-builder','mode-creator','mode-investor');
+  document.body.classList.remove('mode-builder','mode-creator','mode-investor','mode-awards');
   document.body.classList.add('mode-'+name);
   if(name==='investor')requestAnimationFrame(()=>playInvestorIntro());
   if(name!=='builder')document.querySelectorAll('#bTrack .pcard-yt').forEach(s=>{s.innerHTML='';});
