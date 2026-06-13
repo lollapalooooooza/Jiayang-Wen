@@ -131,9 +131,19 @@ main{position:fixed;top:var(--hdr);left:0;right:0;bottom:0}
 /* ============ awards ============ */
 .awards-view{min-height:100%;background:var(--bg)}
 .awards-wrap{max-width:1060px;--award-media-h:300px}
-.awards-head{display:flex;align-items:flex-end;justify-content:space-between;gap:32px;border-bottom:1px solid var(--line);padding-bottom:24px;margin-bottom:18px}
-.awards-head h1{font-family:var(--serif);font-size:clamp(42px,6vw,72px);font-weight:600;line-height:.96;letter-spacing:-.035em;margin-top:12px}
-.awards-head p{color:var(--muted);font-size:15px;line-height:1.65;font-weight:300;max-width:360px}
+.awards-head{display:flex;align-items:center;justify-content:space-between;gap:32px;border-bottom:1px solid var(--line);padding-bottom:24px;margin-bottom:18px}
+.awards-head h1{font-family:var(--serif);font-size:clamp(42px,6vw,72px);font-weight:600;line-height:.96;letter-spacing:-.035em}
+.award-switch{--switch-w:112px;position:relative;display:grid;grid-template-columns:repeat(2,var(--switch-w));gap:0;padding:3px;border:1px solid var(--line);border-radius:999px;background:rgba(250,249,246,.68);box-shadow:0 10px 26px rgba(20,18,12,.045)}
+.award-switch::before{content:'';position:absolute;left:3px;top:3px;width:var(--switch-w);height:calc(100% - 6px);border-radius:999px;background:var(--ink);box-shadow:0 8px 18px rgba(20,18,12,.1);transform:translateX(0);transition:transform .48s var(--ease-out),background .35s var(--ease)}
+.award-switch[data-mode="hackathons"]::before{transform:translateX(var(--switch-w))}
+.award-tab{position:relative;z-index:1;height:34px;border:0;background:transparent;border-radius:999px;cursor:pointer;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);transition:color .35s var(--ease),transform .35s var(--ease)}
+.award-tab:hover{color:var(--ink)}
+.award-tab.active{color:var(--bg)}
+.awards-panels{position:relative;transition:height .5s var(--ease-out)}
+.award-panel{display:grid;opacity:1;transform:none;transition:opacity .44s var(--ease-out),transform .44s var(--ease-out)}
+.award-panel[hidden]{display:none}
+.award-panel.pre-enter{opacity:0;transform:translateY(14px)}
+.award-panel.leaving{position:absolute;top:0;left:0;right:0;opacity:0;transform:translateY(-12px);pointer-events:none}
 .awards-grid{display:grid}
 .award-card{display:grid;grid-template-columns:minmax(0,1fr) minmax(250px,360px);gap:32px;align-items:stretch;padding:26px 0;border-bottom:1px solid var(--line);background:transparent}
 .award-card:first-child{padding-top:28px}
@@ -156,10 +166,16 @@ main{position:fixed;top:var(--hdr);left:0;right:0;bottom:0}
 .award-card--single .award-shot img{width:100%;height:100%;object-fit:contain}
 .award-metrics{display:flex;flex-wrap:wrap;gap:7px;margin-top:16px}
 .award-metrics span{font-family:var(--mono);font-size:9.5px;letter-spacing:.085em;text-transform:uppercase;color:var(--ink-2);border:1px solid var(--line);border-radius:999px;padding:6px 9px;background:rgba(250,249,246,.62)}
+.hack-grid{display:grid}
+.hack-card{display:grid;grid-template-columns:minmax(0,1fr) minmax(250px,360px);gap:32px;align-items:center;padding:26px 0;border-bottom:1px solid var(--line);background:transparent}
+.hack-card:first-child{padding-top:28px}
+.hack-media{height:300px;display:flex;align-items:center;justify-content:center}
+.hack-shot{width:min(100%,540px);aspect-ratio:16/9;background:#080807;border:1px solid var(--line);border-radius:8px;overflow:hidden;box-shadow:0 14px 36px rgba(20,18,12,.08)}
+.hack-shot img{width:100%;height:100%;object-fit:cover}
 @media(max-width:860px){
   .awards-wrap{--award-media-h:150px}
-  .awards-head{display:block}
-  .awards-head p{margin-top:16px}
+  .awards-head{display:flex;align-items:flex-start;flex-direction:column;gap:18px}
+  .award-switch{--switch-w:104px}
   .award-card{grid-template-columns:1fr;gap:18px;padding:24px 0}
   .award-media{justify-items:start}
   .award-shot{max-width:210px}
@@ -172,6 +188,9 @@ main{position:fixed;top:var(--hdr);left:0;right:0;bottom:0}
   .award-card--single .award-shot{height:var(--award-media-h);width:min(100%,194px);max-width:194px}
   .award-card--single .award-shot.wide{width:min(100%,260px);max-width:260px}
   .award-card--single .award-shot img{width:100%;height:100%;object-fit:contain}
+  .hack-card{grid-template-columns:1fr;gap:18px;padding:24px 0}
+  .hack-media{height:auto;justify-content:start}
+  .hack-shot{width:min(100%,310px)}
 }
 
 /* ============ builder ============ */
@@ -567,73 +586,112 @@ main{position:fixed;top:var(--hdr);left:0;right:0;bottom:0}
     <div class="view-pad awards-view">
       <div class="wrap awards-wrap">
         <header class="awards-head reveal">
-          <div>
-            <span class="mono">competition archive</span>
-            <h1>Awards</h1>
+          <h1>Awards</h1>
+          <div class="award-switch" data-awards-switch data-mode="awards" role="tablist" aria-label="Awards sections">
+            <button class="award-tab active" type="button" role="tab" aria-selected="true" aria-controls="awards-academic" data-awards-pane="awards">Awards</button>
+            <button class="award-tab" type="button" role="tab" aria-selected="false" aria-controls="awards-hackathons" data-awards-pane="hackathons">Hackathon</button>
           </div>
-          <p>Selected high-school results across mathematics, physics, and competitive programming.</p>
         </header>
 
-        <div class="awards-grid">
-          <article class="award-card award-card--pair reveal">
-            <div class="award-media">
-              <figure class="award-shot"><img src="images/award-amc12-honor-roll.jpeg" alt="AMC 12 Honor Roll of Distinction certificate"></figure>
-              <figure class="award-shot portrait"><img src="images/award-usamo-qualifier.jpg" alt="AIME II score and USA(J)MO qualification proof"></figure>
-            </div>
-            <div class="award-info">
-              <span class="mono">MAA AMC · 2021-2022</span>
-              <h2>AMC 12 & USAMO Qualifier</h2>
-              <p>Honor Roll of Distinction on AMC 12, followed by USA(J)MO qualification through AIME II performance.</p>
-              <div class="award-metrics">
-                <span>China No. 4</span>
-                <span>USAMO Qualifier</span>
-                <span>Top 0.08%</span>
-              </div>
-            </div>
-          </article>
+        <div class="awards-panels" id="awardsPanels">
+          <div class="award-panel active" id="awards-academic" data-awards-panel="awards" role="tabpanel">
+            <div class="awards-grid">
+              <article class="award-card award-card--pair reveal">
+                <div class="award-media">
+                  <figure class="award-shot"><img src="images/award-amc12-honor-roll.jpeg" alt="AMC 12 Honor Roll of Distinction certificate"></figure>
+                  <figure class="award-shot portrait"><img src="images/award-usamo-qualifier.jpg" alt="AIME II score and USA(J)MO qualification proof"></figure>
+                </div>
+                <div class="award-info">
+                  <span class="mono">MAA AMC · 2021-2022</span>
+                  <h2>AMC 12 & USAMO Qualifier</h2>
+                  <p>Honor Roll of Distinction on AMC 12, followed by USA(J)MO qualification through AIME II performance.</p>
+                  <div class="award-metrics">
+                    <span>China No. 4</span>
+                    <span>USAMO Qualifier</span>
+                    <span>Top 0.08%</span>
+                  </div>
+                </div>
+              </article>
 
-          <article class="award-card award-card--single reveal">
-            <div class="award-media">
-              <figure class="award-shot wide"><img src="images/award-usaco-platinum-full-score.jpg" alt="USACO 2021 US Open Platinum full score result"></figure>
-            </div>
-            <div class="award-info">
-              <span class="mono">USACO · 2021 US Open</span>
-              <h2>USACO Platinum Full Score</h2>
-              <p>Perfect score in the Platinum division, with every listed problem marked correct in the final results.</p>
-              <div class="award-metrics">
-                <span>Platinum</span>
-                <span>Top 0.01%</span>
-              </div>
-            </div>
-          </article>
+              <article class="award-card award-card--single reveal">
+                <div class="award-media">
+                  <figure class="award-shot wide"><img src="images/award-usaco-platinum-full-score.jpg" alt="USACO 2021 US Open Platinum full score result"></figure>
+                </div>
+                <div class="award-info">
+                  <span class="mono">USACO · 2021 US Open</span>
+                  <h2>USACO Platinum Full Score</h2>
+                  <p>Perfect score in the Platinum division, with every listed problem marked correct in the final results.</p>
+                  <div class="award-metrics">
+                    <span>Platinum</span>
+                    <span>Top 0.01%</span>
+                  </div>
+                </div>
+              </article>
 
-          <article class="award-card award-card--single reveal">
-            <div class="award-media">
-              <figure class="award-shot"><img src="images/award-physicsbowl-top100.jpeg" alt="AAPT PhysicsBowl Global Top 100 certificate"></figure>
-            </div>
-            <div class="award-info">
-              <span class="mono">AAPT · 2021</span>
-              <h2>PhysicsBowl Global Top 100</h2>
-              <p>Ranked in the global top 100 for Division 2 in the Thirty-Fifth Annual AAPT PhysicsBowl Contest.</p>
-              <div class="award-metrics">
-                <span>Global Top 100</span>
-              </div>
-            </div>
-          </article>
+              <article class="award-card award-card--single reveal">
+                <div class="award-media">
+                  <figure class="award-shot"><img src="images/award-physicsbowl-top100.jpeg" alt="AAPT PhysicsBowl Global Top 100 certificate"></figure>
+                </div>
+                <div class="award-info">
+                  <span class="mono">AAPT · 2021</span>
+                  <h2>PhysicsBowl Global Top 100</h2>
+                  <p>Ranked in the global top 100 for Division 2 in the Thirty-Fifth Annual AAPT PhysicsBowl Contest.</p>
+                  <div class="award-metrics">
+                    <span>Global Top 100</span>
+                  </div>
+                </div>
+              </article>
 
-          <article class="award-card award-card--single reveal">
-            <div class="award-media">
-              <figure class="award-shot"><img src="images/award-arml-top100.jpeg" alt="ARML National Individual Top 100 certificate"></figure>
+              <article class="award-card award-card--single reveal">
+                <div class="award-media">
+                  <figure class="award-shot"><img src="images/award-arml-top100.jpeg" alt="ARML National Individual Top 100 certificate"></figure>
+                </div>
+                <div class="award-info">
+                  <span class="mono">ARML · 2021</span>
+                  <h2>ARML National Individual Top 100</h2>
+                  <p>Placed in the National Individual Top 100 at the ARML Local Mathematics Competition.</p>
+                  <div class="award-metrics">
+                    <span>National Top 100</span>
+                  </div>
+                </div>
+              </article>
             </div>
-            <div class="award-info">
-              <span class="mono">ARML · 2021</span>
-              <h2>ARML National Individual Top 100</h2>
-              <p>Placed in the National Individual Top 100 at the ARML Local Mathematics Competition.</p>
-              <div class="award-metrics">
-                <span>National Top 100</span>
-              </div>
+          </div>
+
+          <div class="award-panel" id="awards-hackathons" data-awards-panel="hackathons" role="tabpanel" hidden>
+            <div class="hack-grid">
+              <article class="hack-card reveal">
+                <div class="hack-media">
+                  <figure class="hack-shot"><img src="images/award-hackathon-agi-house.png" alt="AGI House and Google DeepMind Enterprise Build Day event page"></figure>
+                </div>
+                <div class="award-info">
+                  <span class="mono">AGI House · Google DeepMind · May 2026</span>
+                  <h2>AGI House & Google DeepMind 1st Place</h2>
+                  <p>First place at the Enterprise Build Day, building an agentic prototype for practical AI workflows.</p>
+                  <div class="award-metrics">
+                    <span>1st Place</span>
+                    <span>AGI House</span>
+                    <span>Google DeepMind</span>
+                  </div>
+                </div>
+              </article>
+
+              <article class="hack-card reveal">
+                <div class="hack-media">
+                  <figure class="hack-shot"><img src="images/award-hackathon-runway.png" alt="Runway API Hackathon event page"></figure>
+                </div>
+                <div class="award-info">
+                  <span class="mono">Runway · API Hackathon · May 2026</span>
+                  <h2>Runway API Hackathon Honorable Mention</h2>
+                  <p>Honorable mention for a creative AI workflow built with the Runway API.</p>
+                  <div class="award-metrics">
+                    <span>Honorable Mention</span>
+                    <span>Runway API</span>
+                  </div>
+                </div>
+              </article>
             </div>
-          </article>
+          </div>
         </div>
       </div>
     </div>
@@ -959,6 +1017,55 @@ function setView(name,push){
 document.querySelectorAll('[data-tab]').forEach(el=>el.addEventListener('click',e=>{e.preventDefault();setView(el.dataset.tab)}));
 addEventListener('popstate',()=>setView((location.hash||'#builder').slice(1),false));
 addEventListener('resize',()=>{moveInk(tabs.find(t=>t.classList.contains('active')));Object.keys(galleries).forEach(k=>galleries[k].measure())});
+
+function initAwardsToggle(){
+  const switcher=document.querySelector('[data-awards-switch]'),wrap=$('#awardsPanels');
+  if(!switcher||!wrap)return;
+  const btns=[...switcher.querySelectorAll('[data-awards-pane]')];
+  const panels=Object.fromEntries([...wrap.querySelectorAll('[data-awards-panel]')].map(p=>[p.dataset.awardsPanel,p]));
+  let active='awards',timer=null;
+  const wake=panel=>panel.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%3)*0.05+'s';el.classList.add('in')});
+  function select(mode){
+    if(!panels[mode]||mode===active)return;
+    clearTimeout(timer);
+    const from=panels[active],to=panels[mode];
+    wrap.style.height=from.offsetHeight+'px';
+    to.hidden=false;
+    to.classList.add('pre-enter');
+    to.classList.remove('leaving');
+    void to.offsetHeight;
+    requestAnimationFrame(()=>{
+      const nextH=to.offsetHeight;
+      switcher.dataset.mode=mode;
+      btns.forEach(b=>{
+        const on=b.dataset.awardsPane===mode;
+        b.classList.toggle('active',on);
+        b.setAttribute('aria-selected',on?'true':'false');
+      });
+      from.classList.add('leaving');
+      to.classList.add('active');
+      to.classList.remove('pre-enter');
+      wrap.style.height=nextH+'px';
+      wake(to);
+      timer=setTimeout(()=>{
+        from.hidden=true;
+        from.classList.remove('active','leaving');
+        wrap.style.height='';
+        active=mode;
+      },520);
+    });
+  }
+  btns.forEach(b=>{
+    b.addEventListener('click',()=>select(b.dataset.awardsPane));
+    b.addEventListener('keydown',e=>{
+      if(e.key!=='ArrowLeft'&&e.key!=='ArrowRight')return;
+      e.preventDefault();
+      const next=btns[(btns.indexOf(b)+(e.key==='ArrowRight'?1:-1)+btns.length)%btns.length];
+      next.focus();
+      select(next.dataset.awardsPane);
+    });
+  });
+}
 
 /* ============ shared curled gallery (coverflow + parallax) ============ */
 let galleries={};
@@ -1391,6 +1498,7 @@ addEventListener('keydown',e=>{if(e.key==='Escape'&&cinema.classList.contains('o
 
 /* ============ boot ============ */
 function boot(){
+  initAwardsToggle();
   const a=tabs.find(t=>t.classList.contains('active'))||tabs[0];moveInk(a);
   setView((location.hash||'#builder').slice(1),false);
 }
