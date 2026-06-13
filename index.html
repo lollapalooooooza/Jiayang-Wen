@@ -131,14 +131,15 @@ main{position:fixed;top:var(--hdr);left:0;right:0;bottom:0}
 /* ============ awards ============ */
 .awards-view{min-height:100%;background:var(--bg)}
 .awards-wrap{max-width:1060px;--award-media-h:300px}
-.awards-head{display:flex;align-items:center;justify-content:space-between;gap:32px;border-bottom:1px solid var(--line);padding-bottom:24px;margin-bottom:18px}
-.awards-head h1{font-family:var(--serif);font-size:clamp(42px,6vw,72px);font-weight:600;line-height:.96;letter-spacing:-.035em}
-.award-switch{--switch-w:112px;position:relative;display:grid;grid-template-columns:repeat(2,var(--switch-w));gap:0;padding:3px;border:1px solid var(--line);border-radius:999px;background:rgba(250,249,246,.68);box-shadow:0 10px 26px rgba(20,18,12,.045)}
-.award-switch::before{content:'';position:absolute;left:3px;top:3px;width:var(--switch-w);height:calc(100% - 6px);border-radius:999px;background:var(--ink);box-shadow:0 8px 18px rgba(20,18,12,.1);transform:translateX(0);transition:transform .48s var(--ease-out),background .35s var(--ease)}
-.award-switch[data-mode="hackathons"]::before{transform:translateX(var(--switch-w))}
-.award-tab{position:relative;z-index:1;height:34px;border:0;background:transparent;border-radius:999px;cursor:pointer;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);transition:color .35s var(--ease),transform .35s var(--ease)}
-.award-tab:hover{color:var(--ink)}
-.award-tab.active{color:var(--bg)}
+.awards-head{display:block;border-bottom:1px solid var(--line);padding-bottom:24px;margin-bottom:18px}
+.awards-title-toggle{display:flex;align-items:flex-end;gap:18px;min-height:76px}
+.award-title-tab{position:relative;border:0;background:transparent;cursor:pointer;font-family:var(--serif);font-size:clamp(28px,3.55vw,42px);font-weight:500;line-height:.96;letter-spacing:-.032em;color:var(--faint);opacity:.62;padding:0 2px 8px;transform:translateY(-5px);transition:font-size .5s var(--ease-out),font-weight .5s var(--ease-out),color .4s var(--ease),opacity .4s var(--ease),transform .5s var(--ease-out),text-shadow .45s var(--ease)}
+.award-title-tab::after{content:'';position:absolute;left:3px;right:3px;bottom:0;height:2px;background:var(--accent);transform:scaleX(0);transform-origin:left;opacity:0;transition:transform .52s var(--ease-out),opacity .35s var(--ease)}
+.award-title-tab:hover{color:var(--ink-2);opacity:.88;transform:translateY(-3px)}
+.awards-title-toggle[data-mode="awards"] [data-awards-pane="awards"],
+.awards-title-toggle[data-mode="hackathons"] [data-awards-pane="hackathons"]{font-size:clamp(42px,6vw,72px);font-weight:700;color:var(--ink);opacity:1;transform:none;text-shadow:0 14px 34px rgba(20,18,12,.06)}
+.awards-title-toggle[data-mode="awards"] [data-awards-pane="awards"]::after,
+.awards-title-toggle[data-mode="hackathons"] [data-awards-pane="hackathons"]::after{transform:scaleX(1);opacity:.95}
 .awards-panels{position:relative;transition:height .5s var(--ease-out)}
 .award-panel{display:grid;opacity:1;transform:none;transition:opacity .44s var(--ease-out),transform .44s var(--ease-out)}
 .award-panel[hidden]{display:none}
@@ -174,8 +175,10 @@ main{position:fixed;top:var(--hdr);left:0;right:0;bottom:0}
 .hack-shot img{width:100%;height:100%;object-fit:cover}
 @media(max-width:860px){
   .awards-wrap{--award-media-h:150px}
-  .awards-head{display:flex;align-items:flex-start;flex-direction:column;gap:18px}
-  .award-switch{--switch-w:104px}
+  .awards-title-toggle{gap:10px;min-height:58px;flex-wrap:wrap}
+  .award-title-tab{font-size:clamp(22px,6.1vw,28px);padding-bottom:6px;transform:translateY(-3px)}
+  .awards-title-toggle[data-mode="awards"] [data-awards-pane="awards"],
+  .awards-title-toggle[data-mode="hackathons"] [data-awards-pane="hackathons"]{font-size:clamp(40px,12.4vw,48px)}
   .award-card{grid-template-columns:1fr;gap:18px;padding:24px 0}
   .award-media{justify-items:start}
   .award-shot{max-width:210px}
@@ -586,10 +589,9 @@ main{position:fixed;top:var(--hdr);left:0;right:0;bottom:0}
     <div class="view-pad awards-view">
       <div class="wrap awards-wrap">
         <header class="awards-head reveal">
-          <h1>Awards</h1>
-          <div class="award-switch" data-awards-switch data-mode="awards" role="tablist" aria-label="Awards sections">
-            <button class="award-tab active" type="button" role="tab" aria-selected="true" aria-controls="awards-academic" data-awards-pane="awards">Awards</button>
-            <button class="award-tab" type="button" role="tab" aria-selected="false" aria-controls="awards-hackathons" data-awards-pane="hackathons">Hackathon</button>
+          <div class="awards-title-toggle" data-awards-switch data-mode="awards" role="tablist" aria-label="Awards sections">
+            <button class="award-title-tab active" type="button" role="tab" aria-selected="true" aria-controls="awards-academic" data-awards-pane="awards">Awards</button>
+            <button class="award-title-tab" type="button" role="tab" aria-selected="false" aria-controls="awards-hackathons" data-awards-pane="hackathons">Hackathon</button>
           </div>
         </header>
 
